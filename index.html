@@ -1692,7 +1692,7 @@ body {
 
           <p class="email__p" style="text-align:center;color:var(--tx-muted);font-size:13px">— oder direkt schreiben —</p>
 
-          <div class="email__compose">
+         <form class="email__compose" name="kontakt" method="POST" data-netlify="true">
             <div class="email__compose-bar">
               <span class="email__compose-bar-title">Neue Nachricht</span>
               <div class="email__compose-dots">
@@ -1707,11 +1707,11 @@ body {
             </div>
             <div class="email__compose-field">
               <span class="email__compose-label">Von</span>
-              <input class="email__compose-input" type="email" placeholder="eure@email.ch">
+              <input class="email__compose-input" type="email" name="email" placeholder="eure@email.ch">
             </div>
             <div class="email__compose-field">
               <span class="email__compose-label">Name</span>
-              <input class="email__compose-input" type="text" placeholder="Vorname Name · Firma AG">
+              <input class="email__compose-input" type="text" name="name" placeholder="Vorname Name · Firma AG">
             </div>
             <div class="email__compose-field">
               <span class="email__compose-label">Betr.</span>
@@ -1729,11 +1729,11 @@ body {
               <textarea class="email__compose-textarea" placeholder="Eventdatum, Personenzahl, was euch bewegt — oder einfach Hallo. Wir melden uns innert 24 Stunden."></textarea>
             </div>
             <div class="email__compose-footer">
-              <button class="email__compose-send">Senden ↑</button>
+              <button class="email__compose-send" type="submit">Senden ↑</button>
               <span class="email__compose-note">Antwort innert 24h · info@bismontag.ch</span>
             </div>
           </div>
-        </div>
+        </form>
       </div>
 
 
