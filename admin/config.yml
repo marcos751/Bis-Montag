@@ -1,0 +1,24 @@
+backend:
+  name: github
+  repo: marcos751/Bis-Montag
+  branch: main
+
+media_folder: images
+public_folder: /images
+
+collections:
+  - name: projekti
+    label: Referenzen / Projekte
+    folder: _projekti
+    create: true
+    fields:
+      - { label: Naziv klijenta, name: klijent, widget: string }
+      - { label: Naslov projekta, name: naslov, widget: string }
+      - { label: Datum, name: datum, widget: string }
+      - { label: Paket, name: paket, widget: select, options: [Feierabend, Zusammen, Meilenstein, Nach Mass] }
+      - { label: Broj osoba, name: osobe, widget: string }
+      - { label: Lokacija, name: lokacija, widget: string }
+      - { label: Opis, name: opis, widget: text }
+      - { label: Glavna fotografija, name: foto_main, widget: image }
+      - { label: Fotografija 2, name: foto_2, widget: image }
+      - { label: Fotografija 3, name: foto_3, widget: image }
