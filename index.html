@@ -809,7 +809,7 @@ body {
 .navbar__title em { color: var(--orange); font-style: normal; }
 
 .navbar__action {
-  font-family: var(--f-mono); font-size: 12px;
+  font-family: var(--f-mono); font-size: 22px;
   color: var(--orange); cursor: pointer;
   padding: 8px 0; -webkit-tap-highlight-color: transparent;
 }
@@ -1246,6 +1246,22 @@ body {
   color: var(--gray-400);
 }
 }
+
+/* Mobile lang switch */
+.mobile-lang-switch {
+  display: flex; align-items: center; gap: 3px;
+  background: rgba(0,0,0,0.05); border-radius: 6px;
+  padding: 3px 8px;
+}
+.mobile-lang-btn {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+  background: transparent; border: none; cursor: pointer;
+  color: var(--gray-400); padding: 2px 4px; border-radius: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+.mobile-lang-btn.active { background: var(--orange); color: #fff; }
+.mobile-lang-sep { font-size: 11px; color: var(--gray-400); }
+
 </style>
 </head>
 <body>
@@ -2051,7 +2067,14 @@ const origNav = nav;
   <div class="navbar">
     <div style="width:60px"></div>
     <div class="navbar__title">BIS <em>MONTAG</em></div>
-    <div class="navbar__action" onclick="openScreen('kontakt')">✏</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="mobile-lang-switch">
+        <button class="mobile-lang-btn active" id="mob-btn-de" onclick="setLang('de')">DE</button>
+        <span class="mobile-lang-sep">|</span>
+        <button class="mobile-lang-btn" id="mob-btn-en" onclick="setLang('en')">EN</button>
+      </div>
+      <div class="navbar__action" onclick="openScreen('kontakt')">✏</div>
+    </div>
   </div>
 
   <!-- Search -->
@@ -2061,38 +2084,38 @@ const origNav = nav;
 
   <!-- Inbox header -->
   <div class="inbox-header">
-    <div class="inbox-header__title">Posteingang</div>
-    <div class="inbox-header__meta">4 ungelesen · Kanton Bern</div>
+    <div class="inbox-header__title" data-de="Posteingang" data-en="Inbox">Posteingang</div>
+    <div class="inbox-header__meta" data-de="4 ungelesen · Kanton Bern" data-en="4 unread · Canton Bern">4 ungelesen · Kanton Bern</div>
   </div>
 
   <!-- Email list -->
   <div class="email-list">
-    <div class="email-list__section-label">Heute</div>
+    <div class="email-list__section-label" data-de="Heute" data-en="Today">Heute</div>
 
     <div class="email-item unread" onclick="openScreen('home')">
       <div class="email-item__dot"></div>
       <div class="email-item__content">
         <div class="email-item__row">
-          <span class="email-item__sender">Bis Montag</span>
+          <span class="email-item__sender" data-de="Bis Montag" data-en="Bis Montag">Bis Montag</span>
           <span class="email-item__date">09:00</span>
         </div>
-        <div class="email-item__subject">Euer nächster Event. Bis Montag.</div>
-        <div class="email-item__preview">Events, die dein Team wirklich will. Von der Idee bis zur letzten Runde — wir übernehmen alles.</div>
+        <div class="email-item__subject" data-de="Euer nächster Event. Bis Montag." data-en="Your next event. By Monday.">Euer nächster Event. Bis Montag.</div>
+        <div class="email-item__preview" data-de="Events, die dein Team wirklich will. Von der Idee bis zur letzten Runde — wir übernehmen alles." data-en="Events your team actually wants. From concept to the last drink — we handle everything.">Events, die dein Team wirklich will. Von der Idee bis zur letzten Runde — wir übernehmen alles.</div>
       </div>
       <div class="email-item__chevron">›</div>
     </div>
 
-    <div class="email-list__section-label">Diese Woche</div>
+    <div class="email-list__section-label" data-de="Diese Woche" data-en="This week">Diese Woche</div>
 
     <div class="email-item unread" onclick="openScreen('pakete')">
       <div class="email-item__dot"></div>
       <div class="email-item__content">
         <div class="email-item__row">
-          <span class="email-item__sender">Pakete & Preise</span>
+          <span class="email-item__sender" data-de="Pakete & Preise" data-en="Packages & Pricing">Pakete & Preise</span>
           <span class="email-item__date">Mo</span>
         </div>
-        <div class="email-item__subject">Transparente Preise für euren Event</div>
-        <div class="email-item__preview">Feierabend ab 6.000 · Zusammen ab 16.000 · Meilenstein ab 28.000 CHF — alles inbegriffen.</div>
+        <div class="email-item__subject" data-de="Transparente Preise für euren Event" data-en="Transparent pricing for your event">Transparente Preise für euren Event</div>
+        <div class="email-item__preview" data-de="Feierabend ab 6.000 · Zusammen ab 16.000 · Meilenstein ab 28.000 CHF. Alles inklusive." data-en="Feierabend from 6,000 · Zusammen from 16,000 · Meilenstein from 28,000 CHF. All-inclusive.">Feierabend ab 6.000 · Zusammen ab 16.000 · Meilenstein ab 28.000 CHF — alles inbegriffen.</div>
       </div>
       <div class="email-item__chevron">›</div>
     </div>
@@ -2101,11 +2124,11 @@ const origNav = nav;
       <div class="email-item__dot"></div>
       <div class="email-item__content">
         <div class="email-item__row">
-          <span class="email-item__sender">Discovery · Neu</span>
+          <span class="email-item__sender" data-de="Discovery · Neu" data-en="Discovery · New">Discovery · Neu</span>
           <span class="email-item__date">Fr</span>
         </div>
-        <div class="email-item__subject">Wir lernen euer Team kennen</div>
-        <div class="email-item__preview">Bevor wir auch nur eine Location buchen, hören wir zu. 45 Minuten, kostenlos.</div>
+        <div class="email-item__subject" data-de="Wir lernen euer Team kennen" data-en="We get to know your team first">Wir lernen euer Team kennen</div>
+        <div class="email-item__preview" data-de="Bevor wir auch nur eine Location buchen, hören wir zu. 45 Minuten, kostenlos." data-en="Before we book a single venue, we listen. 45 minutes, free.">Bevor wir auch nur eine Location buchen, hören wir zu. 45 Minuten, kostenlos.</div>
       </div>
       <div class="email-item__chevron">›</div>
     </div>
@@ -2114,11 +2137,11 @@ const origNav = nav;
       <div class="email-item__dot"></div>
       <div class="email-item__content">
         <div class="email-item__row">
-          <span class="email-item__sender">Locations & Partner</span>
+          <span class="email-item__sender" data-de="Locations & Partner" data-en="Locations & Partners">Locations & Partner</span>
           <span class="email-item__date">Di</span>
         </div>
-        <div class="email-item__subject">Kuratierte Locations in Kanton Bern</div>
-        <div class="email-item__preview">Bierhübeli, Kornhauskeller, chillfood's füüri, Markthalle Burgdorf und mehr.</div>
+        <div class="email-item__subject" data-de="Kuratierte Locations in Kanton Bern" data-en="Curated venues in Canton Bern">Kuratierte Locations in Kanton Bern</div>
+        <div class="email-item__preview" data-de="Bierhübeli, Kornhauskeller, chillfood's füüri, Markthalle Burgdorf." data-en="Bierhübeli, Kornhauskeller, chillfood's füüri, Markthalle Burgdorf.">Bierhübeli, Kornhauskeller, chillfood's füüri, Markthalle Burgdorf und mehr.</div>
       </div>
       <div class="email-item__chevron">›</div>
     </div>
@@ -2127,11 +2150,11 @@ const origNav = nav;
       <div class="email-item__dot read"></div>
       <div class="email-item__content">
         <div class="email-item__row">
-          <span class="email-item__sender">Kontakt</span>
+          <span class="email-item__sender" data-de="Kontakt" data-en="Contact">Kontakt</span>
           <span class="email-item__date">Mo</span>
         </div>
-        <div class="email-item__subject">30 Minuten. Kostenlos.</div>
-        <div class="email-item__preview">Kein Verkaufsgespräch. Wir hören zu — und sagen ehrlich ob wir passen.</div>
+        <div class="email-item__subject" data-de="30 Minuten. Kostenlos." data-en="30 minutes. Free.">30 Minuten. Kostenlos.</div>
+        <div class="email-item__preview" data-de="Kein Verkaufsgespräch. Wir hören zu — und sagen ehrlich ob wir passen." data-en="No sales pitch. We listen — and tell you honestly if we are the right fit.">Kein Verkaufsgespräch. Wir hören zu — und sagen ehrlich ob wir passen.</div>
       </div>
       <div class="email-item__chevron">›</div>
     </div>
@@ -2143,19 +2166,19 @@ const origNav = nav;
   <div class="tab-bar">
     <div class="tab-bar__item">
       <div class="tab-bar__icon">📥</div>
-      <div class="tab-bar__label" style="color:var(--orange)">Inbox</div>
+      <div class="tab-bar__label" style="color:var(--orange)" data-de="Inbox" data-en="Inbox">Inbox</div>
     </div>
     <div class="tab-bar__item" onclick="openScreen('pakete')">
       <div class="tab-bar__icon">📦</div>
-      <div class="tab-bar__label">Pakete</div>
+      <div class="tab-bar__label" data-de="Pakete" data-en="Packages">Pakete</div>
     </div>
     <div class="tab-bar__item" onclick="openScreen('discovery')">
       <div class="tab-bar__icon">🔍</div>
-      <div class="tab-bar__label">Discovery</div>
+      <div class="tab-bar__label" data-de="Discovery" data-en="Discovery">Discovery</div>
     </div>
     <div class="tab-bar__item" onclick="openScreen('kontakt')">
       <div class="tab-bar__icon">✉</div>
-      <div class="tab-bar__label">Kontakt</div>
+      <div class="tab-bar__label" data-de="Kontakt" data-en="Contact">Kontakt</div>
     </div>
   </div>
 
@@ -2169,14 +2192,14 @@ const origNav = nav;
   <div class="navbar navbar--email">
     <div class="navbar__back" onclick="closeScreen('home')">
       <span class="navbar__back-arrow">‹</span>
-      <span class="navbar__back-label">Posteingang</span>
+      <span class="navbar__back-label" data-de="Posteingang" data-en="Inbox">Posteingang</span>
     </div>
     <div class="navbar__title">BIS <em>MONTAG</em></div>
     <div style="width:80px"></div>
   </div>
   <div class="email-view">
     <div class="email-header">
-      <div class="email-header__subject">Euer nächster Event. <em>Bis Montag.</em></div>
+      <div class="email-header__subject" data-de="Euer nächster Event. <em>Bis Montag.</em>" data-en="Your next event. <em>By Monday.</em>">Euer nächster Event. <em>Bis Montag.</em></div>
       <div class="email-meta">
         <div class="email-meta-row">
           <span class="email-meta-label" data-de="Von" data-en="From">Von</span>
@@ -2231,8 +2254,8 @@ const origNav = nav;
     </div>
   </div>
   <div class="email-reply">
-    <button class="email-reply__btn-ghost" onclick="closeScreen('home')">← Zurück</button>
-    <button class="email-reply__btn" onclick="openScreen('kontakt')">Gespräch buchen →</button>
+    <button class="email-reply__btn-ghost" onclick="closeScreen('home')" data-de="← Zurück" data-en="← Back">← Zurück</button>
+    <button class="email-reply__btn" onclick="openScreen('kontakt')" data-de="Gespräch buchen →" data-en="Book a call →">Gespräch buchen →</button>
   </div>
 </div>
 
@@ -2251,7 +2274,7 @@ const origNav = nav;
   </div>
   <div class="email-view">
     <div class="email-header">
-      <div class="email-header__subject">Transparente Preise. <em>Keine Überraschungen.</em></div>
+      <div class="email-header__subject" data-de="Transparente Preise. <em>Keine Überraschungen.</em>" data-en="Transparent pricing. <em>No surprises.</em>">Transparente Preise. <em>Keine Überraschungen.</em></div>
       <div class="email-meta">
         <div class="email-meta-row">
           <span class="email-meta-label" data-de="Von" data-en="From">Von</span>
@@ -2328,8 +2351,8 @@ const origNav = nav;
     </div>
   </div>
   <div class="email-reply">
-    <button class="email-reply__btn-ghost" onclick="closeScreen('pakete')">← Zurück</button>
-    <button class="email-reply__btn" onclick="openScreen('kontakt')">Anfragen →</button>
+    <button class="email-reply__btn-ghost" onclick="closeScreen('pakete')" data-de="← Zurück" data-en="← Back">← Zurück</button>
+    <button class="email-reply__btn" onclick="openScreen('kontakt')" data-de="Anfragen →" data-en="Enquire →">Anfragen →</button>
   </div>
 </div>
 
@@ -2348,7 +2371,7 @@ const origNav = nav;
   </div>
   <div class="email-view">
     <div class="email-header">
-      <div class="email-header__subject">Wir lernen euer Team kennen — <em>bevor wir planen</em></div>
+      <div class="email-header__subject" data-de="Wir lernen euer Team kennen — <em>bevor wir planen</em>" data-en="We get to know your team — <em>before we plan anything</em>">Wir lernen euer Team kennen — <em>bevor wir planen</em></div>
       <div class="email-meta">
         <div class="email-meta-row">
           <span class="email-meta-label" data-de="Von" data-en="From">Von</span>
@@ -2365,9 +2388,9 @@ const origNav = nav;
       <p class="p">Die meisten Agenturen fragen: "Was wollt ihr?" Wir fragen anders.</p>
 
       <div class="discovery">
-        <div class="discovery__tag">Unser Ansatz</div>
-        <div class="discovery__title">Wir werden Teil eures Teams — bevor wir etwas planen.</div>
-        <div class="discovery__body">45 Minuten. Kein Pitch. Wir hören zu — wer sind diese Menschen, was verbindet sie, was haben sie hinter sich.</div>
+        <div class="discovery__tag" data-de="Unser Ansatz" data-en="Our approach">Unser Ansatz</div>
+        <div class="discovery__title" data-de="Wir werden Teil eures Teams — bevor wir etwas planen." data-en="We become part of your team — before we plan anything.">Wir werden Teil eures Teams — bevor wir etwas planen.</div>
+        <div class="discovery__body" data-de="45 Minuten. Kein Fragebogen, kein Pitch. Wir hören zu — wer sind diese Menschen, was verbindet sie, was haben sie hinter sich." data-en="45 minutes. No questionnaire, no pitch. We listen — who are these people, what connects them, what have they been through.">45 Minuten. Kein Pitch. Wir hören zu — wer sind diese Menschen, was verbindet sie, was haben sie hinter sich.</div>
         <button class="discovery__btn" onclick="openScreen('kontakt')">Discovery-Gespräch buchen →</button>
       </div>
 
@@ -2388,7 +2411,7 @@ const origNav = nav;
     </div>
   </div>
   <div class="email-reply">
-    <button class="email-reply__btn-ghost" onclick="closeScreen('discovery')">← Zurück</button>
+    <button class="email-reply__btn-ghost" onclick="closeScreen('discovery')" data-de="← Zurück" data-en="← Back">← Zurück</button>
     <button class="email-reply__btn" onclick="openScreen('kontakt')">Gespräch buchen →</button>
   </div>
 </div>
@@ -2408,7 +2431,7 @@ const origNav = nav;
   </div>
   <div class="email-view">
     <div class="email-header">
-      <div class="email-header__subject">Kuratierte <em>Locations & Partner</em></div>
+      <div class="email-header__subject" data-de="Kuratierte <em>Locations & Partner</em> in Kanton Bern" data-en="Curated <em>Venues & Partners</em> in Canton Bern">Kuratierte <em>Locations & Partner</em></div>
       <div class="email-meta">
         <div class="email-meta-row">
           <span class="email-meta-label" data-de="Von" data-en="From">Von</span>
@@ -2481,8 +2504,8 @@ const origNav = nav;
     </div>
   </div>
   <div class="email-reply">
-    <button class="email-reply__btn-ghost" onclick="closeScreen('partner')">← Zurück</button>
-    <button class="email-reply__btn" onclick="openScreen('kontakt')">Kontakt →</button>
+    <button class="email-reply__btn-ghost" onclick="closeScreen('partner')" data-de="← Zurück" data-en="← Back">← Zurück</button>
+    <button class="email-reply__btn" onclick="openScreen('kontakt')" data-de="Kontakt →" data-en="Contact →">Kontakt →</button>
   </div>
 </div>
 
@@ -2494,14 +2517,14 @@ const origNav = nav;
   <div class="navbar navbar--email">
     <div class="navbar__back" onclick="closeScreen('kontakt')">
       <span class="navbar__back-arrow">‹</span>
-      <span class="navbar__back-label">Abbrechen</span>
+      <span class="navbar__back-label" data-de="Abbrechen" data-en="Cancel">Abbrechen</span>
     </div>
     <div class="navbar__title">Neue Nachricht</div>
     <div class="navbar__action" style="font-size:11px">Senden</div>
   </div>
   <div class="email-view">
     <div class="email-header" style="padding:16px 20px">
-      <div class="email-header__subject" style="font-size:16px;margin-bottom:10px">30 Minuten. <em>Kostenlos.</em></div>
+      <div class="email-header__subject" style="font-size:16px;margin-bottom:10px" data-de="30 Minuten. <em>Kostenlos.</em>" data-en="30 minutes. <em>Free.</em>">30 Minuten. <em>Kostenlos.</em></div>
     </div>
     <div class="email-body" style="padding-top:12px">
 
@@ -2599,8 +2622,16 @@ document.querySelectorAll('.email-screen').forEach(screen => {
 
 <script>
 function setLang(lang) {
-  document.getElementById('btn-de').classList.toggle('active', lang === 'de');
-  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  // Desktop buttons
+  const btnDe = document.getElementById('btn-de');
+  const btnEn = document.getElementById('btn-en');
+  if (btnDe) btnDe.classList.toggle('active', lang === 'de');
+  if (btnEn) btnEn.classList.toggle('active', lang === 'en');
+  // Mobile buttons
+  const mobDe = document.getElementById('mob-btn-de');
+  const mobEn = document.getElementById('mob-btn-en');
+  if (mobDe) mobDe.classList.toggle('active', lang === 'de');
+  if (mobEn) mobEn.classList.toggle('active', lang === 'en');
   document.querySelectorAll('[data-de]').forEach(function(el) {
     el.innerHTML = lang === 'de' ? el.getAttribute('data-de') : el.getAttribute('data-en');
   });
