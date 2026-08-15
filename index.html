@@ -1488,7 +1488,7 @@ body {
             <p class="email__signoff-p" data-de="Mit freundlichen Grüssen," data-en="Best,">Mit freundlichen Grüssen,</p>
             <div class="email__signoff-name" data-de="Bis Montag" data-en="Bis Montag">Bis Montag</div>
             <div class="email__signoff-role">Eventagentur für KMU · Kanton Bern</div>
-            <div class="email__signoff-web">bismontag.ch</div>
+            <div class="email__signoff-web"><a href="https://bismontag.ch" style="color:inherit;text-decoration:none">bismontag.ch</a></div>
           </div>
         </div>
       </div>
@@ -1520,7 +1520,7 @@ body {
                 <th data-de="Inbegriffen" data-en="Included">Inbegriffen</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="pkg-dynamic-container">
               <tr>
                 <td>
                   <div class="pkg-name" data-de="FEIERABEND" data-en="FEIERABEND">FEIERABEND</div>
@@ -1589,6 +1589,10 @@ body {
           </div>
         </div>
         <div class="email__body">
+          <div style="border-left:2px solid var(--orange);padding:14px 18px;margin:0 0 24px;background:rgba(45,63,107,0.05);border-radius:0 6px 6px 0">
+            <div style="font-family:var(--f-display);font-size:13px;font-weight:900;letter-spacing:-0.3px;color:var(--tx-primary);margin-bottom:4px" data-de="Liste wird kuratiert." data-en="List being curated.">Liste wird kuratiert.</div>
+            <div style="font-family:var(--f-mono);font-size:11px;color:var(--tx-muted)" data-de="Wir empfehlen niemanden, den wir nicht persönlich kennen. Das braucht Zeit." data-en="We only recommend people we know personally. That takes time.">Wir empfehlen niemanden, den wir nicht persönlich kennen. Das braucht Zeit.</div>
+          </div>
           <p class="email__p" data-de="Wir arbeiten nur mit Locations und Lieferanten zusammen, die wir persönlich kennen und empfehlen können. Keine bezahlten Platzierungen, keine Kickbacks — nur ehrliche Empfehlungen." data-en="We only work with venues and suppliers we know personally and can genuinely recommend. No paid placements, no kickbacks — just honest recommendations.">Wir arbeiten nur mit Locations und Lieferanten zusammen, die wir persönlich kennen und empfehlen können. Keine bezahlten Platzierungen, keine Kickbacks — nur ehrliche Empfehlungen.</p>
 
           <div class="email__section" data-de="📍 Locations · Kanton Bern" data-en="📍 Venues · Canton Bern">📍 Locations · Kanton Bern</div>
@@ -1718,11 +1722,39 @@ body {
           <div class="email__calendly">
             <div class="email__calendly-title" data-de="🗓 Termin direkt buchen" data-en="🗓 Book directly">🗓 Termin direkt buchen</div>
             <div class="email__calendly-sub" data-de="30 Minuten per Video oder Telefon. Kein Verkaufsgespräch — ein echtes Gespräch." data-en="30 minutes by video or phone. No sales pitch — a real conversation.">30 Minuten per Video oder Telefon. Kein Verkaufsgespräch — ein echtes Gespräch.</div>
-            <div class="email__calendly-btn" data-de="Freien Slot wählen" data-en="Choose a slot">Freien Slot wählen</div>
-            <span class="email__calendly-note" data-de="↑ Calendly Embed hier einfügen" data-en="↑ Insert Calendly Embed here">↑ Calendly Embed hier einfügen</span>
+            <div <div id="calendly-inline-widget" style="min-width:280px;height:420px;margin-top:8px"></div>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+        <script>
+          window.addEventListener('load', function() {
+            if (window.Calendly) {
+              Calendly.initInlineWidget({
+                url: 'https://calendly.com/bismontag-info/30min',
+                parentElement: document.getElementById('calendly-inline-widget'),
+                prefill: {},
+                utm: {}
+              });
+            }
+          });
+        </script>
           </div>
 
-          <p class="email__p" style="text-align:center;color:var(--tx-muted);font-size:13px" data-de="— oder direkt schreiben —" data-en="— or write to us directly —" data-de="— oder direkt schreiben —" data-en="— or write to us directly —" data-de="— oder direkt schreiben —" data-en="— or write to us directly —">— oder direkt schreiben —</p>
+          <div style="display:flex;gap:8px;margin:0 0 20px;flex-wrap:wrap">
+              <a href="tel:+41796020537" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--gray-50);border:1px solid var(--border-soft);border-radius:6px;text-decoration:none;flex:1;min-width:180px">
+                <span style="font-size:16px">📞</span>
+                <div>
+                  <div style="font-family:var(--f-mono);font-size:11px;color:var(--tx-primary);font-weight:500">+41 79 602 05 37</div>
+                  <div style="font-family:var(--f-mono);font-size:10px;color:var(--tx-muted)">Julia</div>
+                </div>
+              </a>
+              <a href="tel:+41782428628" style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--gray-50);border:1px solid var(--border-soft);border-radius:6px;text-decoration:none;flex:1;min-width:180px">
+                <span style="font-size:16px">📞</span>
+                <div>
+                  <div style="font-family:var(--f-mono);font-size:11px;color:var(--tx-primary);font-weight:500">+41 78 242 86 28</div>
+                  <div style="font-family:var(--f-mono);font-size:10px;color:var(--tx-muted)">Marko</div>
+                </div>
+              </a>
+            </div>
+            <p class="email__p" style="text-align:center;color:var(--tx-muted);font-size:13px" data-de="— oder direkt schreiben —" data-en="— or write to us directly —" data-de="— oder direkt schreiben —" data-en="— or write to us directly —" data-de="— oder direkt schreiben —" data-en="— or write to us directly —">— oder direkt schreiben —</p>
 
           <div class="email__compose">
             <div class="email__compose-bar">
@@ -1764,207 +1796,6 @@ body {
               <button class="email__compose-send" data-de="Senden ↑" data-en="Send ↑">Senden ↑</button>
               <span class="email__compose-note" data-de="Antwort innert 24h · info@bismontag.ch" data-en="Reply within 24h · info@bismontag.ch" data-de="Antwort innert 24h · info@bismontag.ch" data-en="Reply within 24h · info@bismontag.ch">Antwort innert 24h · info@bismontag.ch</span>
             </div>
-          </div>
-        </div>
-      </div>
-
-
-      <!-- ═══ PROJEKT 1 ═══ -->
-      <div class="view" id="e-proj1">
-        <div class="email__subject">Jahresabschluss Teamtag — <em>Müller Treuhand AG</em></div>
-        <div class="email__meta">
-          <div class="email__meta-inner">
-            <span class="email__meta-key" data-de="Kunde" data-en="Client">Kunde</span>
-            <span class="email__meta-val"><b>Müller Treuhand AG</b> · Bern</span>
-            <span class="email__meta-key" data-de="Datum" data-en="Date">Datum</span>
-            <span class="email__meta-val">14. November 2024 · Ganztag</span>
-            <span class="email__meta-key" data-de="Paket" data-en="Package">Paket</span>
-            <span class="email__meta-val"><b>Zusammen</b> · 38 Personen · Bierhübeli Bern</span>
-            <span class="email__meta-key" data-de="Output" data-en="Output">Output</span>
-            <span class="email__meta-val">50 Fotos · After-Movie 90 Sek. · 3 LinkedIn Posts</span>
-          </div>
-        </div>
-        <div class="email__body">
-          <div class="proj-badge" data-de="Zusammen — Paket 02" data-en="Together — Package 02">Zusammen — Paket 02</div>
-
-          <div class="proj-photos">
-            <div class="proj-photo proj-photo--tall">
-              <img src="https://images.unsplash.com/photo-1529543544282-ea669407fca3?w=600&q=80" alt="Teamtag">
-              <div class="proj-photo-tag" data-de="Teamaktivität" data-en="Team Activity">Teamaktivität</div>
-            </div>
-            <div class="proj-photo">
-              <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Catering">
-              <div class="proj-photo-tag" data-de="Catering" data-en="Catering">Catering</div>
-            </div>
-            <div class="proj-photo">
-              <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=400&q=80" alt="Team">
-              <div class="proj-photo-tag" data-de="After-Work" data-en="After-Work">After-Work</div>
-            </div>
-          </div>
-
-          <div class="proj-stats">
-            <div class="proj-stat">
-              <div class="proj-stat__num">38</div>
-              <div class="proj-stat__label" data-de="Teilnehmer" data-en="Participants">Teilnehmer</div>
-            </div>
-            <div class="proj-stat">
-              <div class="proj-stat__num">50+</div>
-              <div class="proj-stat__label" data-de="Editierte Fotos" data-en="Edited Photos">Editierte Fotos</div>
-            </div>
-            <div class="proj-stat">
-              <div class="proj-stat__num">90s</div>
-              <div class="proj-stat__label" data-de="After-Movie" data-en="After-Movie">After-Movie</div>
-            </div>
-            <div class="proj-stat">
-              <div class="proj-stat__num">3</div>
-              <div class="proj-stat__label" data-de="LinkedIn Posts" data-en="LinkedIn Posts">LinkedIn Posts</div>
-            </div>
-          </div>
-
-          <p class="email__p" data-de="Das Team von Müller Treuhand AG hatte ein intensives Jahr hinter sich — eine Fusion, neue Mandate, drei neue Kolleginnen. Der Jahresabschluss sollte kein Pflicht-Event sein, sondern ein echter Moment des Innehaltens." data-en="The Müller Treuhand AG team had an intense year behind them — a merger, new clients, three new colleagues. The year-end event was not meant to be an obligation, but a genuine moment to pause.">Das Team von Müller Treuhand AG hatte ein intensives Jahr hinter sich — eine Fusion, neue Mandate, drei neue Kolleginnen. Der Jahresabschluss sollte kein Pflicht-Event sein, sondern ein echter Moment des Innehaltens.</p>
-
-          <div class="email__quote">
-            <p data-de="Wir haben im Discovery-Gespräch erfahren, dass das Team selten zusammen isst — also war das Abendessen der Kern des Events, nicht ein Anhang davon." data-en="In the Discovery call we learned that the team rarely eats together — so dinner became the core of the event, not an appendage.">Wir haben im Discovery-Gespräch erfahren, dass das Team selten zusammen isst — also war das Abendessen der Kern des Events, nicht ein Anhang davon.</p>
-          </div>
-
-          <p class="email__p" data-de="Konzept, Location, Catering, Tischbranding und Programm waren innert 5 Tagen nach Offerte-Unterzeichnung bereit. Der After-Movie wurde 4 Tage nach dem Event auf LinkedIn veröffentlicht." data-en="Concept, venue, catering, table branding and programme were ready within 5 days of signing. The after-movie was published on LinkedIn 4 days after the event.">Konzept, Location, Catering, Tischbranding und Programm waren innert 5 Tagen nach Offerte-Unterzeichnung bereit. Der After-Movie wurde 4 Tage nach dem Event auf LinkedIn veröffentlicht.</p>
-
-          <div class="email__signoff">
-            <div class="email__signoff-name" data-de="Bis Montag · Referenz" data-en="Bis Montag · Reference">Bis Montag · Referenz</div>
-            <div class="email__signoff-role" data-de="Paket Zusammen · November 2024" data-en="Package Together · November 2024">Paket Zusammen · November 2024</div>
-            <div class="email__signoff-web">bismontag.ch</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ═══ PROJEKT 2 ═══ -->
-      <div class="view" id="e-proj2">
-        <div class="email__subject">20 Jahre Jubiläum — <em>Roth & Partner AG</em></div>
-        <div class="email__meta">
-          <div class="email__meta-inner">
-            <span class="email__meta-key" data-de="Kunde" data-en="Client">Kunde</span>
-            <span class="email__meta-val"><b>Roth & Partner AG</b> · Bern</span>
-            <span class="email__meta-key" data-de="Datum" data-en="Date">Datum</span>
-            <span class="email__meta-val">20. September 2024 · Abend</span>
-            <span class="email__meta-key" data-de="Paket" data-en="Package">Paket</span>
-            <span class="email__meta-val"><b>Meilenstein</b> · 85 Personen · Kornhauskeller Bern</span>
-            <span class="email__meta-key" data-de="Output" data-en="Output">Output</span>
-            <span class="email__meta-val">120 Fotos · After-Movie 2.5 Min. · 5 LinkedIn Posts · Newsletter</span>
-          </div>
-        </div>
-        <div class="email__body">
-          <div class="proj-badge" data-de="Meilenstein — Paket 03" data-en="Milestone — Package 03">Meilenstein — Paket 03</div>
-
-          <div class="proj-photos">
-            <div class="proj-photo proj-photo--tall">
-              <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" alt="Jubiläum">
-              <div class="proj-photo-tag" data-de="Jubiläumsfeier" data-en="Anniversary">Jubiläumsfeier</div>
-            </div>
-            <div class="proj-photo">
-              <img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=400&q=80" alt="Dinner">
-              <div class="proj-photo-tag" data-de="Galadinner" data-en="Gala Dinner">Galadinner</div>
-            </div>
-            <div class="proj-photo">
-              <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="Event">
-              <div class="proj-photo-tag" data-de="Programm" data-en="Programme">Programm</div>
-            </div>
-          </div>
-
-          <div class="proj-stats">
-            <div class="proj-stat">
-              <div class="proj-stat__num">85</div>
-              <div class="proj-stat__label">Teilnehmer</div>
-            </div>
-            <div class="proj-stat">
-              <div class="proj-stat__num">120+</div>
-              <div class="proj-stat__label">Editierte Fotos</div>
-            </div>
-            <div class="proj-stat">
-              <div class="proj-stat__num">2.5'</div>
-              <div class="proj-stat__label">After-Movie</div>
-            </div>
-            <div class="proj-stat">
-              <div class="proj-stat__num">5</div>
-              <div class="proj-stat__label">LinkedIn Posts</div>
-            </div>
-          </div>
-
-          <p class="email__p" data-de="Zwanzig Jahre sind kein kleines Datum. Roth & Partner AG wollte einen Abend, der die Geschichte der Firma würdigt — ohne altmodisch zu wirken. Wir haben eine komplette visuelle Identität für den Event entwickelt: Logo, Einladungsdesign, Tischdekoration, Beamerprojektionen." data-en="Twenty years is not a small milestone. Roth & Partner AG wanted an evening that honours the company history — without feeling old-fashioned. We developed a complete visual identity for the event: logo, invitation design, table decoration, projections.">Zwanzig Jahre sind kein kleines Datum. Roth & Partner AG wollte einen Abend, der die Geschichte der Firma würdigt — ohne altmodisch zu wirken. Wir haben eine komplette visuelle Identität für den Event entwickelt: Logo, Einladungsdesign, Tischdekoration, Beamerprojektionen.</p>
-
-          <div class="email__quote">
-            <p data-de="Der After-Movie erreichte in der ersten Woche über 4.800 Aufrufe auf LinkedIn — und drei Kandidaten schrieben in ihren Bewerbungen, dass sie den Film gesehen hatten." data-en="The after-movie reached over 4,800 views on LinkedIn in the first week — and three candidates mentioned in their applications that they had seen the film.">Der After-Movie erreichte in der ersten Woche über 4.800 Aufrufe auf LinkedIn — und drei Kandidaten schrieben in ihren Bewerbungen, dass sie den Film gesehen hatten.</p>
-          </div>
-
-          <div class="email__signoff">
-            <div class="email__signoff-name">Bis Montag · Referenz</div>
-            <div class="email__signoff-role" data-de="Paket Meilenstein · September 2024" data-en="Package Milestone · September 2024">Paket Meilenstein · September 2024</div>
-            <div class="email__signoff-web">bismontag.ch</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ═══ PROJEKT 3 ═══ -->
-      <div class="view" id="e-proj3">
-        <div class="email__subject">Feierabend After-Work — <em>Senn Architekten GmbH</em></div>
-        <div class="email__meta">
-          <div class="email__meta-inner">
-            <span class="email__meta-key" data-de="Kunde" data-en="Client">Kunde</span>
-            <span class="email__meta-val"><b>Senn Architekten GmbH</b> · Bern</span>
-            <span class="email__meta-key" data-de="Datum" data-en="Date">Datum</span>
-            <span class="email__meta-val">7. Juni 2024 · Abend</span>
-            <span class="email__meta-key" data-de="Paket" data-en="Package">Paket</span>
-            <span class="email__meta-val"><b>Feierabend</b> · 22 Personen · chillfood's füüri</span>
-            <span class="email__meta-key" data-de="Output" data-en="Output">Output</span>
-            <span class="email__meta-val">20 Fotos · Abschlussbericht</span>
-          </div>
-        </div>
-        <div class="email__body">
-          <div class="proj-badge" data-de="Feierabend — Paket 01" data-en="Feierabend — Package 01">Feierabend — Paket 01</div>
-
-          <div class="proj-photos">
-            <div class="proj-photo proj-photo--tall">
-              <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=600&q=80" alt="Feierabend">
-              <div class="proj-photo-tag" data-de="Fire Cooking" data-en="Fire Cooking">Fire Cooking</div>
-            </div>
-            <div class="proj-photo">
-              <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=400&q=80" alt="Team">
-              <div class="proj-photo-tag" data-de="Team" data-en="Team">Team</div>
-            </div>
-            <div class="proj-photo">
-              <img src="https://images.unsplash.com/photo-1543353071-087092ec393a?w=400&q=80" alt="Food">
-              <div class="proj-photo-tag" data-de="Apéro" data-en="Apéro">Apéro</div>
-            </div>
-          </div>
-
-          <div class="proj-stats">
-            <div class="proj-stat">
-              <div class="proj-stat__num">22</div>
-              <div class="proj-stat__label">Teilnehmer</div>
-            </div>
-            <div class="proj-stat">
-              <div class="proj-stat__num">20</div>
-              <div class="proj-stat__label">Editierte Fotos</div>
-            </div>
-            <div class="proj-stat">
-              <div class="proj-stat__num">3.5h</div>
-              <div class="proj-stat__label" data-de="Event-Dauer" data-en="Event Duration">Event-Dauer</div>
-            </div>
-            <div class="proj-stat">
-              <div class="proj-stat__num">7k</div>
-              <div class="proj-stat__label" data-de="CHF all-in" data-en="CHF all-in">CHF all-in</div>
-            </div>
-          </div>
-
-          <p class="email__p" data-de="Senn Architekten wollten einen unkomplizierten Sommerabend — kein Programm, kein Mikrofon, kein Tischplan. Nur das Team, ein Feuer, gutes Essen. Wir haben die Location und den Ablauf so gestaltet, dass nichts Event-mässig wirkt." data-en="Senn Architekten wanted a relaxed summer evening — no programme, no microphone, no seating plan. Just the team, a fire, good food. We designed the venue and flow so nothing felt like a corporate event.">Senn Architekten wollten einen unkomplizierten Sommerabend — kein Programm, kein Mikrofon, kein Tischplan. Nur das Team, ein Feuer, gutes Essen. Wir haben die Location und den Ablauf so gestaltet, dass nichts "Event-mässig" wirkt.</p>
-
-          <div class="email__quote">
-            <p data-de="Das Discovery-Gespräch hat gezeigt: das Team braucht keinen Aktivitäts-Tag. Es braucht einfach Zeit — miteinander, ohne Agenda." data-en="The Discovery call made it clear: the team does not need an activity day. They just need time — together, without an agenda.">Das Discovery-Gespräch hat gezeigt: das Team braucht keinen Aktivitäts-Tag. Es braucht einfach Zeit — miteinander, ohne Agenda.</p>
-          </div>
-
-          <div class="email__signoff">
-            <div class="email__signoff-name">Bis Montag · Referenz</div>
-            <div class="email__signoff-role" data-de="Paket Feierabend · Juni 2024" data-en="Package Feierabend · June 2024">Paket Feierabend · Juni 2024</div>
-            <div class="email__signoff-web">bismontag.ch</div>
           </div>
         </div>
       </div>
@@ -2028,8 +1859,8 @@ function goArchiv() {
   document.querySelectorAll('.email, .view').forEach(e => e.classList.remove('is-on'));
 
   // Show first project by default
-  document.getElementById('e-proj1').classList.add('is-on');
-  document.querySelector('#archiv-list .list-item').classList.add('is-on');
+  // Projects loaded dynamically via loadDynProjects()
+  // First item highlighted by loadDynProjects()
   document.querySelector('.pane__scroll').scrollTop = 0;
 }
 
@@ -2177,8 +2008,12 @@ const origNav = nav;
       <div class="tab-bar__label" data-de="Discovery" data-en="Discovery">Discovery</div>
     </div>
     <div class="tab-bar__item" onclick="openScreen('kontakt')">
-      <div class="tab-bar__icon">✉</div>
+      <div class="tab-bar__icon">📩</div>
       <div class="tab-bar__label" data-de="Kontakt" data-en="Contact">Kontakt</div>
+    </div>
+    <div class="tab-bar__item" onclick="openMobileArchiv()">
+      <div class="tab-bar__icon">🗂</div>
+      <div class="tab-bar__label" data-de="Referenzen" data-en="References">Referenzen</div>
     </div>
   </div>
 
@@ -2531,10 +2366,35 @@ const origNav = nav;
       <div class="calendly" style="margin-top:0">
         <div class="calendly__title">🗓 Termin direkt buchen</div>
         <div class="calendly__sub">30 Minuten per Video oder Telefon. Kein Verkaufsgespräch.</div>
-        <div class="calendly__btn">Freien Slot wählen</div>
-        <span class="calendly__note">Calendly Embed hier einfügen</span>
+        <div <div id="calendly-mobile-widget" style="min-width:280px;height:380px;margin-top:8px"></div>
+        <script>
+          window.addEventListener('load', function() {
+            if (window.Calendly) {
+              Calendly.initInlineWidget({
+                url: 'https://calendly.com/bismontag-info/30min',
+                parentElement: document.getElementById('calendly-mobile-widget'),
+              });
+            }
+          });
+        </script>
       </div>
 
+      <div style="display:flex;flex-direction:column;gap:8px;margin:0 0 16px">
+        <a href="tel:+41796020537" style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:10px;text-decoration:none">
+          <span style="font-size:20px">📞</span>
+          <div>
+            <div style="font-family:var(--f-mono);font-size:13px;color:var(--gray-900);font-weight:500">+41 79 602 05 37</div>
+            <div style="font-family:var(--f-mono);font-size:11px;color:var(--gray-400)">Julia</div>
+          </div>
+        </a>
+        <a href="tel:+41782428628" style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:10px;text-decoration:none">
+          <span style="font-size:20px">📞</span>
+          <div>
+            <div style="font-family:var(--f-mono);font-size:13px;color:var(--gray-900);font-weight:500">+41 78 242 86 28</div>
+            <div style="font-family:var(--f-mono);font-size:11px;color:var(--gray-400)">Marko</div>
+          </div>
+        </a>
+      </div>
       <p class="p" style="text-align:center;color:var(--gray-400);font-size:13px;margin:8px 0">— oder schreib direkt —</p>
 
       <div class="compose">
@@ -2637,5 +2497,369 @@ function setLang(lang) {
   });
 }
 </script>
+
+
+<!-- ══ REFERENZEN SCREEN ══ -->
+<div id="screen-referenzen" class="screen email-screen">
+  <div class="status-bar"></div>
+  <div class="navbar navbar--email">
+    <div class="navbar__back" onclick="closeScreen('referenzen')">
+      <span class="navbar__back-arrow">‹</span>
+      <span class="navbar__back-label" data-de="Zurück" data-en="Back">Zurück</span>
+    </div>
+    <div class="navbar__title">BIS <em>MONTAG</em></div>
+    <div style="width:60px"></div>
+  </div>
+  <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column">
+    <div style="padding:20px 16px;border-bottom:1px solid var(--gray-100);flex-shrink:0">
+      <div style="font-family:var(--f-display);font-size:22px;font-weight:900;letter-spacing:-0.8px;color:var(--gray-900)" data-de="Referenzen" data-en="References">Referenzen</div>
+      <div style="font-family:var(--f-mono);font-size:11px;color:var(--gray-400);margin-top:3px" id="mob-archiv-count"></div>
+    </div>
+    <div id="mob-archiv-items" style="padding:0 16px;flex:1"></div>
+  </div>
+</div>
+
+<!-- ══ PROJEKT DETAIL SCREEN ══ -->
+<div id="screen-proj-detail" class="screen email-screen">
+  <div class="status-bar"></div>
+  <div class="navbar navbar--email">
+    <div class="navbar__back" onclick="closeScreen('proj-detail')">
+      <span class="navbar__back-arrow">‹</span>
+      <span class="navbar__back-label" data-de="Referenzen" data-en="References">Referenzen</span>
+    </div>
+    <div class="navbar__title">BIS <em>MONTAG</em></div>
+    <div style="width:60px"></div>
+  </div>
+  <div class="email-view" id="mob-proj-content" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch"></div>
+  <div class="email-reply">
+    <button class="email-reply__btn" onclick="openScreen('kontakt')" data-de="Gespräch buchen →" data-en="Book a call →">Gespräch buchen →</button>
+  </div>
+</div>
+
+
+<script>
+// ═══════════════════════════════════════
+// DYNAMIC PROJECTS — GitHub API Loader
+// ═══════════════════════════════════════
+
+const GITHUB_REPO = 'marcos751/Bis-Montag';
+const PROJECTS_FOLDER = '_projekti';
+let _loadedProjects = [];
+
+// Parse YAML frontmatter from markdown
+function parseFM(text) {
+  const match = text.match(/^---\n([\s\S]*?)\n---/);
+  if (!match) return {};
+  const fm = {};
+  match[1].split('\n').forEach(line => {
+    const colonIdx = line.indexOf(':');
+    if (colonIdx > 0) {
+      const key = line.slice(0, colonIdx).trim();
+      const val = line.slice(colonIdx + 1).trim().replace(/^["']|["']$/g, '');
+      fm[key] = val;
+    }
+  });
+  fm._body = text.replace(/^---[\s\S]*?---\n?/, '').trim();
+  return fm;
+}
+
+// Render project as email HTML
+function renderProjectEmail(p) {
+  const photos = [p.foto_main, p.foto_2, p.foto_3].filter(Boolean);
+  const photosHtml = photos.length > 0 ? `
+    <div class="proj-photos">
+      ${photos[0] ? `<div class="proj-photo proj-photo--tall"><img src="${photos[0]}" alt="${p.naslov || ''}"><div class="proj-photo-tag">${p.klijent || ''}</div></div>` : ''}
+      ${photos[1] ? `<div class="proj-photo"><img src="${photos[1]}" alt=""></div>` : ''}
+      ${photos[2] ? `<div class="proj-photo"><img src="${photos[2]}" alt=""></div>` : ''}
+    </div>` : '';
+
+  return `
+    <div class="email__subject">${p.naslov || 'Projekt'} — <em>${p.klijent || ''}</em></div>
+    <div class="email__meta">
+      <div class="email__meta-inner">
+        <span class="email__meta-key" data-de="Kunde" data-en="Client">Kunde</span>
+        <span class="email__meta-val"><b>${p.klijent || ''}</b></span>
+        <span class="email__meta-key" data-de="Datum" data-en="Date">Datum</span>
+        <span class="email__meta-val">${p.datum || ''}</span>
+        <span class="email__meta-key" data-de="Paket" data-en="Package">Paket</span>
+        <span class="email__meta-val"><b>${p.paket || ''}</b> · ${p.osobe || ''} Personen · ${p.lokacija || ''}</span>
+      </div>
+    </div>
+    <div class="email__body">
+      <div class="proj-badge">${p.paket || ''}</div>
+      ${photosHtml}
+      <p class="email__p">${(p.opis || '').replace(/\n/g, '<br>')}</p>
+      <div class="email__signoff">
+        <div class="email__signoff-name">Bis Montag · Referenz</div>
+        <div class="email__signoff-role">${p.paket || ''} · ${p.datum || ''}</div>
+        <div class="email__signoff-web">bismontag.ch</div>
+      </div>
+    </div>`;
+}
+
+// Render list items
+function renderProjectList(projects) {
+  if (projects.length === 0) {
+    return '<div style="padding:20px 14px;font-family:var(--f-mono);font-size:11px;color:var(--tx-muted)">Noch keine Projekte. Im /admin Bereich hinzufügen.</div>';
+
+  // Show styled empty state
+  const emptyHtml = `<div class="email is-on" id="e-archiv-empty">
+    <div class="email__body" style="padding-top:60px;max-width:480px">
+      <div style="font-family:var(--f-display);font-size:32px;font-weight:900;letter-spacing:-1.5px;line-height:1;color:var(--tx-primary);margin-bottom:12px">Keine neuen<br>Nachrichten.</div>
+      <div style="font-family:var(--f-mono);font-size:13px;color:var(--orange);margin-bottom:32px">Das ändert sich bis Montag.</div>
+      <p style="font-size:14px;color:var(--tx-muted);line-height:1.7">Der erste Event ist in Planung.<br>Euer könnte es sein.</p>
+    </div>
+  </div>`;
+  document.querySelectorAll('.email, .view').forEach(e => e.classList.remove('is-on'));
+  const oldEmpty = document.getElementById('e-archiv-empty');
+  if (oldEmpty) oldEmpty.remove();
+  document.querySelector('.pane__scroll').insertAdjacentHTML('beforeend', emptyHtml);
+  document.querySelector('.pane__scroll').scrollTop = 0;
+  }
+  return projects.map((p, i) => `
+    <div class="list-item list-item--archive" onclick="showDynProject(${i});item(this)">
+      <div class="list-item__row">
+        <span class="list-item__sender" style="font-family:var(--f-mono);font-size:11px">${p.klijent || 'Projekt'}</span>
+        <span class="list-item__date">${(p.datum || '').slice(0, 7)}</span>
+      </div>
+      <div class="list-item__subject">${p.naslov || ''}</div>
+      <div class="list-item__preview">${p.paket || ''} · ${p.osobe || ''} · ${p.lokacija || ''}</div>
+    </div>`).join('');
+}
+
+// Show a single project in pane
+function showDynProject(index) {
+  const p = _loadedProjects[index];
+  if (!p) return;
+
+  document.querySelectorAll('.email, .view').forEach(e => e.classList.remove('is-on'));
+  const old = document.getElementById('e-dyn-proj');
+  if (old) old.remove();
+
+  const el = document.createElement('div');
+  el.className = 'email is-on';
+  el.id = 'e-dyn-proj';
+  el.innerHTML = renderProjectEmail(p);
+  document.querySelector('.pane__scroll').appendChild(el);
+  document.querySelector('.pane__scroll').scrollTop = 0;
+
+  // Apply current language
+  if (typeof setLang === 'function') {
+    document.querySelectorAll('#e-dyn-proj [data-de]').forEach(el2 => {
+      const lang = document.getElementById('btn-en') && document.getElementById('btn-en').classList.contains('active') ? 'en' : 'de';
+      el2.innerHTML = lang === 'de' ? el2.getAttribute('data-de') : el2.getAttribute('data-en');
+    });
+  }
+}
+
+// Load projects from GitHub API
+async function loadDynProjects() {
+  const archivList = document.getElementById('archiv-list');
+  archivList.innerHTML = '<div style="padding:20px 14px;font-family:var(--f-mono);font-size:11px;color:var(--tx-muted)">Lädt Projekte...</div>';
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${PROJECTS_FOLDER}`);
+    
+    if (!res.ok) {
+      // Folder doesn't exist yet — show empty state
+      archivList.innerHTML = '<div style="padding:20px 14px;font-family:var(--f-mono);font-size:11px;color:var(--tx-muted)">Noch keine Projekte. <a href="/admin" style="color:var(--orange)">Im Admin-Bereich hinzufügen →</a></div>';
+      return;
+    }
+
+    const files = await res.json();
+    const mdFiles = Array.isArray(files) ? files.filter(f => f.name.endsWith('.md')) : [];
+
+    if (mdFiles.length === 0) {
+      archivList.innerHTML = '<div style="padding:20px 14px;font-family:var(--f-mono);font-size:11px;color:var(--tx-muted)">Noch keine Projekte. <a href="/admin" style="color:var(--orange)">Im Admin-Bereich hinzufügen →</a></div>';
+      return;
+    }
+
+    // Fetch all project files in parallel
+    const projects = await Promise.all(
+      mdFiles.map(async file => {
+        const r = await fetch(file.download_url);
+        const text = await r.text();
+        return { ...parseFM(text), _filename: file.name };
+      })
+    );
+
+    // Sort by date descending
+    projects.sort((a, b) => (b.datum || '').localeCompare(a.datum || ''));
+
+    _loadedProjects = projects;
+    archivList.innerHTML = renderProjectList(projects);
+
+    // Show first project
+    if (projects.length > 0) {
+      showDynProject(0);
+      archivList.querySelector('.list-item') && archivList.querySelector('.list-item').classList.add('is-on');
+    }
+
+  } catch (err) {
+    console.error('Project load error:', err);
+    archivList.innerHTML = '<div style="padding:20px 14px;font-family:var(--f-mono);font-size:11px;color:var(--tx-muted)">Fehler beim Laden. Seite neu laden.</div>';
+  }
+}
+
+// Override goArchiv to use dynamic loader
+function goArchiv() {
+  // Switch list header
+  document.querySelector('.list__title').textContent = 
+    document.getElementById('btn-en') && document.getElementById('btn-en').classList.contains('active') ? 'References' : 'Referenzen';
+  document.querySelector('.list__count').textContent = '';
+
+  // Hide inbox items, show archiv list
+  document.querySelectorAll('.list__scroll > .list-item:not(.list-item--archive)').forEach(i => i.style.display = 'none');
+  document.getElementById('archiv-list').style.display = 'block';
+
+  // Hide all current email panes
+  document.querySelectorAll('.email, .view').forEach(e => e.classList.remove('is-on'));
+
+  // Load projects from GitHub
+  loadDynProjects();
+}
+</script>
+
+
+<script>
+// ═══════════════════════════════════════
+// DYNAMIC PAKETE & PARTNER LOADERS
+// ═══════════════════════════════════════
+
+// ── PAKETE ──
+async function loadDynPakete() {
+  const container = document.getElementById('pkg-dynamic-container');
+  if (!container) return;
+
+  container.innerHTML = '<tr><td colspan="4" style="padding:20px;font-family:var(--f-mono);font-size:11px;color:var(--tx-muted);text-align:center">Lädt...</td></tr>';
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/_pakete`);
+    if (!res.ok) { renderFallbackPakete(); return; }
+    const files = await res.json();
+    const mdFiles = Array.isArray(files) ? files.filter(f => f.name.endsWith('.md')) : [];
+    if (mdFiles.length === 0) { renderFallbackPakete(); return; }
+
+    const pakete = await Promise.all(
+      mdFiles.map(async f => {
+        const r = await fetch(f.download_url);
+        const text = await r.text();
+        return parseFM(text);
+      })
+    );
+
+    pakete.sort((a, b) => (parseInt(a.reihenfolge) || 99) - (parseInt(b.reihenfolge) || 99));
+
+    const lang = document.getElementById('btn-en') && document.getElementById('btn-en').classList.contains('active') ? 'en' : 'de';
+    
+    const html = pakete.map(p => {
+      const featured = p.featured === 'true';
+      const tagline = lang === 'en' ? (p.tagline_en || p.tagline_de || '') : (p.tagline_de || '');
+      const inbegriffen = lang === 'en' 
+        ? (p.inbegriffen_en || p.inbegriffen_de || '') 
+        : (p.inbegriffen_de || '');
+      const preisStr = p.preis_bis 
+        ? `<em style="color:var(--orange)">${Number(p.preis_von).toLocaleString('de-CH')}</em> – ${Number(p.preis_bis).toLocaleString('de-CH')} CHF`
+        : `Ab <em style="color:var(--orange)">${Number(p.preis_von).toLocaleString('de-CH')}</em> CHF`;
+      
+      return `<tr${featured ? ' class="is-featured"' : ''}>
+        <td>
+          <div class="pkg-name">${p.name || ''}</div>
+          <div class="pkg-size">${p.dauer || ''}</div>
+          ${featured ? `<div class="pkg-badge">${lang === 'en' ? 'Most popular' : 'Beliebtestes'}</div>` : ''}
+        </td>
+        <td><div class="pkg-size">${p.personen || ''}</div></td>
+        <td><div class="pkg-price" style="font-family:var(--f-mono);font-size:13px">${preisStr}</div></td>
+        <td><div class="pkg-inc">${String(inbegriffen).split(',').map(s => s.trim()).filter(Boolean).join(', ')}</div></td>
+      </tr>`;
+    }).join('');
+
+    container.innerHTML = html;
+
+  } catch(err) {
+    console.error('Pakete load error:', err);
+    renderFallbackPakete();
+  }
+}
+
+function renderFallbackPakete() {
+  // Keep hardcoded content as fallback — do nothing
+  const container = document.getElementById('pkg-dynamic-container');
+  if (container) container.style.display = 'none';
+  const fallback = document.getElementById('pkg-fallback-container');
+  if (fallback) fallback.style.display = '';
+}
+
+// ── PARTNER ──
+async function loadDynPartner() {
+  const locContainer = document.getElementById('partner-loc-dynamic');
+  const supContainer = document.getElementById('partner-sup-dynamic');
+  if (!locContainer && !supContainer) return;
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/_partner`);
+    if (!res.ok) return; // Keep hardcoded fallback
+
+    const files = await res.json();
+    const mdFiles = Array.isArray(files) ? files.filter(f => f.name.endsWith('.md')) : [];
+    if (mdFiles.length === 0) return;
+
+    const partner = await Promise.all(
+      mdFiles.map(async f => {
+        const r = await fetch(f.download_url);
+        const text = await r.text();
+        return parseFM(text);
+      })
+    );
+
+    partner.sort((a, b) => (parseInt(a.reihenfolge) || 99) - (parseInt(b.reihenfolge) || 99));
+
+    const lang = document.getElementById('btn-en') && document.getElementById('btn-en').classList.contains('active') ? 'en' : 'de';
+
+    const locations = partner.filter(p => p.kategorie === 'Location');
+    const lieferanten = partner.filter(p => p.kategorie === 'Lieferant');
+
+    function renderPartnerRows(list) {
+      return list.map(p => {
+        const desc = lang === 'en' ? (p.beschreibung_en || p.beschreibung_de || '') : (p.beschreibung_de || '');
+        return `<a class="email__link-row" href="${p.url || '#'}" target="_blank" rel="noopener">
+          <div class="email__link-row-abbr">${p.abk || '?'}</div>
+          <div class="email__link-row-name">${p.name || ''}</div>
+          <div class="email__link-row-cat">${desc}</div>
+          <div class="email__link-row-arrow">↗</div>
+        </a>`;
+      }).join('');
+    }
+
+    if (locContainer && locations.length > 0) {
+      locContainer.innerHTML = renderPartnerRows(locations);
+    }
+    if (supContainer && lieferanten.length > 0) {
+      supContainer.innerHTML = renderPartnerRows(lieferanten);
+    }
+
+  } catch(err) {
+    console.error('Partner load error:', err);
+    // Keep hardcoded fallback
+  }
+}
+
+// ── AUTO LOAD ──
+// Load pakete and partner when their email sections become visible
+const _origGo = window.go;
+window.go = function(id) {
+  _origGo(id);
+  if (id === 'pakete') loadDynPakete();
+  if (id === 'partner') loadDynPartner();
+};
+
+// Also load on page init if pakete/partner is visible
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('e-pakete') && document.getElementById('e-pakete').classList.contains('is-on')) {
+    loadDynPakete();
+  }
+});
+</script>
+
 </body>
 </html>
