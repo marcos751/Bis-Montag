@@ -6,8 +6,6 @@
 <title>Bis Montag — Eventagentur Bern</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-
-/* ── DEVICE SWITCH ── */
 #desktop-version { display: none; }
 #mobile-version  { display: none; }
 
@@ -15,14 +13,12 @@
   #desktop-version { display: block; }
   html, body { height: 100%; overflow: hidden; font-size: 16px; }
 }
-
 @media (max-width: 767px) {
   #mobile-version { display: block; }
   html { font-size: 16px; -webkit-text-size-adjust: 100%; }
   body { overflow: hidden; height: 100dvh; }
 }
 
-/* ══ DESKTOP ══ */
 @media (min-width: 768px) {
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html, body { height:100%; overflow:hidden; }
@@ -694,9 +690,24 @@ body {
 .list-item--archive .list-item__sender {
   font-family: var(--f-mono); font-size: 11px;
 }
-}
 
-/* ══ MOBILE ══ */
+
+/* ── LANGUAGE SWITCH ── */
+.lang-switch {
+  display: flex; align-items: center; gap: 4px;
+  background: rgba(0,0,0,0.06); border-radius: 5px;
+  padding: 3px 8px; margin-left: 8px;
+}
+.lang-btn {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 500;
+  background: transparent; border: none; cursor: pointer;
+  color: var(--tx-muted); padding: 2px 4px; border-radius: 3px;
+  transition: all 0.15s;
+}
+.lang-btn.active { background: var(--orange); color: #fff; }
+.lang-btn:hover:not(.active) { color: var(--tx-primary); }
+.lang-sep { font-size: 10px; color: var(--tx-muted); }
+}
 @media (max-width: 767px) {
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { font-size:16px; -webkit-text-size-adjust:100%; }
@@ -1235,11 +1246,10 @@ body {
   color: var(--gray-400);
 }
 }
-
 </style>
 </head>
 <body>
-  <form name="kontakt" data-netlify="true" hidden>
+<form name="kontakt" data-netlify="true" hidden>
   <input type="email" name="email">
   <input type="text" name="name">
   <select name="subject"></select>
@@ -1256,58 +1266,58 @@ body {
       <div class="dot dot-y"></div>
       <div class="dot dot-g"></div>
     </div>
-    <button class="titlebar__btn compose" onclick="go('kontakt')">✏ Verfassen</button>
+    <button class="titlebar__btn compose" data-de="✏ Verfassen" data-en="✏ Compose" onclick="go('kontakt')">✏ Verfassen</button>
     <button class="titlebar__btn" onclick="go('home')">↩ Antworten</button>
     <div class="titlebar__logo">BIS <em>MONTAG</em></div>
-    <input class="titlebar__search" type="search" placeholder="🔍  Suchen">
+    <input class="titlebar__search" type="search" placeholder="🔍  Suchen" id="search-input"><div class="lang-switch"><button class="lang-btn active" onclick="setLang('de')" id="btn-de">DE</button><span class="lang-sep">|</span><button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button></div>
   </div>
 
   <!-- SIDEBAR -->
   <nav class="sidebar">
-    <div class="sidebar__heading">Postfächer</div>
+    <div class="sidebar__heading" data-de="Postfächer" data-en="Mailboxes">Postfächer</div>
     <button class="sidebar__row is-on" onclick="go('home');nav(this)">
       <span class="sidebar__row-icon">📥</span>
-      <span class="sidebar__row-label">Posteingang</span>
+      <span class="sidebar__row-label" data-de="Posteingang" data-en="Inbox">Posteingang</span>
       <span class="sidebar__row-badge">4</span>
     </button>
 
     <div class="sidebar__sep"></div>
-    <div class="sidebar__heading">Sektionen</div>
+    <div class="sidebar__heading" data-de="Sektionen" data-en="Sections">Sektionen</div>
 
     <button class="sidebar__row" onclick="go('pakete');nav(this)">
       <span class="sidebar__row-icon">📦</span>
-      <span class="sidebar__row-label">Pakete</span>
+      <span class="sidebar__row-label" data-de="Pakete" data-en="Packages">Pakete</span>
     </button>
     <button class="sidebar__row" onclick="go('partner');nav(this)">
       <span class="sidebar__row-icon">🤝</span>
-      <span class="sidebar__row-label">Partner</span>
+      <span class="sidebar__row-label" data-de="Partner" data-en="Partners">Partner</span>
     </button>
     <button class="sidebar__row" onclick="go('discovery');nav(this)">
       <span class="sidebar__row-icon">🔍</span>
-      <span class="sidebar__row-label">Discovery</span>
+      <span class="sidebar__row-label" data-de="Discovery" data-en="Discovery">Discovery</span>
       <span class="sidebar__row-badge">1</span>
     </button>
     <button class="sidebar__row" onclick="go('kontakt');nav(this)">
       <span class="sidebar__row-icon">✉</span>
-      <span class="sidebar__row-label">Kontakt</span>
+      <span class="sidebar__row-label" data-de="Kontakt" data-en="Contact">Kontakt</span>
     </button>
 
     <div class="sidebar__sep"></div>
     <button class="sidebar__row" onclick="goArchiv();nav(this)">
       <span class="sidebar__row-icon">🗂</span>
-      <span class="sidebar__row-label">Referenzen</span>
+      <span class="sidebar__row-label" data-de="Referenzen" data-en="References">Referenzen</span>
       <span class="sidebar__row-badge">3</span>
     </button>
 
     <div class="sidebar__sep"></div>
-    <div class="sidebar__heading">Info</div>
+    <div class="sidebar__heading" data-de="Info" data-en="Info">Info</div>
     <div class="sidebar__row">
       <span class="sidebar__row-icon">📍</span>
-      <span class="sidebar__row-label" style="color:var(--tx-muted)">Kanton Bern</span>
+      <span class="sidebar__row-label" style="color:var(--tx-muted)" data-de="Kanton Bern" data-en="Canton Bern">Kanton Bern</span>
     </div>
     <div class="sidebar__row">
       <span class="sidebar__row-icon">⏱</span>
-      <span class="sidebar__row-label" style="color:var(--tx-muted)">48h Offerte</span>
+      <span class="sidebar__row-label" style="color:var(--tx-muted)" data-de="48h Offerte" data-en="48h Quote">48h Offerte</span>
     </div>
     <div class="sidebar__row">
       <span class="sidebar__row-icon">📸</span>
@@ -1318,54 +1328,54 @@ body {
   <!-- EMAIL LIST -->
   <div class="list">
     <div class="list__header">
-      <div class="list__title">Posteingang</div>
-      <div class="list__count">4 ungelesen</div>
+      <div class="list__title" data-de="Posteingang" data-en="Inbox">Posteingang</div>
+      <div class="list__count" data-de="4 ungelesen" data-en="4 unread">4 ungelesen</div>
     </div>
     <div class="list__scroll">
 
       <div class="list-item unread is-on" onclick="go('home');item(this)">
         <div class="list-item__row">
-          <span class="list-item__sender">Bis Montag</span>
+          <span class="list-item__sender" data-de="Bis Montag" data-en="Bis Montag">Bis Montag</span>
           <span class="list-item__date">Heute</span>
         </div>
-        <div class="list-item__subject">Euer nächster Event. Bis Montag.</div>
-        <div class="list-item__preview">Events, die dein Team wirklich will. Von der Idee bis zur letzten Runde — wir übernehmen alles.</div>
+        <div class="list-item__subject" data-de="Euer nächster Event. Bis Montag." data-en="Your next event. By Monday.">Euer nächster Event. Bis Montag.</div>
+        <div class="list-item__preview" data-de="Events, die dein Team wirklich will. Von der Idee bis zur letzten Runde — wir übernehmen alles." data-en="Events your team actually wants. From concept to the last drink — we handle everything.">Events, die dein Team wirklich will. Von der Idee bis zur letzten Runde — wir übernehmen alles.</div>
       </div>
 
       <div class="list-item unread" onclick="go('pakete');item(this)">
         <div class="list-item__row">
-          <span class="list-item__sender">Pakete & Preise</span>
+          <span class="list-item__sender" data-de="Pakete & Preise" data-en="Packages & Pricing">Pakete & Preise</span>
           <span class="list-item__date">Mo</span>
         </div>
-        <div class="list-item__subject">Transparente Preise für euren Event</div>
-        <div class="list-item__preview">Feierabend ab 6.000 · Zusammen ab 16.000 · Meilenstein ab 28.000 CHF. Alles inklusive.</div>
+        <div class="list-item__subject" data-de="Transparente Preise für euren Event" data-en="Transparent pricing for your event">Transparente Preise für euren Event</div>
+        <div class="list-item__preview" data-de="Feierabend ab 6.000 · Zusammen ab 16.000 · Meilenstein ab 28.000 CHF. Alles inklusive." data-en="Feierabend from 6,000 · Zusammen from 16,000 · Meilenstein from 28,000 CHF. All-inclusive.">Feierabend ab 6.000 · Zusammen ab 16.000 · Meilenstein ab 28.000 CHF. Alles inklusive.</div>
       </div>
 
       <div class="list-item unread" onclick="go('discovery');item(this)">
         <div class="list-item__row">
-          <span class="list-item__sender">Discovery · Neu</span>
+          <span class="list-item__sender" data-de="Discovery · Neu" data-en="Discovery · New">Discovery · Neu</span>
           <span class="list-item__date">Fr</span>
         </div>
-        <div class="list-item__subject">Wir lernen euer Team kennen</div>
-        <div class="list-item__preview">Bevor wir auch nur eine Location buchen, hören wir zu. 45 Minuten, kostenlos.</div>
+        <div class="list-item__subject" data-de="Wir lernen euer Team kennen" data-en="We get to know your team first">Wir lernen euer Team kennen</div>
+        <div class="list-item__preview" data-de="Bevor wir auch nur eine Location buchen, hören wir zu. 45 Minuten, kostenlos." data-en="Before we book a single venue, we listen. 45 minutes, free.">Bevor wir auch nur eine Location buchen, hören wir zu. 45 Minuten, kostenlos.</div>
       </div>
 
       <div class="list-item unread" onclick="go('partner');item(this)">
         <div class="list-item__row">
-          <span class="list-item__sender">Locations & Partner</span>
+          <span class="list-item__sender" data-de="Locations & Partner" data-en="Locations & Partners">Locations & Partner</span>
           <span class="list-item__date">Di</span>
         </div>
-        <div class="list-item__subject">Kuratierte Locations in Kanton Bern</div>
-        <div class="list-item__preview">Bierhübeli, Kornhauskeller, chillfood's füüri, Markthalle Burgdorf.</div>
+        <div class="list-item__subject" data-de="Kuratierte Locations in Kanton Bern" data-en="Curated venues in Canton Bern">Kuratierte Locations in Kanton Bern</div>
+        <div class="list-item__preview" data-de="Bierhübeli, Kornhauskeller, chillfood's füüri, Markthalle Burgdorf." data-en="Bierhübeli, Kornhauskeller, chillfood's füüri, Markthalle Burgdorf.">Bierhübeli, Kornhauskeller, chillfood's füüri, Markthalle Burgdorf.</div>
       </div>
 
       <div class="list-item" onclick="go('kontakt');item(this)">
         <div class="list-item__row">
-          <span class="list-item__sender">Kontakt</span>
+          <span class="list-item__sender" data-de="Kontakt" data-en="Contact">Kontakt</span>
           <span class="list-item__date">Mo</span>
         </div>
-        <div class="list-item__subject">30 Minuten. Kostenlos. Unverbindlich.</div>
-        <div class="list-item__preview">Kein Verkaufsgespräch. Wir hören zu — und sagen ehrlich ob wir passen.</div>
+        <div class="list-item__subject" data-de="30 Minuten. Kostenlos. Unverbindlich." data-en="30 minutes. Free. No strings attached.">30 Minuten. Kostenlos. Unverbindlich.</div>
+        <div class="list-item__preview" data-de="Kein Verkaufsgespräch. Wir hören zu — und sagen ehrlich ob wir passen." data-en="No sales pitch. We listen — and tell you honestly if we are the right fit.">Kein Verkaufsgespräch. Wir hören zu — und sagen ehrlich ob wir passen.</div>
       </div>
 
 
@@ -1376,24 +1386,24 @@ body {
             <span class="list-item__sender">Müller Treuhand AG</span>
             <span class="list-item__date">Nov 24</span>
           </div>
-          <div class="list-item__subject">Jahresabschluss Teamtag</div>
-          <div class="list-item__preview">Zusammen · 38 Personen · Ganztag · Bierhübeli Bern</div>
+          <div class="list-item__subject" data-de="Jahresabschluss Teamtag" data-en="Year-end Team Day">Jahresabschluss Teamtag</div>
+          <div class="list-item__preview" data-de="Zusammen · 38 Personen · Ganztag · Bierhübeli Bern" data-en="Zusammen · 38 people · Full day · Bierhübeli Bern">Zusammen · 38 Personen · Ganztag · Bierhübeli Bern</div>
         </div>
         <div class="list-item list-item--archive" onclick="goProj('proj2');item(this)">
           <div class="list-item__row">
             <span class="list-item__sender">Roth & Partner AG</span>
             <span class="list-item__date">Sep 24</span>
           </div>
-          <div class="list-item__subject">20 Jahre Jubiläumsfeier</div>
-          <div class="list-item__preview">Meilenstein · 85 Personen · Kornhauskeller Bern</div>
+          <div class="list-item__subject" data-de="20 Jahre Jubiläumsfeier" data-en="20-Year Anniversary">20 Jahre Jubiläumsfeier</div>
+          <div class="list-item__preview" data-de="Meilenstein · 85 Personen · Kornhauskeller Bern" data-en="Meilenstein · 85 people · Kornhauskeller Bern">Meilenstein · 85 Personen · Kornhauskeller Bern</div>
         </div>
         <div class="list-item list-item--archive" onclick="goProj('proj3');item(this)">
           <div class="list-item__row">
             <span class="list-item__sender">Senn Architekten GmbH</span>
             <span class="list-item__date">Jun 24</span>
           </div>
-          <div class="list-item__subject">Feierabend After-Work</div>
-          <div class="list-item__preview">Feierabend · 22 Personen · chillfood's füüri</div>
+          <div class="list-item__subject" data-de="Feierabend After-Work" data-en="Feierabend After-Work">Feierabend After-Work</div>
+          <div class="list-item__preview" data-de="Feierabend · 22 Personen · chillfood's füüri" data-en="Feierabend · 22 people · chillfood's füüri">Feierabend · 22 Personen · chillfood's füüri</div>
         </div>
       </div>
     </div>
@@ -1404,63 +1414,63 @@ body {
 
     <!-- Toolbar per email -->
     <div class="pane__toolbar">
-      <button class="pane__toolbar-btn" onclick="go('home')">↩ Antworten</button>
-      <button class="pane__toolbar-btn">↪ Weiterleiten</button>
+      <button class="pane__toolbar-btn" onclick="go('home')" data-de="↩ Antworten" data-en="↩ Reply">↩ Antworten</button>
+      <button class="pane__toolbar-btn" data-de="↪ Weiterleiten" data-en="↪ Forward">↪ Weiterleiten</button>
       <button class="pane__toolbar-btn">🗑</button>
-      <button class="pane__toolbar-btn primary" onclick="go('kontakt')">✏ Gespräch buchen →</button>
+      <button class="pane__toolbar-btn primary" onclick="go('kontakt')" data-de="✏ Gespräch buchen →" data-en="✏ Book a call →">✏ Gespräch buchen →</button>
     </div>
 
     <div class="pane__scroll">
 
       <!-- ═══ EMAIL 1: HOME ═══ -->
       <div class="email is-on" id="e-home">
-        <div class="email__subject">Euer nächster Event. <em>Bis Montag.</em></div>
+        <div class="email__subject" data-de="Euer nächster Event. <em>Bis Montag.</em>" data-en="Your next event. <em>By Monday.</em>">Euer nächster Event. <em>Bis Montag.</em></div>
         <div class="email__meta">
           <div class="email__meta-inner">
-            <span class="email__meta-key">Von</span>
+            <span class="email__meta-key" data-de="Von" data-en="From">Von</span>
             <span class="email__meta-val"><span class="email__avatar">BM</span><b>Bis Montag</b> &lt;team@bismontag.ch&gt;</span>
-            <span class="email__meta-key">An</span>
-            <span class="email__meta-val"><b>KMU Kanton Bern</b> &lt;ihr@euremail.ch&gt;</span>
-            <span class="email__meta-key">Datum</span>
-            <span class="email__meta-val">Heute um 09:00 Uhr</span>
-            <span class="email__meta-key">Betr.</span>
-            <span class="email__meta-val">Events, die euer Team wirklich will</span>
+            <span class="email__meta-key" data-de="An" data-en="To">An</span>
+            <span class="email__meta-val" data-de="<b>KMU Kanton Bern</b> &lt;ihr@euremail.ch&gt;" data-en="<b>SMEs Canton Bern</b> &lt;you@yourcompany.ch&gt;"><b>KMU Kanton Bern</b> &lt;ihr@euremail.ch&gt;</span>
+            <span class="email__meta-key" data-de="Datum" data-en="Date">Datum</span>
+            <span class="email__meta-val" data-de="Heute, 09:00 Uhr" data-en="Today, 09:00 AM">Heute um 09:00 Uhr</span>
+            <span class="email__meta-key" data-de="Betr." data-en="Subj.">Betr.</span>
+            <span class="email__meta-val" data-de="Events, die euer Team wirklich will" data-en="Events your team actually wants">Events, die euer Team wirklich will</span>
           </div>
         </div>
         <div class="email__body">
-          <p class="email__greeting">Hallo,</p>
-          <p class="email__p">wir sind Bis Montag — eine Eventagentur für KMU im Kanton Bern. Wir machen keine Pflicht-Events. Wir machen Erlebnisse, über die euer Team noch Wochen danach spricht.</p>
+          <p class="email__greeting" data-de="Hallo," data-en="Hi,">Hallo,</p>
+          <p class="email__p" data-de="wir sind Bis Montag — eine Eventagentur für KMU im Kanton Bern. Wir machen keine Pflicht-Events. Wir machen Erlebnisse, über die euer Team noch Wochen danach spricht." data-en="we are Bis Montag — an event agency for SMEs in Canton Bern. We do not do obligation events. We create experiences your team will still be talking about weeks later.">wir sind Bis Montag — eine Eventagentur für KMU im Kanton Bern. Wir machen keine Pflicht-Events. Wir machen Erlebnisse, über die euer Team noch Wochen danach spricht.</p>
 
           <div class="email__quote">
-            <p>Unser Versprechen: <span class="sel-highlight"><b>Wir werden Teil eures Teams — bevor wir auch nur eine Location buchen.</b></span> Wir hören zu, verstehen wer ihr seid, und kreieren etwas, das nur für euch funktioniert.</p>
+            <p data-de="Unser Versprechen: <b>Wir werden Teil eures Teams — bevor wir auch nur eine Location buchen.</b> Wir hören zu, verstehen wer ihr seid, und kreieren etwas, das nur für euch funktioniert." data-en="Our promise: <b>We become part of your team — before we book a single venue.</b> We listen, understand who you are, and create something that works only for you.">Unser Versprechen: <span class="sel-highlight"><b>Wir werden Teil eures Teams — bevor wir auch nur eine Location buchen.</b></span> Wir hören zu, verstehen wer ihr seid, und kreieren etwas, das nur für euch funktioniert.</p>
           </div>
 
           <div class="email__stats">
             <div class="email__stat">
               <div class="email__stat-num">48h</div>
-              <div class="email__stat-label">Offerte garantiert</div>
+              <div class="email__stat-label" data-de="Offerte garantiert" data-en="Quote guaranteed">Offerte garantiert</div>
             </div>
             <div class="email__stat">
               <div class="email__stat-num">100%</div>
-              <div class="email__stat-label">Foto-Doku in jedem Paket</div>
+              <div class="email__stat-label" data-de="Foto-Doku in jedem Paket" data-en="Photo documentation in every package">Foto-Doku in jedem Paket</div>
             </div>
             <div class="email__stat">
               <div class="email__stat-num">0</div>
-              <div class="email__stat-label">Versteckte Kosten</div>
+              <div class="email__stat-label" data-de="Versteckte Kosten" data-en="Hidden costs">Versteckte Kosten</div>
             </div>
           </div>
 
-          <div class="email__section">So funktioniert's</div>
+          <div class="email__section" data-de="So funktioniert's" data-en="How it works">So funktioniert's</div>
           <div class="email__list">
-            <div class="email__li"><span class="email__li-mark">01</span><div class="email__li-text"><b>Discovery-Gespräch</b> — 45 Minuten, kostenlos. Wir lernen euer Team kennen, nicht euer Budget.</div></div>
-            <div class="email__li"><span class="email__li-mark">02</span><div class="email__li-text"><b>Offerte innert 48h</b> — transparent, klare Preise, ein konkretes Konzept, das zu euch passt.</div></div>
-            <div class="email__li"><span class="email__li-mark">03</span><div class="email__li-text"><b>Wir übernehmen alles</b> — Konzept, Locations, Lieferanten, Event-Branding, Onsite-Koordination.</div></div>
-            <div class="email__li"><span class="email__li-mark">04</span><div class="email__li-text"><b>Fotos & After-Movie</b> — innert 5 Werktagen geliefert. LinkedIn-ready, intern nutzbar.</div></div>
+            <div class="email__li"><span class="email__li-mark">01</span><div class="email__li-text" data-de="<b>Discovery-Gespräch</b> — 45 Minuten, kostenlos. Wir lernen euer Team kennen, nicht euer Budget." data-en="<b>Discovery call</b> — 45 minutes, free. We get to know your team, not your budget."><b>Discovery-Gespräch</b> — 45 Minuten, kostenlos. Wir lernen euer Team kennen, nicht euer Budget.</div></div>
+            <div class="email__li"><span class="email__li-mark">02</span><div class="email__li-text" data-de="<b>Offerte innert 48h</b> — transparent, klare Preise, ein konkretes Konzept, das zu euch passt." data-en="<b>Quote within 48h</b> — transparent, clear pricing, a concrete concept that fits you."><b>Offerte innert 48h</b> — transparent, klare Preise, ein konkretes Konzept, das zu euch passt.</div></div>
+            <div class="email__li"><span class="email__li-mark">03</span><div class="email__li-text" data-de="<b>Wir übernehmen alles</b> — Konzept, Locations, Lieferanten, Event-Branding, Onsite-Koordination." data-en="<b>We handle everything</b> — concept, venues, suppliers, event branding, on-site coordination."><b>Wir übernehmen alles</b> — Konzept, Locations, Lieferanten, Event-Branding, Onsite-Koordination.</div></div>
+            <div class="email__li"><span class="email__li-mark">04</span><div class="email__li-text" data-de="<b>Fotos & After-Movie</b> — innert 5 Werktagen geliefert. LinkedIn-ready, intern nutzbar." data-en="<b>Photos & after-movie</b> — delivered within 5 working days. LinkedIn-ready."><b>Fotos & After-Movie</b> — innert 5 Werktagen geliefert. LinkedIn-ready, intern nutzbar.</div></div>
           </div>
 
           <div class="email__signoff">
-            <p class="email__signoff-p">Mit freundlichen Grüssen,</p>
-            <div class="email__signoff-name">Bis Montag</div>
+            <p class="email__signoff-p" data-de="Mit freundlichen Grüssen," data-en="Best,">Mit freundlichen Grüssen,</p>
+            <div class="email__signoff-name" data-de="Bis Montag" data-en="Bis Montag">Bis Montag</div>
             <div class="email__signoff-role">Eventagentur für KMU · Kanton Bern</div>
             <div class="email__signoff-web">bismontag.ch</div>
           </div>
@@ -1469,108 +1479,108 @@ body {
 
       <!-- ═══ EMAIL 2: PAKETE ═══ -->
       <div class="email" id="e-pakete">
-        <div class="email__subject">Transparente Preise. <em>Keine Überraschungen.</em></div>
+        <div class="email__subject" data-de="Transparente Preise. <em>Keine Überraschungen.</em>" data-en="Transparent pricing. <em>No surprises.</em>">Transparente Preise. <em>Keine Überraschungen.</em></div>
         <div class="email__meta">
           <div class="email__meta-inner">
             <span class="email__meta-key">Von</span>
             <span class="email__meta-val"><span class="email__avatar">BM</span><b>Bis Montag · Pakete</b> &lt;pakete@bismontag.ch&gt;</span>
             <span class="email__meta-key">An</span>
-            <span class="email__meta-val"><b>KMU Kanton Bern</b></span>
+            <span class="email__meta-val" data-de="<b>KMU Kanton Bern</b>" data-en="<b>SMEs Canton Bern</b>"><b>KMU Kanton Bern</b></span>
             <span class="email__meta-key">Datum</span>
-            <span class="email__meta-val">Montag, 14. April 2025</span>
+            <span class="email__meta-val" data-de="Montag, 14. April 2025" data-en="Monday, 14 April 2025">Montag, 14. April 2025</span>
             <span class="email__meta-key">Betr.</span>
-            <span class="email__meta-val">Alles inbegriffen — Location, Aktivität, Catering & Agentur</span>
+            <span class="email__meta-val" data-de="Alles inbegriffen — Location, Aktivität, Catering & Agentur" data-en="Everything included — venue, activity, catering & agency">Alles inbegriffen — Location, Aktivität, Catering & Agentur</span>
           </div>
         </div>
         <div class="email__body">
-          <p class="email__p">Keine "Bitte anfragen" Taktik. Alle Preise sind Gesamtpakete — alles inklusive. Ihr seht was es kostet, bevor ihr auch nur ein Gespräch führt.</p>
+          <p class="email__p" data-de='Keine &quot;Bitte anfragen&quot; Taktik. Alle Preise sind Gesamtpakete — alles inklusive. Ihr seht was es kostet, bevor ihr auch nur ein Gespräch führt.' data-en='No &quot;please enquire&quot; tactics. All prices are all-inclusive packages. You see what it costs before you even have a conversation.'>Keine "Bitte anfragen" Taktik. Alle Preise sind Gesamtpakete — alles inklusive. Ihr seht was es kostet, bevor ihr auch nur ein Gespräch führt.</p>
 
           <table class="email__pkg-table">
             <thead>
               <tr>
-                <th>Paket</th>
-                <th>Grösse</th>
-                <th>Preis (all-in)</th>
-                <th>Inbegriffen</th>
+                <th data-de="Paket" data-en="Package">Paket</th>
+                <th data-de="Grösse" data-en="Size">Grösse</th>
+                <th data-de="Preis (all-in)" data-en="Price (all-in)">Preis (all-in)</th>
+                <th data-de="Inbegriffen" data-en="Included">Inbegriffen</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>
-                  <div class="pkg-name">FEIERABEND</div>
-                  <div class="pkg-size">3–4 Stunden</div>
+                  <div class="pkg-name" data-de="FEIERABEND" data-en="FEIERABEND">FEIERABEND</div>
+                  <div class="pkg-size" data-de="3–4 Stunden" data-en="3–4 hours">3–4 Stunden</div>
                 </td>
-                <td><div class="pkg-size">15–30 Pers.</div></td>
+                <td><div class="pkg-size" data-de="15–30 Pers." data-en="15–30 people">15–30 Pers.</div></td>
                 <td><div class="pkg-price"><em>6.000</em> – 8.000 CHF</div></td>
-                <td><div class="pkg-inc">Location, Aktivität, Catering, Briefing, 20 Fotos, Abschlussbericht</div></td>
+                <td><div class="pkg-inc" data-de="Location, Aktivität, Catering, Briefing, 20 Fotos, Abschlussbericht" data-en="Venue, activity, catering, briefing, 20 photos, final report">Location, Aktivität, Catering, Briefing, 20 Fotos, Abschlussbericht</div></td>
               </tr>
               <tr class="is-featured">
                 <td>
-                  <div class="pkg-name">ZUSAMMEN</div>
-                  <div class="pkg-size">Ganztägig</div>
-                  <div class="pkg-badge">Beliebtestes</div>
+                  <div class="pkg-name" data-de="ZUSAMMEN" data-en="TOGETHER">ZUSAMMEN</div>
+                  <div class="pkg-size" data-de="Ganztägig" data-en="Full day">Ganztägig</div>
+                  <div class="pkg-badge" data-de="Beliebtestes" data-en="Most popular">Beliebtestes</div>
                 </td>
-                <td><div class="pkg-size">25–60 Pers.</div></td>
+                <td><div class="pkg-size" data-de="25–60 Pers." data-en="25–60 people">25–60 Pers.</div></td>
                 <td><div class="pkg-price"><em>16.000</em> – 24.000 CHF</div></td>
-                <td><div class="pkg-inc">Konzept, Event-Branding, alle Lieferanten, 50+ Fotos, After-Movie 90 Sek., 3 LinkedIn Posts</div></td>
+                <td><div class="pkg-inc" data-de="Konzept, Event-Branding, alle Lieferanten, 50+ Fotos, After-Movie 90 Sek., 3 LinkedIn Posts" data-en="Concept, event branding, all suppliers, 50+ photos, after-movie 90 sec., 3 LinkedIn posts">Konzept, Event-Branding, alle Lieferanten, 50+ Fotos, After-Movie 90 Sek., 3 LinkedIn Posts</div></td>
               </tr>
               <tr>
                 <td>
-                  <div class="pkg-name">MEILENSTEIN</div>
-                  <div class="pkg-size">Ganztag / Abend</div>
+                  <div class="pkg-name" data-de="MEILENSTEIN" data-en="MILESTONE">MEILENSTEIN</div>
+                  <div class="pkg-size" data-de="Ganztag / Abend" data-en="Full day / Evening">Ganztag / Abend</div>
                 </td>
-                <td><div class="pkg-size">40–120 Pers.</div></td>
+                <td><div class="pkg-size" data-de="40–120 Pers." data-en="40–120 people">40–120 Pers.</div></td>
                 <td><div class="pkg-price"><em>28.000</em> – 55.000 CHF</div></td>
-                <td><div class="pkg-inc">Komplette visuelle Identität, Moderation, After-Movie 2–3 Min., 5 LinkedIn Posts, Newsletter</div></td>
+                <td><div class="pkg-inc" data-de="Komplette visuelle Identität, Moderation, After-Movie 2–3 Min., 5 LinkedIn Posts, Newsletter" data-en="Complete visual identity, moderation, after-movie 2–3 min., 5 LinkedIn posts, newsletter">Komplette visuelle Identität, Moderation, After-Movie 2–3 Min., 5 LinkedIn Posts, Newsletter</div></td>
               </tr>
               <tr>
                 <td>
-                  <div class="pkg-name">NACH MASS</div>
-                  <div class="pkg-size">Individuell</div>
+                  <div class="pkg-name" data-de="NACH MASS" data-en="BESPOKE">NACH MASS</div>
+                  <div class="pkg-size" data-de="Individuell" data-en="Individual">Individuell</div>
                 </td>
-                <td><div class="pkg-size">Flex</div></td>
+                <td><div class="pkg-size" data-de="Flex" data-en="Flex">Flex</div></td>
                 <td><div class="pkg-price">Ab <em>2.000</em> CHF</div></td>
-                <td><div class="pkg-inc">Jahresvertrag, Onboarding-Events, nur After-Movie, Weihnachtsfeier-Spezial</div></td>
+                <td><div class="pkg-inc" data-de="Jahresvertrag, Onboarding-Events, nur After-Movie, Weihnachtsfeier-Spezial" data-en="Annual contract, onboarding events, after-movie only, Christmas party special">Jahresvertrag, Onboarding-Events, nur After-Movie, Weihnachtsfeier-Spezial</div></td>
               </tr>
             </tbody>
           </table>
 
           <div class="email__quote">
-            <p>Nicht sicher welches Paket passt? Das klären wir im <b>Discovery-Gespräch</b> — kostenlos, ohne Verpflichtung. <span style="color:var(--orange);cursor:pointer" onclick="go('kontakt')">Gespräch buchen →</span></p>
+            <p data-de="Nicht sicher welches Paket passt? Das klären wir im <b>Discovery-Gespräch</b> — kostenlos, ohne Verpflichtung." data-en="Not sure which package fits? We will figure it out in the <b>Discovery call</b> — free, no commitment.">Nicht sicher welches Paket passt? Das klären wir im <b>Discovery-Gespräch</b> — kostenlos, ohne Verpflichtung. <span style="color:var(--orange);cursor:pointer" onclick="go('kontakt')" data-de="Gespräch buchen →" data-en="Book a call →">Gespräch buchen →</span></p>
           </div>
 
           <div class="email__signoff">
-            <p class="email__signoff-p">Bei Fragen stehen wir gerne zur Verfügung.</p>
-            <div class="email__signoff-name">Bis Montag · Pakete</div>
-            <div class="email__signoff-web">pakete@bismontag.ch</div>
+            <p class="email__signoff-p" data-de="Bei Fragen stehen wir gerne zur Verfügung." data-en="Happy to answer any questions.">Bei Fragen stehen wir gerne zur Verfügung.</p>
+            <div class="email__signoff-name" data-de="Bis Montag · Pakete" data-en="Bis Montag · Packages">Bis Montag · Pakete</div>
+            <div class="email__signoff-web" data-de="pakete@bismontag.ch" data-en="packages@bismontag.ch">pakete@bismontag.ch</div>
           </div>
         </div>
       </div>
 
       <!-- ═══ EMAIL 3: PARTNER ═══ -->
       <div class="email" id="e-partner">
-        <div class="email__subject">Kuratierte <em>Locations & Partner</em> in Kanton Bern</div>
+        <div class="email__subject" data-de="Kuratierte <em>Locations & Partner</em> in Kanton Bern" data-en="Curated <em>Venues & Partners</em> in Canton Bern">Kuratierte <em>Locations & Partner</em> in Kanton Bern</div>
         <div class="email__meta">
           <div class="email__meta-inner">
             <span class="email__meta-key">Von</span>
-            <span class="email__meta-val"><span class="email__avatar">BM</span><b>Bis Montag · Netzwerk</b> &lt;info@bismontag.ch&gt;</span>
+            <span class="email__meta-val"><span class="email__avatar">BM</span><b>Bis Montag · Netzwerk</b> &lt;partner@bismontag.ch&gt;</span>
             <span class="email__meta-key">An</span>
-            <span class="email__meta-val"><b>KMU Kanton Bern</b></span>
+            <span class="email__meta-val" data-de="<b>KMU Kanton Bern</b>" data-en="<b>SMEs Canton Bern</b>"><b>KMU Kanton Bern</b></span>
             <span class="email__meta-key">Datum</span>
-            <span class="email__meta-val">Dienstag, 8. April 2025</span>
+            <span class="email__meta-val" data-de="Dienstag, 8. April 2025" data-en="Tuesday, 8 April 2025">Dienstag, 8. April 2025</span>
             <span class="email__meta-key">Betr.</span>
-            <span class="email__meta-val">Aus eigener Erfahrung — keine bezahlten Platzierungen</span>
+            <span class="email__meta-val" data-de="Aus eigener Erfahrung — keine bezahlten Platzierungen" data-en="From personal experience — no paid placements">Aus eigener Erfahrung — keine bezahlten Platzierungen</span>
           </div>
         </div>
         <div class="email__body">
-          <p class="email__p">Wir arbeiten nur mit Locations und Lieferanten zusammen, die wir persönlich kennen und empfehlen können. Keine bezahlten Platzierungen, keine Kickbacks — nur ehrliche Empfehlungen.</p>
+          <p class="email__p" data-de="Wir arbeiten nur mit Locations und Lieferanten zusammen, die wir persönlich kennen und empfehlen können. Keine bezahlten Platzierungen, keine Kickbacks — nur ehrliche Empfehlungen." data-en="We only work with venues and suppliers we know personally and can genuinely recommend. No paid placements, no kickbacks — just honest recommendations.">Wir arbeiten nur mit Locations und Lieferanten zusammen, die wir persönlich kennen und empfehlen können. Keine bezahlten Platzierungen, keine Kickbacks — nur ehrliche Empfehlungen.</p>
 
-          <div class="email__section">📍 Locations · Kanton Bern</div>
+          <div class="email__section" data-de="📍 Locations · Kanton Bern" data-en="📍 Venues · Canton Bern">📍 Locations · Kanton Bern</div>
           <div class="email__link-list">
             <a class="email__link-row" href="https://bierhuebeli.ch" target="_blank" rel="noopener">
               <div class="email__link-row-abbr">BH</div>
               <div class="email__link-row-name">Bierhübeli Bern</div>
-              <div class="email__link-row-cat">Event Location</div>
+              <div class="email__link-row-cat" data-de="Event Location" data-en="Event Venue">Event Location</div>
               <div class="email__link-row-arrow">↗</div>
             </a>
             <a class="email__link-row" href="https://casinobern.ch" target="_blank" rel="noopener">
@@ -1582,94 +1592,94 @@ body {
             <a class="email__link-row" href="https://bindella.ch/kornhauskeller" target="_blank" rel="noopener">
               <div class="email__link-row-abbr">KK</div>
               <div class="email__link-row-name">Kornhauskeller</div>
-              <div class="email__link-row-cat">Gastronomie · Bern</div>
+              <div class="email__link-row-cat" data-de="Gastronomie · Bern" data-en="Gastronomy · Bern">Gastronomie · Bern</div>
               <div class="email__link-row-arrow">↗</div>
             </a>
             <a class="email__link-row" href="https://fueueri.ch" target="_blank" rel="noopener">
               <div class="email__link-row-abbr">FF</div>
               <div class="email__link-row-name">chillfood's füüri</div>
-              <div class="email__link-row-cat">Fire Cooking · Bern</div>
+              <div class="email__link-row-cat" data-de="Fire Cooking · Bern" data-en="Fire Cooking · Bern">Fire Cooking · Bern</div>
               <div class="email__link-row-arrow">↗</div>
             </a>
             <a class="email__link-row" href="https://markthalle-burgdorf.ch" target="_blank" rel="noopener">
               <div class="email__link-row-abbr">MB</div>
               <div class="email__link-row-name">Markthalle Burgdorf</div>
-              <div class="email__link-row-cat">Event Halle · Burgdorf</div>
+              <div class="email__link-row-cat" data-de="Event Halle · Burgdorf" data-en="Event Hall · Burgdorf">Event Halle · Burgdorf</div>
               <div class="email__link-row-arrow">↗</div>
             </a>
           </div>
 
-          <div class="email__section">⚙ Lieferanten & Services</div>
+          <div class="email__section" data-de="⚙ Lieferanten & Services" data-en="⚙ Suppliers & Services">⚙ Lieferanten & Services</div>
           <div class="email__link-list">
             <a class="email__link-row" href="https://flashlight.ch" target="_blank" rel="noopener">
               <div class="email__link-row-abbr">FL</div>
               <div class="email__link-row-name">Flashlight AG</div>
-              <div class="email__link-row-cat">Eventtechnik · CH</div>
+              <div class="email__link-row-cat" data-de="Eventtechnik · CH" data-en="Event Tech · CH">Eventtechnik · CH</div>
               <div class="email__link-row-arrow">↗</div>
             </a>
             <a class="email__link-row" href="https://gourmetbox.ch" target="_blank" rel="noopener">
               <div class="email__link-row-abbr">GB</div>
               <div class="email__link-row-name">Gourmetbox</div>
-              <div class="email__link-row-cat">Catering · Bern</div>
+              <div class="email__link-row-cat" data-de="Catering · Bern" data-en="Catering · Bern">Catering · Bern</div>
               <div class="email__link-row-arrow">↗</div>
             </a>
           </div>
 
           <div class="email__quote" style="margin-top:24px">
-            <p>Ihr seid Lieferant oder Location in Kanton Bern? <b>Bevorzugte Partnerbedingungen möglich.</b> <span style="color:var(--orange);cursor:pointer" onclick="go('kontakt')">Partnerschaft anfragen →</span></p>
+            <p data-de="Ihr seid Lieferant oder Location in Kanton Bern? <b>Bevorzugte Partnerbedingungen möglich.</b>" data-en="Are you a supplier or venue in Canton Bern? <b>Preferred partner terms available.</b>">Ihr seid Lieferant oder Location in Kanton Bern? <b>Bevorzugte Partnerbedingungen möglich.</b> <span style="color:var(--orange);cursor:pointer" onclick="go('kontakt')">Partnerschaft anfragen →</span></p>
           </div>
 
           <div class="email__signoff">
             <div class="email__signoff-name">Bis Montag · Netzwerk</div>
-            <div class="email__signoff-web">info@bismontag.ch</div>
+            <div class="email__signoff-web">partner@bismontag.ch</div>
           </div>
         </div>
       </div>
 
       <!-- ═══ EMAIL 4: DISCOVERY ═══ -->
       <div class="email" id="e-discovery">
-        <div class="email__subject">Wir lernen euer Team kennen — <em>bevor wir planen</em></div>
+        <div class="email__subject" data-de="Wir lernen euer Team kennen — <em>bevor wir planen</em>" data-en="We get to know your team — <em>before we plan anything</em>">Wir lernen euer Team kennen — <em>bevor wir planen</em></div>
         <div class="email__meta">
           <div class="email__meta-inner">
             <span class="email__meta-key">Von</span>
             <span class="email__meta-val"><span class="email__avatar">BM</span><b>Bis Montag · Discovery</b> &lt;discovery@bismontag.ch&gt;</span>
             <span class="email__meta-key">An</span>
-            <span class="email__meta-val"><b>KMU Kanton Bern</b></span>
+            <span class="email__meta-val" data-de="<b>KMU Kanton Bern</b>" data-en="<b>SMEs Canton Bern</b>"><b>KMU Kanton Bern</b></span>
             <span class="email__meta-key">Datum</span>
-            <span class="email__meta-val">Freitag, 11. April 2025</span>
+            <span class="email__meta-val" data-de="Freitag, 11. April 2025" data-en="Friday, 11 April 2025">Freitag, 11. April 2025</span>
             <span class="email__meta-key">Betr.</span>
-            <span class="email__meta-val">Kein Fragebogen, kein Pitch. Ein echtes Gespräch.</span>
+            <span class="email__meta-val" data-de="Kein Fragebogen, kein Pitch. Ein echtes Gespräch." data-en="No questionnaire, no pitch. A real conversation.">Kein Fragebogen, kein Pitch. Ein echtes Gespräch.</span>
           </div>
         </div>
         <div class="email__body">
-          <p class="email__p">Die meisten Agenturen fragen: "Was wollt ihr?" und schicken dann eine Liste von Aktivitäten zum Ankreuzen. Wir machen das anders.</p>
+          <p class="email__p" data-de='Die meisten Agenturen fragen: &quot;Was wollt ihr?&quot; Wir fragen anders.' data-en='Most agencies ask: &quot;What do you want?&quot; We ask differently.'>Die meisten Agenturen fragen: "Was wollt ihr?" und schicken dann eine Liste von Aktivitäten zum Ankreuzen. Wir machen das anders.</p>
 
           <div class="email__dark-block">
-            <div class="email__dark-block-label">Unser Ansatz</div>
-            <div class="email__dark-block-title">Wir werden Teil eures Teams — bevor wir etwas planen.</div>
-            <div class="email__dark-block-body">45 Minuten. Kein Fragebogen, kein Pitch. Wir hören zu — wer sind diese Menschen, was verbindet sie, was haben sie hinter sich, worüber lachen sie zusammen. <span class="sel-highlight" style="--sel-color:rgba(255,255,255,0.12)">Erst dann entsteht ein Event, der wirklich zu euch passt.</span></div>
-            <button class="email__dark-block-btn" onclick="go('kontakt')">Discovery-Gespräch buchen →</button>
+            <div class="email__dark-block-label" data-de="Unser Ansatz" data-en="Our approach">Unser Ansatz</div>
+            <div class="email__dark-block-title" data-de="Wir werden Teil eures Teams — bevor wir etwas planen." data-en="We become part of your team — before we plan anything.">Wir werden Teil eures Teams — bevor wir etwas planen.</div>
+            <div class="email__dark-block-body" data-de="45 Minuten. Kein Fragebogen, kein Pitch. Wir hören zu — wer sind diese Menschen, was verbindet sie, was haben sie hinter sich, worüber lachen sie zusammen. Erst dann entsteht ein Event, der wirklich zu euch passt." data-en="45 minutes. No questionnaire, no pitch. We listen — who are these people, what connects them, what have they been through, what makes them laugh together. Only then do we create an event that actually fits.">45 Minuten. Kein Fragebogen, kein Pitch. Wir hören zu — wer sind diese Menschen, was verbindet sie, was haben sie hinter sich, worüber lachen sie zusammen. <span class="sel-highlight" style="--sel-color:rgba(255,255,255,0.12)">Erst dann entsteht ein Event, der wirklich zu euch passt.</span></div>
+            <button class="email__dark-block-btn" data-de="Discovery-Gespräch buchen →" data-en="Book a Discovery call →" onclick="go('kontakt')" data-de="Discovery-Gespräch buchen →" data-en="Book a Discovery call →">Discovery-Gespräch buchen →</button>
           </div>
 
-          <div class="email__section">Was wir im Discovery fragen</div>
+          <div class="email__section" data-de="Was wir im Discovery fragen" data-en="What we ask in Discovery">Was wir im Discovery fragen</div>
           <div class="email__list">
-            <div class="email__li"><span class="email__li-mark">—</span><div class="email__li-text"><b>Kontext der Firma</b> — Was hat euer Team in den letzten 12 Monaten bewegt? Was war schwer, was war gut? Gab es Veränderungen im Team?</div></div>
-            <div class="email__li"><span class="email__li-mark">—</span><div class="email__li-text"><b>Die Menschen</b> — Wer ist das Team wirklich? Gibt es Introvertierte, Neue, jemanden der sich vielleicht aussen fühlt? Wann haben sie das letzte Mal zusammen gelacht?</div></div>
-            <div class="email__li"><span class="email__li-mark">—</span><div class="email__li-text"><b>Der Zweck</b> — Warum jetzt ein Event? Was soll er bewirken — und was soll er definitiv nicht sein?</div></div>
-            <div class="email__li"><span class="email__li-mark">—</span><div class="email__li-text"><b>Der Rahmen</b> — Termine, Grösse, Budget, öffentlich oder intern. Das Letzte, nicht das Erste.</div></div>
+            <div class="email__li"><span class="email__li-mark">—</span><div class="email__li-text" data-de="<b>Kontext der Firma</b> — Was hat euer Team in den letzten 12 Monaten bewegt? Was war schwer, was war gut? Gab es Veränderungen im Team?" data-en="<b>Company context</b> — What has your team been through in the last 12 months? What was tough, what went well? Any changes in the team?"><b>Kontext der Firma</b> — Was hat euer Team in den letzten 12 Monaten bewegt? Was war schwer, was war gut? Gab es Veränderungen im Team?</div></div>
+            <div class="email__li"><span class="email__li-mark">—</span><div class="email__li-text" data-de="<b>Die Menschen</b> — Wer ist das Team wirklich? Gibt es Introvertierte, Neue, jemanden der sich vielleicht aussen fühlt? Wann haben sie das letzte Mal zusammen gelacht?" data-en="<b>The people</b> — Who is the team, really? Are there introverts, newcomers, someone who might feel on the outside? When did they last laugh together?"><b>Die Menschen</b> — Wer ist das Team wirklich? Gibt es Introvertierte, Neue, jemanden der sich vielleicht aussen fühlt? Wann haben sie das letzte Mal zusammen gelacht?</div></div>
+            <div class="email__li"><span class="email__li-mark">—</span><div class="email__li-text" data-de="<b>Der Zweck</b> — Warum jetzt ein Event? Was soll er bewirken — und was soll er definitiv nicht sein?" data-en="<b>The purpose</b> — Why an event now? What should it achieve — and what should it definitely not be?"><b>Der Zweck</b> — Warum jetzt ein Event? Was soll er bewirken — und was soll er definitiv nicht sein?</div></div>
+            <div class="email__li"><span class="email__li-mark">—</span><div class="email__li-text" data-de="<b>Der Rahmen</b> — Termine, Grösse, Budget, öffentlich oder intern. Das Letzte, nicht das Erste." data-en="<b>The framework</b> — Dates, size, budget, public or internal. Last, not first."><b>Der Rahmen</b> — Termine, Grösse, Budget, öffentlich oder intern. Das Letzte, nicht das Erste.</div></div>
           </div>
 
           <hr class="email__hr">
 
-          <div class="email__section">Was ihr danach bekommt — Team-Porträt</div>
-          <p class="email__p">Innerhalb von 48 Stunden erhaltet ihr ein einseitiges Dokument — das <b>Team-Porträt</b>. Es fasst zusammen was wir gehört haben: wer ist dieses Team, was ist die Geschichte dieses Events, was soll er erreichen, was soll er nicht sein.</p>
+          <div class="email__section" data-de="Was ihr danach bekommt — Team-Porträt" data-en="What you get after — Team Portrait">Was ihr danach bekommt — Team-Porträt</div>
+          <p class="email__p" data-de="Innerhalb von 48 Stunden erhaltet ihr ein einseitiges Dokument — das <b>Team-Porträt</b>. Es fasst zusammen was wir gehört haben: wer ist dieses Team, was ist die Geschichte dieses Events, was soll er erreichen, was soll er nicht sein." data-en="Within 48 hours you will receive a one-page document — the <b>Team Portrait</b>. It summarises what we heard: who this team is, what the story of this event is, what it should achieve, what it should not be.">Innerhalb von 48 Stunden erhaltet ihr ein einseitiges Dokument — das <b>Team-Porträt</b>. Es fasst zusammen was wir gehört haben: wer ist dieses Team, was ist die Geschichte dieses Events, was soll er erreichen, was soll er nicht sein.</p>
 
           <div class="email__quote">
-            <p>Das Team-Porträt ist nicht für uns — es ist für euch. Wenn wir etwas falsch verstanden haben, sagt es uns. Diese Korrektur ist bereits Teil des Prozesses.</p>
+            <p data-de="Das Team-Porträt ist nicht für uns — es ist für euch. Wenn wir etwas falsch verstanden haben, sagt es uns. Diese Korrektur ist bereits Teil des Prozesses." data-en="The Team Portrait is for you, not for us. If we got something wrong, tell us. That correction is already part of the process.">Das Team-Porträt ist nicht für uns — es ist für euch. Wenn wir etwas falsch verstanden haben, sagt es uns. Diese Korrektur ist bereits Teil des Prozesses.</p>
           </div>
 
           <div class="email__signoff">
-            <p class="email__signoff-p">Das Discovery-Gespräch ist kostenlos und ohne Verpflichtung.</p>
+            <p class="email__signoff-p" data-de="Das Discovery-Gespräch ist kostenlos und ohne Verpflichtung." data-en="The Discovery call is free and with no commitment.">Das Discovery-Gespräch ist kostenlos und ohne Verpflichtung.</p>
             <div class="email__signoff-name">Bis Montag · Discovery</div>
             <div class="email__signoff-web">discovery@bismontag.ch</div>
           </div>
@@ -1678,11 +1688,11 @@ body {
 
       <!-- ═══ EMAIL 5: KONTAKT / COMPOSE ═══ -->
       <div class="email" id="e-kontakt">
-        <div class="email__subject">Neue Nachricht an <em>Bis Montag</em></div>
+        <div class="email__subject" data-de="Neue Nachricht an <em>Bis Montag</em>" data-en="New message to <em>Bis Montag</em>">Neue Nachricht an <em>Bis Montag</em></div>
         <div class="email__meta">
           <div class="email__meta-inner">
             <span class="email__meta-key">Von</span>
-            <span class="email__meta-val"><b>Ich</b> &lt;meine@email.ch&gt;</span>
+            <span class="email__meta-val" data-de="<b>Ich</b> &lt;meine@email.ch&gt;" data-en="<b>Me</b> &lt;my@email.ch&gt;"><b>Ich</b> &lt;meine@email.ch&gt;</span>
             <span class="email__meta-key">An</span>
             <span class="email__meta-val"><span class="email__avatar">BM</span><b>Bis Montag</b> &lt;team@bismontag.ch&gt;</span>
           </div>
@@ -1690,17 +1700,17 @@ body {
         <div class="email__body" style="padding-top:20px">
 
           <div class="email__calendly">
-            <div class="email__calendly-title">🗓 Termin direkt buchen</div>
-            <div class="email__calendly-sub">30 Minuten per Video oder Telefon. Kein Verkaufsgespräch — ein echtes Gespräch.</div>
-            <div class="email__calendly-btn">Freien Slot wählen</div>
-            <span class="email__calendly-note">↑ Calendly Embed hier einfügen</span>
+            <div class="email__calendly-title" data-de="🗓 Termin direkt buchen" data-en="🗓 Book directly">🗓 Termin direkt buchen</div>
+            <div class="email__calendly-sub" data-de="30 Minuten per Video oder Telefon. Kein Verkaufsgespräch — ein echtes Gespräch." data-en="30 minutes by video or phone. No sales pitch — a real conversation.">30 Minuten per Video oder Telefon. Kein Verkaufsgespräch — ein echtes Gespräch.</div>
+            <div class="email__calendly-btn" data-de="Freien Slot wählen" data-en="Choose a slot">Freien Slot wählen</div>
+            <span class="email__calendly-note" data-de="↑ Calendly Embed hier einfügen" data-en="↑ Insert Calendly Embed here">↑ Calendly Embed hier einfügen</span>
           </div>
 
-          <p class="email__p" style="text-align:center;color:var(--tx-muted);font-size:13px">— oder direkt schreiben —</p>
+          <p class="email__p" style="text-align:center;color:var(--tx-muted);font-size:13px" data-de="— oder direkt schreiben —" data-en="— or write to us directly —" data-de="— oder direkt schreiben —" data-en="— or write to us directly —" data-de="— oder direkt schreiben —" data-en="— or write to us directly —">— oder direkt schreiben —</p>
 
-         <form class="email__compose" name="kontakt" method="POST" data-netlify="true">
+          <div class="email__compose">
             <div class="email__compose-bar">
-              <span class="email__compose-bar-title">Neue Nachricht</span>
+              <span class="email__compose-bar-title" data-de="Neue Nachricht" data-en="New Message">Neue Nachricht</span>
               <div class="email__compose-dots">
                 <div class="email__compose-dot" style="background:#FF5F57"></div>
                 <div class="email__compose-dot" style="background:#FEBC2E"></div>
@@ -1713,16 +1723,16 @@ body {
             </div>
             <div class="email__compose-field">
               <span class="email__compose-label">Von</span>
-              <input class="email__compose-input" type="email" name="email" placeholder="eure@email.ch">
+              <input class="email__compose-input" type="email" data-de-placeholder="eure@email.ch" data-en-placeholder="your@email.ch" placeholder="eure@email.ch">
             </div>
             <div class="email__compose-field">
               <span class="email__compose-label">Name</span>
-              <input class="email__compose-input" type="text" name="name" placeholder="Vorname Name · Firma AG">
+              <input class="email__compose-input" type="text" data-de-placeholder="Vorname Name · Firma AG" data-en-placeholder="First Last · Company AG" placeholder="Vorname Name · Firma AG">
             </div>
             <div class="email__compose-field">
               <span class="email__compose-label">Betr.</span>
               <select class="email__compose-select">
-                <option value="">Paket oder Thema wählen…</option>
+                <option value="" data-de="Paket oder Thema wählen…" data-en="Choose package or topic…">Paket oder Thema wählen…</option>
                 <option>Feierabend — 6.000–8.000 CHF</option>
                 <option>Zusammen — 16.000–24.000 CHF</option>
                 <option>Meilenstein — 28.000–55.000 CHF</option>
@@ -1732,14 +1742,14 @@ body {
               </select>
             </div>
             <div class="email__compose-textarea-wrap">
-              <textarea class="email__compose-textarea" placeholder="Eventdatum, Personenzahl, was euch bewegt — oder einfach Hallo. Wir melden uns innert 24 Stunden."></textarea>
+              <textarea class="email__compose-textarea" data-de-placeholder="Eventdatum, Personenzahl, was euch bewegt — oder einfach Hallo. Wir melden uns innert 24 Stunden." data-en-placeholder="Event date, number of people, what's on your mind — or just say hello. We reply within 24h." placeholder="Eventdatum, Personenzahl, was euch bewegt — oder einfach Hallo. Wir melden uns innert 24 Stunden."></textarea>
             </div>
             <div class="email__compose-footer">
-              <button class="email__compose-send" type="submit">Senden ↑</button>
-              <span class="email__compose-note">Antwort innert 24h · info@bismontag.ch</span>
+              <button class="email__compose-send" data-de="Senden ↑" data-en="Send ↑">Senden ↑</button>
+              <span class="email__compose-note" data-de="Antwort innert 24h · info@bismontag.ch" data-en="Reply within 24h · info@bismontag.ch" data-de="Antwort innert 24h · info@bismontag.ch" data-en="Reply within 24h · info@bismontag.ch">Antwort innert 24h · info@bismontag.ch</span>
             </div>
           </div>
-        </form>
+        </div>
       </div>
 
 
@@ -1748,64 +1758,64 @@ body {
         <div class="email__subject">Jahresabschluss Teamtag — <em>Müller Treuhand AG</em></div>
         <div class="email__meta">
           <div class="email__meta-inner">
-            <span class="email__meta-key">Kunde</span>
+            <span class="email__meta-key" data-de="Kunde" data-en="Client">Kunde</span>
             <span class="email__meta-val"><b>Müller Treuhand AG</b> · Bern</span>
             <span class="email__meta-key">Datum</span>
             <span class="email__meta-val">14. November 2024 · Ganztag</span>
-            <span class="email__meta-key">Paket</span>
+            <span class="email__meta-key" data-de="Paket" data-en="Package">Paket</span>
             <span class="email__meta-val"><b>Zusammen</b> · 38 Personen · Bierhübeli Bern</span>
-            <span class="email__meta-key">Output</span>
+            <span class="email__meta-key" data-de="Output" data-en="Output">Output</span>
             <span class="email__meta-val">50 Fotos · After-Movie 90 Sek. · 3 LinkedIn Posts</span>
           </div>
         </div>
         <div class="email__body">
-          <div class="proj-badge">Zusammen — Paket 02</div>
+          <div class="proj-badge" data-de="Zusammen — Paket 02" data-en="Together — Package 02">Zusammen — Paket 02</div>
 
           <div class="proj-photos">
             <div class="proj-photo proj-photo--tall">
               <img src="https://images.unsplash.com/photo-1529543544282-ea669407fca3?w=600&q=80" alt="Teamtag">
-              <div class="proj-photo-tag">Teamaktivität</div>
+              <div class="proj-photo-tag" data-de="Teamaktivität" data-en="Team Activity">Teamaktivität</div>
             </div>
             <div class="proj-photo">
               <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Catering">
-              <div class="proj-photo-tag">Catering</div>
+              <div class="proj-photo-tag" data-de="Catering" data-en="Catering">Catering</div>
             </div>
             <div class="proj-photo">
               <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=400&q=80" alt="Team">
-              <div class="proj-photo-tag">After-Work</div>
+              <div class="proj-photo-tag" data-de="After-Work" data-en="After-Work">After-Work</div>
             </div>
           </div>
 
           <div class="proj-stats">
             <div class="proj-stat">
               <div class="proj-stat__num">38</div>
-              <div class="proj-stat__label">Teilnehmer</div>
+              <div class="proj-stat__label" data-de="Teilnehmer" data-en="Participants">Teilnehmer</div>
             </div>
             <div class="proj-stat">
               <div class="proj-stat__num">50+</div>
-              <div class="proj-stat__label">Editierte Fotos</div>
+              <div class="proj-stat__label" data-de="Editierte Fotos" data-en="Edited Photos">Editierte Fotos</div>
             </div>
             <div class="proj-stat">
               <div class="proj-stat__num">90s</div>
-              <div class="proj-stat__label">After-Movie</div>
+              <div class="proj-stat__label" data-de="After-Movie" data-en="After-Movie">After-Movie</div>
             </div>
             <div class="proj-stat">
               <div class="proj-stat__num">3</div>
-              <div class="proj-stat__label">LinkedIn Posts</div>
+              <div class="proj-stat__label" data-de="LinkedIn Posts" data-en="LinkedIn Posts">LinkedIn Posts</div>
             </div>
           </div>
 
-          <p class="email__p">Das Team von Müller Treuhand AG hatte ein intensives Jahr hinter sich — eine Fusion, neue Mandate, drei neue Kolleginnen. Der Jahresabschluss sollte kein Pflicht-Event sein, sondern ein echter Moment des Innehaltens.</p>
+          <p class="email__p" data-de="Das Team von Müller Treuhand AG hatte ein intensives Jahr hinter sich — eine Fusion, neue Mandate, drei neue Kolleginnen. Der Jahresabschluss sollte kein Pflicht-Event sein, sondern ein echter Moment des Innehaltens." data-en="The Müller Treuhand AG team had an intense year behind them — a merger, new clients, three new colleagues. The year-end event was not meant to be an obligation, but a genuine moment to pause.">Das Team von Müller Treuhand AG hatte ein intensives Jahr hinter sich — eine Fusion, neue Mandate, drei neue Kolleginnen. Der Jahresabschluss sollte kein Pflicht-Event sein, sondern ein echter Moment des Innehaltens.</p>
 
           <div class="email__quote">
-            <p>Wir haben im Discovery-Gespräch erfahren, dass das Team selten zusammen isst — also war das Abendessen der Kern des Events, nicht ein Anhang davon.</p>
+            <p data-de="Wir haben im Discovery-Gespräch erfahren, dass das Team selten zusammen isst — also war das Abendessen der Kern des Events, nicht ein Anhang davon." data-en="In the Discovery call we learned that the team rarely eats together — so dinner became the core of the event, not an appendage.">Wir haben im Discovery-Gespräch erfahren, dass das Team selten zusammen isst — also war das Abendessen der Kern des Events, nicht ein Anhang davon.</p>
           </div>
 
-          <p class="email__p">Konzept, Location, Catering, Tischbranding und Programm waren innert 5 Tagen nach Offerte-Unterzeichnung bereit. Der After-Movie wurde 4 Tage nach dem Event auf LinkedIn veröffentlicht.</p>
+          <p class="email__p" data-de="Konzept, Location, Catering, Tischbranding und Programm waren innert 5 Tagen nach Offerte-Unterzeichnung bereit. Der After-Movie wurde 4 Tage nach dem Event auf LinkedIn veröffentlicht." data-en="Concept, venue, catering, table branding and programme were ready within 5 days of signing. The after-movie was published on LinkedIn 4 days after the event.">Konzept, Location, Catering, Tischbranding und Programm waren innert 5 Tagen nach Offerte-Unterzeichnung bereit. Der After-Movie wurde 4 Tage nach dem Event auf LinkedIn veröffentlicht.</p>
 
           <div class="email__signoff">
-            <div class="email__signoff-name">Bis Montag · Referenz</div>
-            <div class="email__signoff-role">Paket Zusammen · November 2024</div>
+            <div class="email__signoff-name" data-de="Bis Montag · Referenz" data-en="Bis Montag · Reference">Bis Montag · Referenz</div>
+            <div class="email__signoff-role" data-de="Paket Zusammen · November 2024" data-en="Package Together · November 2024">Paket Zusammen · November 2024</div>
             <div class="email__signoff-web">bismontag.ch</div>
           </div>
         </div>
@@ -1827,20 +1837,20 @@ body {
           </div>
         </div>
         <div class="email__body">
-          <div class="proj-badge">Meilenstein — Paket 03</div>
+          <div class="proj-badge" data-de="Meilenstein — Paket 03" data-en="Milestone — Package 03">Meilenstein — Paket 03</div>
 
           <div class="proj-photos">
             <div class="proj-photo proj-photo--tall">
               <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" alt="Jubiläum">
-              <div class="proj-photo-tag">Jubiläumsfeier</div>
+              <div class="proj-photo-tag" data-de="Jubiläumsfeier" data-en="Anniversary">Jubiläumsfeier</div>
             </div>
             <div class="proj-photo">
               <img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=400&q=80" alt="Dinner">
-              <div class="proj-photo-tag">Galadinner</div>
+              <div class="proj-photo-tag" data-de="Galadinner" data-en="Gala Dinner">Galadinner</div>
             </div>
             <div class="proj-photo">
               <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="Event">
-              <div class="proj-photo-tag">Programm</div>
+              <div class="proj-photo-tag" data-de="Programm" data-en="Programme">Programm</div>
             </div>
           </div>
 
@@ -1863,15 +1873,15 @@ body {
             </div>
           </div>
 
-          <p class="email__p">Zwanzig Jahre sind kein kleines Datum. Roth & Partner AG wollte einen Abend, der die Geschichte der Firma würdigt — ohne altmodisch zu wirken. Wir haben eine komplette visuelle Identität für den Event entwickelt: Logo, Einladungsdesign, Tischdekoration, Beamerprojektionen.</p>
+          <p class="email__p" data-de="Zwanzig Jahre sind kein kleines Datum. Roth & Partner AG wollte einen Abend, der die Geschichte der Firma würdigt — ohne altmodisch zu wirken. Wir haben eine komplette visuelle Identität für den Event entwickelt: Logo, Einladungsdesign, Tischdekoration, Beamerprojektionen." data-en="Twenty years is not a small milestone. Roth & Partner AG wanted an evening that honours the company history — without feeling old-fashioned. We developed a complete visual identity for the event: logo, invitation design, table decoration, projections.">Zwanzig Jahre sind kein kleines Datum. Roth & Partner AG wollte einen Abend, der die Geschichte der Firma würdigt — ohne altmodisch zu wirken. Wir haben eine komplette visuelle Identität für den Event entwickelt: Logo, Einladungsdesign, Tischdekoration, Beamerprojektionen.</p>
 
           <div class="email__quote">
-            <p>Der After-Movie erreichte in der ersten Woche über 4.800 Aufrufe auf LinkedIn — und drei Kandidaten schrieben in ihren Bewerbungen, dass sie den Film gesehen hatten.</p>
+            <p data-de="Der After-Movie erreichte in der ersten Woche über 4.800 Aufrufe auf LinkedIn — und drei Kandidaten schrieben in ihren Bewerbungen, dass sie den Film gesehen hatten." data-en="The after-movie reached over 4,800 views on LinkedIn in the first week — and three candidates mentioned in their applications that they had seen the film.">Der After-Movie erreichte in der ersten Woche über 4.800 Aufrufe auf LinkedIn — und drei Kandidaten schrieben in ihren Bewerbungen, dass sie den Film gesehen hatten.</p>
           </div>
 
           <div class="email__signoff">
             <div class="email__signoff-name">Bis Montag · Referenz</div>
-            <div class="email__signoff-role">Paket Meilenstein · September 2024</div>
+            <div class="email__signoff-role" data-de="Paket Meilenstein · September 2024" data-en="Package Milestone · September 2024">Paket Meilenstein · September 2024</div>
             <div class="email__signoff-web">bismontag.ch</div>
           </div>
         </div>
@@ -1893,20 +1903,20 @@ body {
           </div>
         </div>
         <div class="email__body">
-          <div class="proj-badge">Feierabend — Paket 01</div>
+          <div class="proj-badge" data-de="Feierabend — Paket 01" data-en="Feierabend — Package 01">Feierabend — Paket 01</div>
 
           <div class="proj-photos">
             <div class="proj-photo proj-photo--tall">
               <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=600&q=80" alt="Feierabend">
-              <div class="proj-photo-tag">Fire Cooking</div>
+              <div class="proj-photo-tag" data-de="Fire Cooking" data-en="Fire Cooking">Fire Cooking</div>
             </div>
             <div class="proj-photo">
               <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=400&q=80" alt="Team">
-              <div class="proj-photo-tag">Team</div>
+              <div class="proj-photo-tag" data-de="Team" data-en="Team">Team</div>
             </div>
             <div class="proj-photo">
               <img src="https://images.unsplash.com/photo-1543353071-087092ec393a?w=400&q=80" alt="Food">
-              <div class="proj-photo-tag">Apéro</div>
+              <div class="proj-photo-tag" data-de="Apéro" data-en="Apéro">Apéro</div>
             </div>
           </div>
 
@@ -1921,23 +1931,23 @@ body {
             </div>
             <div class="proj-stat">
               <div class="proj-stat__num">3.5h</div>
-              <div class="proj-stat__label">Event-Dauer</div>
+              <div class="proj-stat__label" data-de="Event-Dauer" data-en="Event Duration">Event-Dauer</div>
             </div>
             <div class="proj-stat">
               <div class="proj-stat__num">7k</div>
-              <div class="proj-stat__label">CHF all-in</div>
+              <div class="proj-stat__label" data-de="CHF all-in" data-en="CHF all-in">CHF all-in</div>
             </div>
           </div>
 
-          <p class="email__p">Senn Architekten wollten einen unkomplizierten Sommerabend — kein Programm, kein Mikrofon, kein Tischplan. Nur das Team, ein Feuer, gutes Essen. Wir haben die Location und den Ablauf so gestaltet, dass nichts "Event-mässig" wirkt.</p>
+          <p class="email__p" data-de="Senn Architekten wollten einen unkomplizierten Sommerabend — kein Programm, kein Mikrofon, kein Tischplan. Nur das Team, ein Feuer, gutes Essen. Wir haben die Location und den Ablauf so gestaltet, dass nichts Event-mässig wirkt." data-en="Senn Architekten wanted a relaxed summer evening — no programme, no microphone, no seating plan. Just the team, a fire, good food. We designed the venue and flow so nothing felt like a corporate event.">Senn Architekten wollten einen unkomplizierten Sommerabend — kein Programm, kein Mikrofon, kein Tischplan. Nur das Team, ein Feuer, gutes Essen. Wir haben die Location und den Ablauf so gestaltet, dass nichts "Event-mässig" wirkt.</p>
 
           <div class="email__quote">
-            <p>Das Discovery-Gespräch hat gezeigt: das Team braucht keinen Aktivitäts-Tag. Es braucht einfach Zeit — miteinander, ohne Agenda.</p>
+            <p data-de="Das Discovery-Gespräch hat gezeigt: das Team braucht keinen Aktivitäts-Tag. Es braucht einfach Zeit — miteinander, ohne Agenda." data-en="The Discovery call made it clear: the team does not need an activity day. They just need time — together, without an agenda.">Das Discovery-Gespräch hat gezeigt: das Team braucht keinen Aktivitäts-Tag. Es braucht einfach Zeit — miteinander, ohne Agenda.</p>
           </div>
 
           <div class="email__signoff">
             <div class="email__signoff-name">Bis Montag · Referenz</div>
-            <div class="email__signoff-role">Paket Feierabend · Juni 2024</div>
+            <div class="email__signoff-role" data-de="Paket Feierabend · Juni 2024" data-en="Package Feierabend · June 2024">Paket Feierabend · Juni 2024</div>
             <div class="email__signoff-web">bismontag.ch</div>
           </div>
         </div>
@@ -1947,7 +1957,7 @@ body {
 
     <!-- Reply bar -->
     <div class="pane__reply">
-      <div class="pane__reply-field">← Antworten an team@bismontag.ch</div>
+      <div class="pane__reply-field" data-de="← Antworten an team@bismontag.ch" data-en="← Reply to team@bismontag.ch">← Antworten an team@bismontag.ch</div>
       <button class="pane__reply-btn" onclick="go('kontakt')">Gespräch buchen →</button>
     </div>
 
@@ -2024,6 +2034,8 @@ function goProj(id) {
 // Override nav to reset inbox when switching away from archiv
 const origNav = nav;
 </script>
+
+
 </div>
 
 <div id="mobile-version">
@@ -2167,17 +2179,17 @@ const origNav = nav;
       <div class="email-header__subject">Euer nächster Event. <em>Bis Montag.</em></div>
       <div class="email-meta">
         <div class="email-meta-row">
-          <span class="email-meta-label">Von</span>
+          <span class="email-meta-label" data-de="Von" data-en="From">Von</span>
           <span class="email-meta-avatar">BM</span>
           <span class="email-meta-value"><b>Bis Montag</b> &lt;team@bismontag.ch&gt;</span>
         </div>
         <div class="email-meta-row">
-          <span class="email-meta-label">An</span>
-          <span class="email-meta-value"><b>KMU Kanton Bern</b></span>
+          <span class="email-meta-label" data-de="An" data-en="To">An</span>
+          <span class="email-meta-value" data-de="<b>KMU Kanton Bern</b>" data-en="<b>SMEs Canton Bern</b>"><b>KMU Kanton Bern</b></span>
         </div>
         <div class="email-meta-row">
-          <span class="email-meta-label">Datum</span>
-          <span class="email-meta-value">Heute, 09:00 · Kanton Bern</span>
+          <span class="email-meta-label" data-de="Datum" data-en="Date">Datum</span>
+          <span class="email-meta-value" data-de="Heute, 09:00 · Kanton Bern" data-en="Today, 09:00 · Canton Bern">Heute, 09:00 · Kanton Bern</span>
         </div>
       </div>
     </div>
@@ -2242,13 +2254,13 @@ const origNav = nav;
       <div class="email-header__subject">Transparente Preise. <em>Keine Überraschungen.</em></div>
       <div class="email-meta">
         <div class="email-meta-row">
-          <span class="email-meta-label">Von</span>
+          <span class="email-meta-label" data-de="Von" data-en="From">Von</span>
           <span class="email-meta-avatar">BM</span>
           <span class="email-meta-value"><b>Pakete</b> &lt;pakete@bismontag.ch&gt;</span>
         </div>
         <div class="email-meta-row">
-          <span class="email-meta-label">Betr.</span>
-          <span class="email-meta-value">Alles inbegriffen — Location, Catering, Agentur</span>
+          <span class="email-meta-label" data-de="Betr." data-en="Subj.">Betr.</span>
+          <span class="email-meta-value" data-de="Alles inbegriffen — Location, Catering, Agentur" data-en="Everything included — venue, catering & agency">Alles inbegriffen — Location, Catering, Agentur</span>
         </div>
       </div>
     </div>
@@ -2339,13 +2351,13 @@ const origNav = nav;
       <div class="email-header__subject">Wir lernen euer Team kennen — <em>bevor wir planen</em></div>
       <div class="email-meta">
         <div class="email-meta-row">
-          <span class="email-meta-label">Von</span>
+          <span class="email-meta-label" data-de="Von" data-en="From">Von</span>
           <span class="email-meta-avatar">BM</span>
           <span class="email-meta-value"><b>Discovery</b> &lt;discovery@bismontag.ch&gt;</span>
         </div>
         <div class="email-meta-row">
-          <span class="email-meta-label">Betr.</span>
-          <span class="email-meta-value">Kein Fragebogen. Ein echtes Gespräch.</span>
+          <span class="email-meta-label" data-de="Betr." data-en="Subj.">Betr.</span>
+          <span class="email-meta-value" data-de="Kein Fragebogen. Ein echtes Gespräch." data-en="No questionnaire. A real conversation.">Kein Fragebogen. Ein echtes Gespräch.</span>
         </div>
       </div>
     </div>
@@ -2399,13 +2411,13 @@ const origNav = nav;
       <div class="email-header__subject">Kuratierte <em>Locations & Partner</em></div>
       <div class="email-meta">
         <div class="email-meta-row">
-          <span class="email-meta-label">Von</span>
+          <span class="email-meta-label" data-de="Von" data-en="From">Von</span>
           <span class="email-meta-avatar">BM</span>
-          <span class="email-meta-value"><b>Netzwerk</b> &lt;info@bismontag.ch&gt;</span>
+          <span class="email-meta-value"><b>Netzwerk</b> &lt;partner@bismontag.ch&gt;</span>
         </div>
         <div class="email-meta-row">
-          <span class="email-meta-label">Betr.</span>
-          <span class="email-meta-value">Aus eigener Erfahrung — keine bezahlten Platzierungen</span>
+          <span class="email-meta-label" data-de="Betr." data-en="Subj.">Betr.</span>
+          <span class="email-meta-value" data-de="Aus eigener Erfahrung — keine bezahlten Platzierungen" data-en="From personal experience — no paid placements">Aus eigener Erfahrung — keine bezahlten Platzierungen</span>
         </div>
       </div>
     </div>
@@ -2585,5 +2597,14 @@ document.querySelectorAll('.email-screen').forEach(screen => {
 </script>
 </div>
 
+<script>
+function setLang(lang) {
+  document.getElementById('btn-de').classList.toggle('active', lang === 'de');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.querySelectorAll('[data-de]').forEach(function(el) {
+    el.innerHTML = lang === 'de' ? el.getAttribute('data-de') : el.getAttribute('data-en');
+  });
+}
+</script>
 </body>
 </html>
