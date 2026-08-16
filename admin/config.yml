@@ -6,18 +6,55 @@ media_folder: images
 public_folder: /images
 
 collections:
+
   - name: projekti
     label: Referenzen / Projekte
     folder: _projekti
     create: true
+    slug: "{{slug}}"
     fields:
       - { label: Naziv klijenta, name: klijent, widget: string }
       - { label: Naslov projekta, name: naslov, widget: string }
-      - { label: Datum, name: datum, widget: string }
+      - { label: Datum, name: datum, widget: string, hint: "z.B. November 2024" }
       - { label: Paket, name: paket, widget: select, options: [Feierabend, Zusammen, Meilenstein, Nach Mass] }
-      - { label: Broj osoba, name: osobe, widget: string }
-      - { label: Lokacija, name: lokacija, widget: string }
-      - { label: Opis, name: opis, widget: text }
-      - { label: Glavna fotografija, name: foto_main, widget: image }
-      - { label: Fotografija 2, name: foto_2, widget: image }
-      - { label: Fotografija 3, name: foto_3, widget: image }
+      - { label: Anzahl Personen, name: osobe, widget: string }
+      - { label: Location, name: lokacija, widget: string }
+      - { label: Beschreibung, name: opis, widget: text }
+      - { label: Hauptfoto, name: foto_main, widget: image, required: false }
+      - { label: Foto 2, name: foto_2, widget: image, required: false }
+      - { label: Foto 3, name: foto_3, widget: image, required: false }
+
+  - name: pakete
+    label: Pakete & Preise
+    folder: _pakete
+    create: true
+    slug: "{{fields.reihenfolge}}-{{slug}}"
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Reihenfolge, name: reihenfolge, widget: number, hint: "1-4" }
+      - { label: Personen, name: personen, widget: string, hint: "z.B. 15–30 Personen" }
+      - { label: Dauer, name: dauer, widget: string, hint: "z.B. 3–4 Stunden" }
+      - { label: Preis von (CHF), name: preis_von, widget: number }
+      - { label: Preis bis (CHF), name: preis_bis, widget: number, required: false }
+      - { label: Beliebtestes Paket, name: featured, widget: boolean, default: false }
+      - label: Inbegriffen (DE)
+        name: inbegriffen_de
+        widget: list
+      - label: Inbegriffen (EN)
+        name: inbegriffen_en
+        widget: list
+
+  - name: partner
+    label: Partner & Locations
+    folder: _partner
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Abkürzung (2–3 Buchstaben), name: abk, widget: string }
+      - { label: Kategorie, name: kategorie, widget: select, options: [Location, Lieferant] }
+      - { label: Beschreibung DE, name: beschreibung_de, widget: string }
+      - { label: Beschreibung EN, name: beschreibung_en, widget: string }
+      - { label: Website URL, name: url, widget: string }
+      - { label: Status, name: status, widget: select, options: [Empfohlen, Partner, In Kontaktaufnahme] }
+      - { label: Reihenfolge, name: reihenfolge, widget: number }
