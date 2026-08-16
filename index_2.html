@@ -1,0 +1,2778 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bis Montag — Eventagentur Bern</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+#desktop-version { display: none; }
+#mobile-version  { display: none; }
+
+@media (min-width: 768px) {
+  #desktop-version { display: block; }
+  html, body { height: 100%; overflow: hidden; font-size: 16px; }
+}
+@media (max-width: 767px) {
+  #mobile-version { display: block; }
+  html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+  body { overflow: hidden; height: 100dvh; }
+}
+
+@media (min-width: 768px) {
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow:hidden; }
+
+:root {
+  /* Apple Mail light — exact tones */
+  --app-bg:      #D8DAE2;
+  --sidebar-bg:  #EAECF2;
+  --sidebar-sel: #D2D7E8;
+  --list-bg:     #F5F6FA;
+  --list-sel:    #FFFFFF;
+  --pane-bg:     #FFFFFF;
+  --border:      #BEC3D4;
+  --border-soft: #E0E3EC;
+
+  /* Typography */
+  --tx-primary:  #1C1C1E;
+  --tx-dim:      #6C6C70;
+  --tx-muted:    #AEAEB2;
+
+  /* Brand */
+  --orange:      #2D3F6B;
+  --orange-bg:   #EEF0F7;
+  --orange-bd:   rgba(45,63,107,0.18);
+
+  /* Fonts */
+  --f-ui:      'DM Sans', -apple-system, sans-serif;
+  --f-display: 'Unbounded', sans-serif;
+  --f-mono:    'DM Mono', 'SF Mono', monospace;
+}
+
+body {
+  font-family: var(--f-ui);
+  background: var(--app-bg);
+  color: var(--tx-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ══════════════════════
+   WINDOW CHROME
+══════════════════════ */
+.window {
+  width: 100vw; height: 100vh;
+  display: grid;
+  grid-template-rows: 40px 1fr;
+  grid-template-columns: 220px 300px 1fr;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+/* ── TITLEBAR ── */
+.titlebar {
+  grid-column: 1 / -1;
+  background: linear-gradient(180deg, #E0E2EA 0%, #D8DAE2 100%);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 14px; gap: 0;
+  -webkit-app-region: drag;
+}
+
+.titlebar__controls {
+  display: flex; gap: 7px; margin-right: 12px;
+}
+.dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  cursor: default; position: relative;
+}
+.dot-r { background: #FF5F57; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.12); }
+.dot-y { background: #FEBC2E; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.12); }
+.dot-g { background: #28C840; box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.12); }
+
+.titlebar__btn {
+  height: 28px; padding: 0 12px;
+  background: rgba(0,0,0,0.07);
+  border: none; border-radius: 5px;
+  font-family: var(--f-mono); font-size: 11px;
+  color: var(--tx-dim); cursor: pointer;
+  display: flex; align-items: center; gap: 5px;
+  transition: background 0.15s;
+  margin-right: 6px;
+}
+.titlebar__btn:hover { background: rgba(0,0,0,0.12); }
+.titlebar__btn.compose {
+  background: var(--orange); color: #fff;
+  font-weight: 500;
+}
+.titlebar__btn.compose:hover { background: #1E2E52; }
+
+.titlebar__search {
+  height: 24px; padding: 0 10px;
+  background: rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 5px; outline: none;
+  font-family: var(--f-mono); font-size: 11px;
+  color: var(--tx-primary); width: 200px;
+  margin-left: auto;
+}
+.titlebar__search::placeholder { color: var(--tx-muted); }
+
+.titlebar__logo {
+  font-family: var(--f-display);
+  font-size: 10px; font-weight: 900;
+  letter-spacing: -0.3px;
+  color: var(--tx-dim);
+  margin: 0 auto; position: absolute; left: 50%; transform: translateX(-50%);
+}
+.titlebar__logo em { color: var(--orange); font-style: normal; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  padding: 8px 0;
+  overflow-y: auto;
+}
+
+.sidebar__heading {
+  font-family: var(--f-mono);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--tx-muted);
+  padding: 10px 14px 4px;
+  text-transform: uppercase;
+}
+
+.sidebar__row {
+  display: flex; align-items: center;
+  padding: 5px 10px; margin: 1px 6px;
+  border-radius: 6px; gap: 8px;
+  cursor: pointer; border: none;
+  background: transparent; text-align: left; width: calc(100% - 12px);
+  transition: background 0.1s;
+}
+.sidebar__row:hover { background: var(--sidebar-sel); }
+.sidebar__row.is-on  { background: var(--sidebar-sel); }
+
+.sidebar__row-icon { font-size: 13px; width: 18px; text-align: center; flex-shrink: 0; }
+.sidebar__row-label {
+  font-size: 13px; color: var(--tx-primary);
+  flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.sidebar__row.is-on .sidebar__row-label { font-weight: 500; }
+
+.sidebar__row-badge {
+  font-family: var(--f-mono);
+  font-size: 10px; font-weight: 500;
+  background: var(--orange); color: #fff;
+  min-width: 18px; height: 16px;
+  border-radius: 8px; text-align: center;
+  padding: 0 5px; line-height: 16px;
+}
+
+.sidebar__sep { height: 1px; background: var(--border-soft); margin: 8px 14px; }
+
+/* ── EMAIL LIST ── */
+.list {
+  background: var(--list-bg);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+
+.list__header {
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--list-bg);
+  flex-shrink: 0;
+}
+
+.list__title {
+  font-size: 15px; font-weight: 600;
+  color: var(--tx-primary); letter-spacing: -0.2px;
+}
+
+.list__count {
+  font-family: var(--f-mono);
+  font-size: 10px; color: var(--tx-muted); margin-top: 2px;
+}
+
+.list__scroll { flex: 1; overflow-y: auto; }
+
+.list-item {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-soft);
+  cursor: pointer; position: relative;
+  background: var(--list-bg);
+  transition: background 0.1s;
+}
+.list-item:hover { background: #E8EBF4; }
+.list-item.is-on  { background: var(--list-sel); }
+.list-item.is-on::after {
+  content: ''; position: absolute;
+  left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--orange);
+}
+
+.list-item.unread .list-item__sender { font-weight: 600; }
+.list-item.unread::before {
+  content: ''; position: absolute;
+  left: 4px; top: 50%; transform: translateY(-50%);
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--orange);
+}
+
+.list-item__row {
+  display: flex; justify-content: space-between;
+  align-items: baseline; gap: 6px; margin-bottom: 2px;
+}
+.list-item__sender { font-size: 12px; color: var(--tx-primary); }
+.list-item__date   { font-family: var(--f-mono); font-size: 10px; color: var(--tx-muted); flex-shrink: 0; }
+.list-item__subject { font-size: 12px; font-weight: 500; color: var(--tx-primary); margin-bottom: 2px; line-height: 1.3; }
+.list-item__preview {
+  font-size: 11px; color: var(--tx-muted); line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* ── EMAIL PANE ── */
+.pane {
+  background: var(--pane-bg);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+
+/* Toolbar strip above email */
+.pane__toolbar {
+  height: 36px; background: var(--pane-bg);
+  border-bottom: 1px solid var(--border-soft);
+  display: flex; align-items: center;
+  padding: 0 20px; gap: 8px; flex-shrink: 0;
+}
+.pane__toolbar-btn {
+  height: 24px; padding: 0 10px;
+  background: rgba(0,0,0,0.05);
+  border: none; border-radius: 4px;
+  font-family: var(--f-mono); font-size: 10px;
+  color: var(--tx-dim); cursor: pointer;
+  transition: background 0.15s;
+}
+.pane__toolbar-btn:hover { background: rgba(0,0,0,0.1); }
+.pane__toolbar-btn.primary {
+  background: var(--orange); color: #fff; margin-left: auto;
+}
+.pane__toolbar-btn.primary:hover { background: #1E2E52; }
+
+/* Email scroll area */
+.pane__scroll { flex: 1; overflow-y: auto; }
+
+/* ══════════════════════
+   EMAIL ANATOMY
+   — each email looks like
+     a real received email
+══════════════════════ */
+.email { display: none; animation: pop 0.18s ease; }
+.email.is-on { display: block; }
+
+@keyframes pop { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:none} }
+
+/* Subject line — big and bold */
+.email__subject {
+  font-family: var(--f-display);
+  font-size: 22px; font-weight: 900;
+  letter-spacing: -0.8px; line-height: 1.05;
+  color: var(--tx-primary);
+  padding: 28px 32px 0;
+}
+.email__subject em { color: var(--orange); font-style: normal; }
+
+/* Meta block — exactly like Apple Mail */
+.email__meta {
+  padding: 14px 32px 16px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.email__meta-inner {
+  display: inline-grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 10px;
+  align-items: baseline;
+}
+
+.email__meta-key {
+  font-family: var(--f-mono) !important;
+  font-size: 11px; color: var(--tx-muted);
+  text-align: right; white-space: nowrap;
+}
+.email__meta-val {
+  font-family: var(--f-mono) !important;
+  font-size: 11px; color: var(--tx-dim);
+}
+.email__meta-val b { color: var(--tx-primary); font-weight: 500; }
+
+.email__avatar {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--orange); color: #fff;
+  font-family: var(--f-display); font-size: 7px; font-weight: 900;
+  vertical-align: middle; margin-right: 5px;
+}
+
+/* Body — this is where it reads like an email */
+.email__body {
+  padding: 28px 32px 48px;
+  max-width: 700px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--tx-primary);
+}
+
+/* Greeting */
+.email__greeting {
+  font-size: 14px;
+  color: var(--tx-primary);
+  margin-bottom: 16px;
+}
+
+/* Paragraph */
+.email__p {
+  font-size: 14px; font-weight: 300;
+  color: var(--tx-primary); line-height: 1.75;
+  margin-bottom: 16px;
+}
+
+/* Bold inline */
+.email__p b, .email__p strong { font-weight: 500; color: var(--tx-primary); }
+
+/* Horizontal rule */
+.email__hr {
+  border: none; border-top: 1px solid var(--border-soft);
+  margin: 24px 0;
+}
+
+/* Block quote — highlighted content */
+.email__quote {
+  border-left: 3px solid var(--orange);
+  background: var(--orange-bg);
+  padding: 14px 18px;
+  margin: 20px 0;
+  border-radius: 0 6px 6px 0;
+}
+.email__quote p {
+  font-size: 14px; color: var(--tx-primary); line-height: 1.7;
+}
+.email__quote b { font-weight: 500; }
+
+/* Stats — inline, email-style table feel */
+.email__stats {
+  display: flex; gap: 0;
+  margin: 20px 0;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px; overflow: hidden;
+}
+.email__stat {
+  flex: 1; padding: 14px 16px;
+  border-right: 1px solid var(--border-soft);
+  background: #F8F9FC;
+}
+.email__stat:last-child { border-right: none; }
+.email__stat-num {
+  font-family: var(--f-display);
+  font-size: 22px; font-weight: 900;
+  letter-spacing: -0.8px; color: var(--orange);
+  line-height: 1;
+}
+.email__stat-label {
+  font-family: var(--f-mono) !important; font-size: 10px;
+  color: var(--tx-muted); margin-top: 3px; line-height: 1.4;
+}
+
+/* List items — email list style */
+.email__list { margin: 16px 0; display: flex; flex-direction: column; gap: 8px; }
+.email__li {
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.email__li-mark {
+  color: var(--orange); font-family: var(--f-mono);
+  font-size: 11px; margin-top: 2px; flex-shrink: 0; width: 12px;
+}
+.email__li-text { font-size: 14px; color: var(--tx-dim); line-height: 1.6; }
+.email__li-text b { color: var(--tx-primary); font-weight: 500; }
+
+/* Section label — like an email heading, subtle */
+.email__section {
+  font-family: var(--f-mono) !important;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--tx-muted);
+  margin: 28px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+/* Package table — looks like a proper email price table */
+.email__pkg-table {
+  width: 100%; border-collapse: collapse;
+  margin: 16px 0; font-size: 13px;
+}
+.email__pkg-table th {
+  text-align: left; padding: 8px 12px;
+  background: #F3F4F9; border: 1px solid var(--border-soft);
+  font-family: var(--f-mono); font-size: 10px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--tx-muted); font-weight: 500;
+}
+.email__pkg-table td {
+  padding: 10px 12px; border: 1px solid var(--border-soft);
+  vertical-align: top; background: var(--pane-bg);
+}
+.email__pkg-table tr.is-featured td { background: var(--orange-bg); }
+.email__pkg-table .pkg-name {
+  font-family: var(--f-display) !important; font-size: 11px; font-weight: 900;
+  letter-spacing: -0.2px; color: var(--tx-primary);
+}
+.email__pkg-table .pkg-size { font-family: var(--f-mono) !important; font-size: 10px; color: var(--tx-muted); margin-top: 2px; }
+.email__pkg-table .pkg-price { font-family: var(--f-mono) !important; font-size: 13px; color: var(--tx-primary); white-space: nowrap; }
+.email__pkg-table .pkg-price em { color: var(--orange); font-style: normal; font-weight: 500; }
+.email__pkg-table .pkg-inc { font-size: 11px; color: var(--tx-dim); line-height: 1.5; font-family: var(--f-ui); }
+.email__pkg-table .pkg-badge {
+  display: inline-block;
+  font-family: var(--f-mono); font-size: 9px;
+  background: var(--orange); color: #fff;
+  padding: 1px 7px; border-radius: 4px;
+  margin-top: 3px;
+}
+
+/* Partner link list — like a real link list in email */
+.email__link-list { display: flex; flex-direction: column; gap: 1px; margin: 12px 0; }
+.email__link-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid var(--border-soft);
+  background: #F8F9FC;
+  text-decoration: none;
+  transition: background 0.1s;
+  cursor: pointer;
+}
+.email__link-row:hover { background: var(--orange-bg); border-color: var(--orange-bd); }
+.email__link-row-abbr {
+  font-family: var(--f-mono); font-size: 9px; font-weight: 500;
+  width: 28px; height: 20px; background: var(--border-soft);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 3px; color: var(--tx-muted); flex-shrink: 0;
+}
+.email__link-row-name { font-size: 13px; color: var(--tx-primary); flex: 1; font-family: var(--f-ui); }
+.email__link-row-cat { font-family: var(--f-mono); font-size: 10px; color: var(--tx-muted); }
+.email__link-row-arrow { font-size: 11px; color: var(--tx-muted); margin-left: 4px; }
+
+/* Dark block — for Discovery */
+.email__dark-block {
+  background: #1C1C1E; border-radius: 8px;
+  padding: 24px 28px; margin: 20px 0;
+}
+.email__dark-block-label {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 8px;
+}
+.email__dark-block-title {
+  font-family: var(--f-display); font-size: 15px; font-weight: 900;
+  letter-spacing: -0.3px; color: #fff; line-height: 1.2; margin-bottom: 8px;
+}
+.email__dark-block-body { font-size: 13px; color: #888; line-height: 1.65; margin-bottom: 16px; font-family: var(--f-ui); }
+.email__dark-block-btn {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 500;
+  background: var(--orange); color: #fff;
+  padding: 8px 16px; border-radius: 5px;
+  border: none; cursor: pointer; display: inline-block;
+}
+
+/* Sign-off block */
+.email__signoff {
+  margin-top: 32px; padding-top: 20px;
+  border-top: 1px solid var(--border-soft);
+}
+.email__signoff-p { font-size: 14px; color: var(--tx-dim); line-height: 1.8; margin-bottom: 10px; }
+.email__signoff-name {
+  font-family: var(--f-display); font-size: 12px; font-weight: 900;
+  letter-spacing: -0.3px; color: var(--tx-primary);
+}
+.email__signoff-role { font-family: var(--f-mono) !important; font-size: 11px; color: var(--tx-muted); margin-top: 1px; }
+.email__signoff-web  { font-family: var(--f-mono) !important; font-size: 11px; color: var(--orange); margin-top: 1px; }
+
+/* Compose window */
+.email__compose {
+  border: 1px solid var(--border-soft); border-radius: 8px;
+  overflow: hidden; margin: 20px 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+}
+.email__compose-bar {
+  background: #F3F4F9; border-bottom: 1px solid var(--border-soft);
+  padding: 8px 14px; display: flex; align-items: center;
+  justify-content: space-between;
+}
+.email__compose-bar-title { font-family: var(--f-mono); font-size: 11px; color: var(--tx-muted); }
+.email__compose-dots { display: flex; gap: 5px; }
+.email__compose-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+.email__compose-field {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 9px 14px; border-bottom: 1px solid var(--border-soft);
+}
+.email__compose-label { font-family: var(--f-mono); font-size: 11px; color: var(--tx-muted); min-width: 34px; }
+.email__compose-value { font-family: var(--f-mono) !important; font-size: 12px; color: var(--tx-dim); }
+.email__compose-input {
+  font-family: var(--f-mono) !important; font-size: 13px; color: var(--tx-primary);
+  background: transparent; border: none; outline: none; flex: 1;
+}
+.email__compose-input::placeholder { color: var(--tx-muted); }
+.email__compose-select {
+  font-family: var(--f-mono) !important; font-size: 13px; color: var(--tx-primary);
+  background: transparent; border: none; outline: none;
+  flex: 1; appearance: none; cursor: pointer;
+}
+.email__compose-textarea-wrap { padding: 12px 14px; }
+.email__compose-textarea {
+  width: 100%; min-height: 90px; resize: none;
+  font-family: var(--f-body) !important; font-size: 14px;
+  color: var(--tx-primary); background: transparent;
+  border: none; outline: none; line-height: 1.7;
+}
+.email__compose-textarea::placeholder { color: var(--tx-muted); }
+.email__compose-footer {
+  background: #F3F4F9; border-top: 1px solid var(--border-soft);
+  padding: 8px 14px; display: flex; align-items: center; gap: 10px;
+}
+.email__compose-send {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 500;
+  background: var(--orange); color: #fff;
+  padding: 6px 16px; border: none; border-radius: 5px; cursor: pointer;
+}
+.email__compose-note { font-family: var(--f-mono); font-size: 10px; color: var(--tx-muted); }
+
+/* Calendly placeholder */
+.email__calendly {
+  background: #F3F4F9; border: 1px solid var(--border-soft);
+  border-radius: 8px; padding: 24px; text-align: center; margin: 20px 0;
+}
+.email__calendly-title { font-family: var(--f-display); font-size: 14px; font-weight: 900; letter-spacing: -0.3px; color: var(--tx-primary); margin-bottom: 5px; }
+.email__calendly-sub { font-size: 13px; color: var(--tx-muted); margin-bottom: 14px; }
+.email__calendly-btn {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 500;
+  background: #1C1C1E; color: #fff;
+  padding: 8px 20px; border-radius: 6px;
+  display: inline-block; cursor: pointer;
+}
+.email__calendly-note { font-family: var(--f-mono); font-size: 10px; color: var(--orange); margin-top: 8px; display: block; }
+
+/* Reply bar */
+.pane__reply {
+  border-top: 1px solid var(--border-soft);
+  padding: 10px 20px;
+  display: flex; gap: 8px; align-items: center;
+  background: var(--pane-bg); flex-shrink: 0;
+}
+.pane__reply-field {
+  flex: 1; padding: 7px 12px;
+  background: #F3F4F9; border: 1px solid var(--border-soft);
+  border-radius: 5px; font-family: var(--f-mono); font-size: 11px;
+  color: var(--tx-muted); cursor: text; transition: all 0.15s;
+}
+.pane__reply-field:focus-within { border-color: var(--orange); background: var(--pane-bg); }
+.pane__reply-btn {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 500;
+  background: var(--orange); color: #fff;
+  padding: 7px 16px; border: none; border-radius: 5px;
+  cursor: pointer; transition: background 0.15s; white-space: nowrap;
+}
+.pane__reply-btn:hover { background: #1E2E52; }
+
+/* ── TEXT ACCENT EFFECTS — static ── */
+
+.squig {}
+
+.sel-highlight {
+  position: relative;
+  display: inline;
+}
+
+.sel-highlight::before {
+  content: '';
+  position: absolute;
+  left: -2px; right: -2px;
+  top: 0; bottom: 0;
+  background: rgba(45,63,107,0.13);
+  border-radius: 2px;
+  z-index: -1;
+}
+
+
+/* ── ARCHIVE / REFERENZEN ── */
+
+.view { display: none; }
+.view.is-on { display: block; animation: pop 0.18s ease; }
+
+/* Photo grid in project email */
+.proj-photos {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 180px 120px;
+  gap: 4px;
+  margin: 20px 0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.proj-photo {
+  overflow: hidden;
+  position: relative;
+  background: var(--border-soft);
+}
+
+.proj-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(8%);
+  transition: filter 0.3s ease;
+}
+.proj-photo:hover img { filter: grayscale(0%); }
+
+.proj-photo--tall { grid-row: span 2; }
+
+.proj-photo-tag {
+  position: absolute; bottom: 8px; left: 8px;
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(6px);
+  color: var(--tx-primary);
+  padding: 3px 8px; border-radius: 3px;
+}
+
+/* Project stats row */
+.proj-stats {
+  display: flex; gap: 0;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px; overflow: hidden;
+  margin: 16px 0;
+}
+.proj-stat {
+  flex: 1; padding: 12px 16px;
+  border-right: 1px solid var(--border-soft);
+  background: #F8F9FC;
+}
+.proj-stat:last-child { border-right: none; }
+.proj-stat__num {
+  font-family: var(--f-display);
+  font-size: 18px; font-weight: 900;
+  letter-spacing: -0.5px; color: var(--orange);
+  line-height: 1;
+}
+.proj-stat__label {
+  font-family: var(--f-mono); font-size: 9px;
+  color: var(--tx-muted); margin-top: 3px;
+}
+
+/* Package badge */
+.proj-badge {
+  display: inline-block;
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--orange); color: #fff;
+  padding: 3px 10px; border-radius: 3px;
+  margin-bottom: 14px;
+}
+
+/* Archive list item subtle styling */
+.list-item--archive .list-item__sender {
+  font-family: var(--f-mono); font-size: 11px;
+}
+
+
+/* ── LANGUAGE SWITCH ── */
+.lang-switch {
+  display: flex; align-items: center; gap: 4px;
+  background: rgba(0,0,0,0.06); border-radius: 5px;
+  padding: 3px 8px; margin-left: 8px;
+}
+.lang-btn {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 500;
+  background: transparent; border: none; cursor: pointer;
+  color: var(--tx-muted); padding: 2px 4px; border-radius: 3px;
+  transition: all 0.15s;
+}
+.lang-btn.active { background: var(--orange); color: #fff; }
+.lang-btn:hover:not(.active) { color: var(--tx-primary); }
+.lang-sep { font-size: 10px; color: var(--tx-muted); }
+}
+@media (max-width: 767px) {
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:16px; -webkit-text-size-adjust:100%; }
+
+:root {
+  --white:     #FFFFFF;
+  --gray-50:   #F7F7F5;
+  --gray-100:  #EFEFED;
+  --gray-200:  #E5E5E3;
+  --gray-400:  #ADADAB;
+  --gray-600:  #6B6B69;
+  --gray-900:  #1A1A1A;
+  --orange:    #2D3F6B;
+  --orange-10: rgba(45,63,107,0.07);
+  --orange-20: rgba(45,63,107,0.12);
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --f-display: 'Unbounded', sans-serif;
+  --f-body:    'DM Sans', sans-serif;
+  --f-mono:    'DM Mono', monospace;
+}
+
+body {
+  background: var(--gray-50);
+  color: var(--gray-900);
+  font-family: var(--f-body);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  height: 100dvh;
+}
+
+/* ══════════════════════════════════
+   SCREENS — iOS style navigation
+══════════════════════════════════ */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* Inbox is always visible */
+#screen-inbox { transform: translateX(0); z-index: 1; }
+
+/* Email screens slide in from right */
+.screen.email-screen {
+  transform: translateX(100%);
+  z-index: 2;
+}
+.screen.email-screen.is-open {
+  transform: translateX(0);
+}
+
+/* ── STATUS BAR SPACER ── */
+.status-bar {
+  height: calc(var(--safe-top) + 14px);
+  background: rgba(247,247,245,0.95);
+  flex-shrink: 0;
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  background: rgba(247,247,245,0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--gray-200);
+  padding: 0 16px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.navbar--email {
+  background: rgba(255,255,255,0.95);
+}
+
+.navbar__back {
+  display: flex; align-items: center; gap: 4px;
+  font-family: var(--f-mono); font-size: 13px;
+  color: var(--orange); cursor: pointer;
+  padding: 8px 0; -webkit-tap-highlight-color: transparent;
+}
+.navbar__back-arrow { font-size: 18px; line-height: 1; }
+.navbar__back-label { font-size: 12px; }
+
+.navbar__title {
+  font-family: var(--f-display);
+  font-size: 13px; font-weight: 900;
+  letter-spacing: -0.4px; color: var(--gray-900);
+  position: absolute; left: 50%; transform: translateX(-50%);
+  white-space: nowrap;
+}
+.navbar__title em { color: var(--orange); font-style: normal; }
+
+.navbar__action {
+  font-family: var(--f-mono); font-size: 22px;
+  color: var(--orange); cursor: pointer;
+  padding: 8px 0; -webkit-tap-highlight-color: transparent;
+}
+
+/* ── SEARCH BAR ── */
+.search-bar {
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--gray-200);
+  padding: 8px 16px;
+  flex-shrink: 0;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--gray-100);
+  border: none; border-radius: 10px;
+  padding: 8px 14px;
+  font-family: var(--f-mono); font-size: 14px;
+  color: var(--gray-900); outline: none;
+}
+.search-input::placeholder { color: var(--gray-400); }
+
+/* ── INBOX HEADER ── */
+.inbox-header {
+  padding: 20px 16px 8px;
+  background: var(--white);
+  flex-shrink: 0;
+}
+
+.inbox-header__title {
+  font-family: var(--f-display);
+  font-size: 26px; font-weight: 900;
+  letter-spacing: -1px; color: var(--gray-900);
+}
+
+.inbox-header__meta {
+  font-family: var(--f-mono); font-size: 11px;
+  color: var(--gray-400); margin-top: 3px;
+}
+
+/* ── EMAIL LIST ── */
+.email-list {
+  flex: 1; overflow-y: auto;
+  background: var(--white);
+  -webkit-overflow-scrolling: touch;
+}
+
+.email-list__section-label {
+  font-family: var(--f-mono); font-size: 11px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--gray-400);
+  padding: 16px 16px 4px;
+  background: var(--gray-50);
+  border-top: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.email-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--gray-100);
+  cursor: pointer; position: relative;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.12s;
+  background: var(--white);
+}
+.email-item:active { background: var(--gray-50); }
+
+.email-item.unread .email-item__sender { font-weight: 600; }
+
+.email-item__dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--orange); flex-shrink: 0;
+  margin-top: 6px;
+}
+.email-item__dot.read { background: transparent; }
+
+.email-item__content { flex: 1; min-width: 0; }
+
+.email-item__row {
+  display: flex; justify-content: space-between;
+  align-items: baseline; gap: 8px; margin-bottom: 2px;
+}
+
+.email-item__sender {
+  font-family: var(--f-mono); font-size: 13px;
+  color: var(--gray-900); font-weight: 400;
+  truncate: ellipsis; white-space: nowrap;
+  overflow: hidden;
+}
+
+.email-item__date {
+  font-family: var(--f-mono); font-size: 11px;
+  color: var(--gray-400); flex-shrink: 0;
+}
+
+.email-item__subject {
+  font-size: 14px; font-weight: 500;
+  color: var(--gray-900); margin-bottom: 2px;
+  line-height: 1.3;
+}
+
+.email-item__preview {
+  font-size: 13px; color: var(--gray-400); line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.email-item__chevron {
+  font-size: 14px; color: var(--gray-200);
+  flex-shrink: 0; margin-top: 2px;
+  align-self: center;
+}
+
+/* ── BOTTOM TAB BAR ── */
+.tab-bar {
+  background: rgba(247,247,245,0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--gray-200);
+  padding: 8px 0 calc(var(--safe-bottom) + 8px);
+  display: flex; justify-content: space-around;
+  flex-shrink: 0;
+}
+
+.tab-bar__item {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 2px;
+  cursor: pointer; padding: 4px 16px;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.15s;
+}
+.tab-bar__item:active { opacity: 0.6; }
+
+.tab-bar__icon { font-size: 20px; }
+.tab-bar__label {
+  font-family: var(--f-mono); font-size: 9px;
+  color: var(--gray-400); letter-spacing: 0.04em;
+}
+
+/* ══════════════════════════════════
+   EMAIL VIEW SCREEN
+══════════════════════════════════ */
+.email-view {
+  flex: 1; overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--white);
+}
+
+/* Email header */
+.email-header {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.email-header__subject {
+  font-family: var(--f-display);
+  font-size: 20px; font-weight: 900;
+  letter-spacing: -0.8px; color: var(--gray-900);
+  line-height: 1.1; margin-bottom: 14px;
+}
+.email-header__subject em { color: var(--orange); font-style: normal; }
+
+.email-meta { display: flex; flex-direction: column; gap: 4px; }
+
+.email-meta-row {
+  display: flex; align-items: center; gap: 8px;
+}
+.email-meta-label {
+  font-family: var(--f-mono); font-size: 10px;
+  color: var(--gray-400); min-width: 28px;
+}
+.email-meta-avatar {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--orange); color: #fff;
+  font-family: var(--f-display); font-size: 7px; font-weight: 900;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.email-meta-value {
+  font-family: var(--f-mono); font-size: 11px;
+  color: var(--gray-600);
+}
+.email-meta-value b { color: var(--gray-900); font-weight: 500; }
+
+/* Email body */
+.email-body { padding: 24px 20px 32px; }
+
+.p {
+  font-size: 15px; font-weight: 300;
+  color: var(--gray-900); line-height: 1.8;
+  margin-bottom: 18px;
+}
+
+.h2 {
+  font-family: var(--f-mono);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gray-400); margin: 28px 0 12px;
+}
+
+.highlight {
+  border-left: 2px solid var(--orange);
+  padding: 14px 16px; margin: 20px 0;
+  background: var(--orange-10);
+  border-radius: 0 6px 6px 0;
+}
+.highlight p { font-size: 14px; line-height: 1.7; color: var(--gray-900); }
+
+.sep { height: 1px; background: var(--gray-100); margin: 24px 0; }
+
+.li { display: flex; gap: 10px; margin-bottom: 10px; }
+.li-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--orange); flex-shrink: 0; margin-top: 8px;
+}
+.li-text { font-size: 14px; color: var(--gray-600); line-height: 1.6; }
+.li-text b { color: var(--gray-900); font-weight: 500; }
+
+/* Stats */
+.stats {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1px; background: var(--gray-200);
+  border: 1px solid var(--gray-200); border-radius: 10px;
+  overflow: hidden; margin: 20px 0;
+}
+.stat { background: var(--white); padding: 14px 12px; text-align: center; }
+.stat__num {
+  font-family: var(--f-display); font-size: 20px;
+  font-weight: 900; letter-spacing: -0.8px; color: var(--orange);
+}
+.stat__label {
+  font-family: var(--f-mono); font-size: 9px;
+  color: var(--gray-400); margin-top: 3px; line-height: 1.4;
+}
+
+/* Packages — stacked on mobile */
+.pkgs { display: flex; flex-direction: column; gap: 8px; margin: 16px 0; }
+
+.pkg {
+  border: 1px solid var(--gray-200); border-radius: 10px;
+  padding: 16px; background: var(--white);
+  -webkit-tap-highlight-color: transparent;
+}
+.pkg.is-featured { border-color: var(--orange); background: var(--orange-10); }
+
+.pkg__num {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 0.15em; color: var(--orange); margin-bottom: 4px;
+}
+.pkg__header {
+  display: flex; justify-content: space-between;
+  align-items: baseline; margin-bottom: 4px;
+}
+.pkg__name {
+  font-family: var(--f-display); font-size: 13px; font-weight: 900;
+  letter-spacing: -0.3px; color: var(--gray-900);
+}
+.pkg__price {
+  font-family: var(--f-mono); font-size: 12px; color: var(--gray-600);
+  text-align: right; flex-shrink: 0;
+}
+.pkg__price em { color: var(--orange); font-style: normal; font-weight: 500; }
+.pkg__tag { font-size: 12px; color: var(--gray-400); margin-bottom: 10px; }
+.pkg__list { display: flex; flex-direction: column; gap: 4px; }
+.pkg__item {
+  font-size: 12px; color: var(--gray-400); line-height: 1.4;
+  padding-left: 12px; position: relative;
+}
+.pkg__item::before {
+  content: '—'; position: absolute; left: 0;
+  color: var(--orange); font-size: 10px;
+}
+
+/* Partners — stacked */
+.partners { display: flex; flex-direction: column; gap: 2px; margin: 12px 0; }
+
+.partner {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: 8px;
+  border: 1px solid var(--gray-100);
+  text-decoration: none;
+  background: var(--white);
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.12s;
+}
+.partner:active { background: var(--gray-50); }
+
+.partner__icon {
+  width: 32px; height: 32px; border-radius: 6px;
+  background: var(--gray-100);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-mono); font-size: 7px; font-weight: 700;
+  color: var(--gray-400); flex-shrink: 0;
+}
+.partner__name { font-family: var(--f-mono); font-size: 13px; color: var(--gray-900); flex: 1; }
+.partner__cat { font-family: var(--f-mono); font-size: 10px; color: var(--gray-400); }
+.partner__arrow { font-size: 12px; color: var(--gray-200); margin-left: 4px; }
+
+/* Discovery block */
+.discovery {
+  background: var(--gray-900); border-radius: 12px;
+  padding: 24px 20px; margin: 20px 0;
+}
+.discovery__tag {
+  font-family: var(--f-mono); font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 8px;
+}
+.discovery__title {
+  font-family: var(--f-display); font-size: 15px; font-weight: 900;
+  letter-spacing: -0.4px; color: #fff; margin-bottom: 8px; line-height: 1.2;
+}
+.discovery__body { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 16px; }
+.discovery__btn {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+  background: var(--orange); color: #fff;
+  padding: 10px 18px; border-radius: 8px;
+  display: inline-block; border: none; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Compose */
+.compose {
+  border: 1px solid var(--gray-200); border-radius: 12px;
+  overflow: hidden; margin: 16px 0;
+}
+.compose__bar {
+  background: var(--gray-50); padding: 10px 14px;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.compose__bar-title { font-family: var(--f-mono); font-size: 11px; color: var(--gray-400); }
+.compose__bar-dots { display: flex; gap: 5px; }
+.compose__bar-dot { width: 9px; height: 9px; border-radius: 50%; }
+
+.compose__field {
+  display: flex; align-items: center;
+  padding: 12px 14px; gap: 10px;
+  border-bottom: 1px solid var(--gray-100);
+}
+.compose__label { font-family: var(--f-mono); font-size: 11px; color: var(--gray-400); min-width: 32px; }
+.compose__value { font-family: var(--f-mono); font-size: 12px; color: var(--gray-600); }
+.compose__input {
+  font-family: var(--f-mono); font-size: 14px; color: var(--gray-900);
+  background: transparent; border: none; outline: none; flex: 1;
+}
+.compose__input::placeholder { color: var(--gray-200); }
+.compose__select {
+  font-family: var(--f-mono); font-size: 14px; color: var(--gray-900);
+  background: transparent; border: none; outline: none;
+  flex: 1; appearance: none; cursor: pointer;
+}
+.compose__textarea-wrap { padding: 12px 14px; }
+.compose__textarea {
+  width: 100%; min-height: 100px; resize: none;
+  font-family: var(--f-body); font-size: 15px;
+  color: var(--gray-900); background: transparent;
+  border: none; outline: none; line-height: 1.7;
+}
+.compose__textarea::placeholder { color: var(--gray-200); }
+.compose__footer {
+  background: var(--gray-50); padding: 10px 14px;
+  border-top: 1px solid var(--gray-100);
+  display: flex; align-items: center; gap: 10px;
+}
+.compose__send {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+  background: var(--orange); color: #fff;
+  padding: 9px 18px; border: none; border-radius: 8px;
+  cursor: pointer;
+}
+.compose__note { font-family: var(--f-mono); font-size: 10px; color: var(--gray-400); }
+
+/* Calendly */
+.calendly {
+  background: var(--gray-50); border: 1px solid var(--gray-200);
+  border-radius: 12px; padding: 24px 20px; text-align: center; margin: 16px 0;
+}
+.calendly__title {
+  font-family: var(--f-display); font-size: 15px; font-weight: 900;
+  letter-spacing: -0.3px; color: var(--gray-900); margin-bottom: 6px;
+}
+.calendly__sub { font-size: 13px; color: var(--gray-400); margin-bottom: 16px; line-height: 1.5; }
+.calendly__btn {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+  background: var(--gray-900); color: #fff;
+  padding: 12px 24px; border-radius: 10px;
+  display: inline-block; cursor: pointer;
+}
+.calendly__note {
+  font-family: var(--f-mono); font-size: 10px;
+  color: var(--orange); margin-top: 10px; display: block;
+}
+
+/* Sign off */
+.signoff { margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--gray-100); }
+.signoff p { font-size: 14px; color: var(--gray-600); line-height: 1.8; }
+.signoff__name {
+  font-family: var(--f-display); font-size: 13px; font-weight: 900;
+  letter-spacing: -0.3px; color: var(--gray-900); margin-top: 10px;
+}
+.signoff__role { font-family: var(--f-mono); font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+.signoff__web  { font-family: var(--f-mono); font-size: 11px; color: var(--orange); margin-top: 2px; }
+
+/* Reply bar */
+.email-reply {
+  padding: 10px 16px calc(var(--safe-bottom) + 10px);
+  border-top: 1px solid var(--gray-100);
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  display: flex; gap: 8px; align-items: center;
+  flex-shrink: 0;
+}
+.email-reply__btn {
+  flex: 1; padding: 11px;
+  background: var(--orange); color: #fff;
+  font-family: var(--f-mono); font-size: 12px; font-weight: 500;
+  border: none; border-radius: 10px; cursor: pointer;
+  text-align: center; -webkit-tap-highlight-color: transparent;
+}
+.email-reply__btn-ghost {
+  padding: 11px 14px;
+  background: var(--gray-100); color: var(--gray-600);
+  font-family: var(--f-mono); font-size: 12px; font-weight: 500;
+  border: none; border-radius: 10px; cursor: pointer;
+  white-space: nowrap; -webkit-tap-highlight-color: transparent;
+}
+
+/* ── SWIPE HINT ── */
+.swipe-hint {
+  text-align: center; padding: 8px;
+  font-family: var(--f-mono); font-size: 10px;
+  color: var(--gray-400);
+}
+}
+
+/* Mobile lang switch */
+.mobile-lang-switch {
+  display: flex; align-items: center; gap: 3px;
+  background: rgba(0,0,0,0.05); border-radius: 6px;
+  padding: 3px 8px;
+}
+.mobile-lang-btn {
+  font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+  background: transparent; border: none; cursor: pointer;
+  color: var(--gray-400); padding: 2px 4px; border-radius: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+.mobile-lang-btn.active { background: var(--orange); color: #fff; }
+.mobile-lang-sep { font-size: 11px; color: var(--gray-400); }
+
+</style>
+</head>
+<body>
+<form name="kontakt" data-netlify="true" hidden>
+  <input type="email" name="email">
+  <input type="text" name="name">
+  <select name="subject"></select>
+  <textarea name="message"></textarea>
+</form>
+
+<div id="desktop-version">
+<div class="window">
+
+  <!-- TITLEBAR -->
+  <div class="titlebar">
+    <div class="titlebar__controls">
+      <div class="dot dot-r"></div>
+      <div class="dot dot-y"></div>
+      <div class="dot dot-g"></div>
+    </div>
+    <button class="titlebar__btn compose" data-de="✏ Verfassen" data-en="✏ Compose" onclick="go('kontakt')">✏ Verfassen</button>
+    <button class="titlebar__btn" data-de="↩ Antworten" data-en="↩ Reply" onclick="go('home')">↩ Antworten</button>
+    <div class="titlebar__logo">BIS <em>MONTAG</em></div>
+    <input class="titlebar__search" type="search" placeholder="🔍  Suchen" id="search-input"><div class="lang-switch"><button class="lang-btn active" onclick="setLang('de')" id="btn-de">DE</button><span class="lang-sep">|</span><button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button></div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar__heading" data-de="Postfächer" data-en="Mailboxes">Postfächer</div>
+    <button class="sidebar__row is-on" onclick="go('home');nav(this)">
+      <span class="sidebar__row-icon">📥</span>
+      <span class="sidebar__row-label" data-de="Posteingang" data-en="Inbox">Posteingang</span>
+      <span class="sidebar__row-badge">4</span>
+    </button>
+
+    <div class="sidebar__sep"></div>
+    <div class="sidebar__heading" data-de="Sektionen" data-en="Sections">Sektionen</div>
+
+    <button class="sidebar__row" onclick="go('pakete');nav(this)">
+      <span class="sidebar__row-icon">📦</span>
+      <span class="sidebar__row-label" data-de="Pakete" data-en="Packages">Pakete</span>
+    </button>
+    <button class="sidebar__row" onclick="go('partner');nav(this)">
+      <span class="sidebar__row-icon">🤝</span>
+      <span class="sidebar__row-label" data-de="Partner" data-en="Partners">Partner</span>
+    </button>
+    <button class="sidebar__row" onclick="go('discovery');nav(this)">
+      <span class="sidebar__row-icon">🔍</span>
+      <span class="sidebar__row-label" data-de="Discovery" data-en="Discovery">Discovery</span>
+      <span class="sidebar__row-badge">1</span>
+    </button>
+    <button class="sidebar__row" onclick="go('kontakt');nav(this)">
+      <span class="sidebar__row-icon">✉</span>
+      <span class="sidebar__row-label" data-de="Kontakt" data-en="Contact">Kontakt</span>
+    </button>
+
+    <div class="sidebar__sep"></div>
+    <button class="sidebar__row" onclick="goReferenzenStatic();nav(this)">
+      <span class="sidebar__row-icon">🗂</span>
+      <span class="sidebar__row-label" data-de="Referenzen" data-en="References">Referenzen</span>
+      <span class="sidebar__row-badge">3</span>
+    </button>
+
+    <div class="sidebar__sep"></div>
+    <div class="sidebar__heading" data-de="Info" data-en="Info">Info</div>
+    <div class="sidebar__row">
+      <span class="sidebar__row-icon">📍</span>
+      <span class="sidebar__row-label" style="color:var(--tx-muted)" data-de="Kanton Bern" data-en="Canton Bern">Kanton Bern</span>
+    </div>
+    <div class="sidebar__row">
+      <span class="sidebar__row-icon">⏱</span>
+      <span class="sidebar__row-label" style="color:var(--tx-muted)" data-de="48h Offerte" data-en="48h Quote">48h Offerte</span>
+    </div>
+    <div class="sidebar__row">
+      <span class="sidebar__row-icon">📸</span>
+      <span class="sidebar__row-label" style="color:var(--tx-muted)">@bismontag</span>
+    </div>
+  </nav>
+
+  <!-- EMAIL LIST -->
+  <div class="list">
+    <div class="list__header">
+      <div class="list__title" data-de="Posteingang" data-en="Inbox">Posteingang</div>
+      <div class="list__count" data-de="4 ungelesen" data-en="4 unread">4 ungelesen</div>
+    </div>
+    <div class="list__scroll">
+
+      <div class="list-item unread is-on" onclick="go('home');item(this)">
+        <div class="list-item__row">
+          <span class="list-item__sender" data-de="Bis Montag" data-en="Bis Montag">Bis Montag</span>
+          <span class="list-item__date">Heute</span>
+        </div>
+        <div class="list-item__subject" data-de="Euer nächster Event. Bis Montag." data-en="Your next event. By Monday.">Euer nächster Event. Bis Montag.</div>
+        <div class="list-item__preview" data-de="Events, die dein Team wirklich will. Von der Idee bis zur letzten Runde — wir übernehmen alles." data-en="Events your team actually wants. From concept to the last drink — we handle everything.">Events, die dein Team wirklich will. Von der Idee bis zur letzten Runde — wir übernehmen alles.</div>
+      </div>
+
+      <div class="list-item unread" onclick="go('pakete');item(this)">
+        <div class="list-item__row">
+          <span class="list-item__sender" data-de="Pakete & Preise" data-en="Packages & Pricing">Pakete & Preise</span>
+          <span class="list-item__date">Mo</span>
+        </div>
+        <div class="list-item__subject" data-de="Transparente Preise für euren Event" data-en="Transparent pricing for your event">Transparente Preise für euren Event</div>
+        <div class="list-item__preview" data-de="Feierabend ab 6.000 · Zusammen ab 16.000 · Meilenstein ab 28.000 CHF. Alles inklusive." data-en="Feierabend from 6,000 · Zusammen from 16,000 · Meilenstein from 28,000 CHF. All-inclusive.">Feierabend ab 6.000 · Zusammen ab 16.000 · Meilenstein ab 28.000 CHF. Alles inklusive.</div>
+      </div>
+
+      <div class="list-item unread" onclick="go('discovery');item(this)">
+        <div class="list-item__row">
+          <span class="list-item__sender" data-de="Discovery · Neu" data-en="Discovery · New">Discovery · Neu</span>
+          <span class="list-item__date">Fr</span>
+        </div>
+        <div class="list-item__subject" data-de="Wir lernen euer Team kennen" data-en="We get to know your team first">Wir lernen euer Team kennen</div>
+        <div class="list-item__preview" data-de="Bevor wir auch nur eine Location buchen, hören wir zu. 45 Minuten, kostenlos." data-en="Before we book a single venue, we listen. 45 minutes, free.">Bevor wir auch nur eine Location buchen, hören wir zu. 45 Minuten, kostenlos.</div>
+      </div>
+
+      <div class="list-item unread" onclick="go('partner');item(this)">
+        <div class="list-item__row">
+          <span class="list-item__sender" data-de="Locations & Partner" data-en="Locations & Partners">Locations & Partner</span>
+          <span class="list-item__date">Di</span>
+        </div>
+        <div class="list-item__subject" data-de="Kuratierte Locations in Kanton Bern" data-en="Curated venues in Canton Bern">Kuratierte Locations in Kanton Bern</div>
+        <div class="list-item__preview" data-de="Bierhübeli, Kornhauskeller, chillfood's füüri, Markthalle Burgdorf." data-en="Bierhübeli, Kornhauskeller, chillfood's füüri, Markthalle Burgdorf.">Bierhübeli, Kornhauskeller, chillfood's füüri, Markthalle Burgdorf.</div>
+      </div>
+
+      <div class="list-item" onclick="go('kontakt');item(this)">
+        <div class="list-item__row">
+          <span class="list-item__sender" data-de="Kontakt" data-en="Contact">Kontakt</span>
+          <span class="list-item__date">Mo</span>
+        </div>
+        <div class="list-item__subject" data-de="45 Minuten. Kostenlos. Unverbindlich." data-en="45 minutes. Free. No strings attached.">45 Minuten. Kostenlos. Unverbindlich.</div>
+        <div class="list-item__preview" data-de="Kein Verkaufsgespräch. Wir hören zu — und sagen ehrlich ob wir passen." data-en="No sales pitch. We listen — and tell you honestly if we are the right fit.">Kein Verkaufsgespräch. Wir hören zu — und sagen ehrlich ob wir passen.</div>
+      </div>
+
+
+      <!-- Archive items — shown when Archiv is active -->
+      <div id="archiv-list" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- EMAIL PANE -->
+  <div class="pane">
+
+    <!-- Toolbar per email -->
+    <div class="pane__toolbar">
+      <button class="pane__toolbar-btn" onclick="go('home')" data-de="↩ Antworten" data-en="↩ Reply">↩ Antworten</button>
+      <button class="pane__toolbar-btn" data-de="↪ Weiterleiten" data-en="↪ Forward">↪ Weiterleiten</button>
+      <button class="pane__toolbar-btn">🗑</button>
+      <button class="pane__toolbar-btn primary" onclick="go('kontakt')" data-de="✏ Gespräch buchen →" data-en="✏ Book a call →">✏ Gespräch buchen →</button>
+    </div>
+
+    <div class="pane__scroll">
+
+      <!-- ═══ EMAIL 1: HOME ═══ -->
+      <div class="email is-on" id="e-home">
+        <div class="email__subject" data-de="Euer nächster Event. <em>Bis Montag.</em>" data-en="Your next event. <em>By Monday.</em>">Euer nächster Event. <em>Bis Montag.</em></div>
+        <div class="email__meta">
+          <div class="email__meta-inner">
+            <span class="email__meta-key" data-de="Von" data-en="From">Von</span>
+            <span class="email__meta-val"><span class="email__avatar">BM</span><b>Bis Montag</b> &lt;info@bismontag.ch&gt;</span>
+            <span class="email__meta-key" data-de="An" data-en="To">An</span>
+            <span class="email__meta-val" data-de="<b>KMU Kanton Bern</b> &lt;ihr@euremail.ch&gt;" data-en="<b>SMEs Canton Bern</b> &lt;you@yourcompany.ch&gt;"><b>KMU Kanton Bern</b> &lt;ihr@euremail.ch&gt;</span>
+            <span class="email__meta-key" data-de="Datum" data-en="Date">Datum</span>
+            <span class="email__meta-val" data-de="Heute, 09:00 Uhr" data-en="Today, 09:00 AM">Heute um 09:00 Uhr</span>
+            <span class="email__meta-key" data-de="Betr." data-en="Subj.">Betr.</span>
+            <span class="email__meta-val" data-de="Events, die euer Team wirklich will" data-en="Events your team actually wants">Events, die euer Team wirklich will</span>
+          </div>
+        </div>
+        <div class="email__body">
+          <p class="email__greeting" data-de="Hallo," data-en="Hi,">Hallo,</p>
+          <p class="email__p" data-de="wir sind Bis Montag — eine Eventagentur für KMU im Kanton Bern. Wir machen keine Pflicht-Events. Wir machen Erlebnisse, über die euer Team noch Wochen danach spricht." data-en="we are Bis Montag — an event agency for SMEs in Canton Bern. We do not do obligation events. We create experiences your team will still be talking about weeks later.">wir sind Bis Montag — eine Eventagentur für KMU im Kanton Bern. Wir machen keine Pflicht-Events. Wir machen Erlebnisse, über die euer Team noch Wochen danach spricht.</p>
+
+          <div class="email__quote">
+            <p data-de="Unser Versprechen: <b>Wir werden Teil eures Teams — bevor wir auch nur eine Location buchen.</b> Wir hören zu, verstehen wer ihr seid, und kreieren etwas, das nur für euch funktioniert." data-en="Our promise: <b>We become part of your team — before we book a single venue.</b> We listen, understand who you are, and create something that works only for you.">Unser Versprechen: <span class="sel-highlight"><b>Wir werden Teil eures Teams — bevor wir auch nur eine Location buchen.</b></span> Wir hören zu, verstehen wer ihr seid, und kreieren etwas, das nur für euch funktioniert.</p>
+          </div>
+
+          <div class="email__stats">
+            <div class="email__stat">
+              <div class="email__stat-num">48h</div>
+              <div class="email__stat-label" data-de="Offerte garantiert" data-en="Quote guaranteed">Offerte garantiert</div>
+            </div>
+            <div class="email__stat">
+              <div class="email__stat-num">100%</div>
+              <div class="email__stat-label" data-de="Foto-Doku in jedem Paket" data-en="Photo documentation in every package">Foto-Doku in jedem Paket</div>
+            </div>
+            <div class="email__stat">
+              <div class="email__stat-num">0</div>
+              <div class="email__stat-label" data-de="Versteckte Kosten" data-en="Hidden costs">Versteckte Kosten</div>
+            </div>
+          </div>
+
+          <div class="email__section" data-de="So funktioniert's" data-en="How it works">So funktioniert's</div>
+          <div class="email__list">
+            <div class="email__li"><span class="email__li-mark">01</span><div class="email__li-text" data-de="<b>Discovery-Gespräch</b> — 45 Minuten, kostenlos. Wir lernen euer Team kennen, nicht euer Budget." data-en="<b>Discovery call</b> — 45 minutes, free. We get to know your team, not your budget."><b>Discovery-Gespräch</b> — 45 Minuten, kostenlos. Wir lernen euer Team kennen, nicht euer Budget.</div></div>
+            <div class="email__li"><span class="email__li-mark">02</span><div class="email__li-text" data-de="<b>Offerte innert 48h</b> — transparent, klare Preise, ein konkretes Konzept, das zu euch passt." data-en="<b>Quote within 48h</b> — transparent, clear pricing, a concrete concept that fits you."><b>Offerte innert 48h</b> — transparent, klare Preise, ein konkretes Konzept, das zu euch passt.</div></div>
+            <div class="email__li"><span class="email__li-mark">03</span><div class="email__li-text" data-de="<b>Wir übernehmen alles</b> — Konzept, Locations, Lieferanten, Event-Branding, Onsite-Koordination." data-en="<b>We handle everything</b> — concept, venues, suppliers, event branding, on-site coordination."><b>Wir übernehmen alles</b> — Konzept, Locations, Lieferanten, Event-Branding, Onsite-Koordination.</div></div>
+            <div class="email__li"><span class="email__li-mark">04</span><div class="email__li-text" data-de="<b>Fotos & After-Movie</b> — innert 5 Werktagen geliefert. LinkedIn-ready, intern nutzbar." data-en="<b>Photos & after-movie</b> — delivered within 5 working days. LinkedIn-ready."><b>Fotos & After-Movie</b> — innert 5 Werktagen geliefert. LinkedIn-ready, intern nutzbar.</div></div>
+          </div>
+
+          <div class="email__signoff">
+            <p class="email__signoff-p" data-de="Mit freundlichen Grüssen," data-en="Best,">Mit freundlichen Grüssen,</p>
+            <div class="email__signoff-name" data-de="Bis Montag" data-en="Bis Montag">Bis Montag</div>
+            <div class="email__signoff-role">Eventagentur für KMU · Kanton Bern</div>
+            <div class="email__signoff-web"><a href="https://bismontag.ch" style="color:inherit;text-decoration:none">bismontag.ch</a></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ EMAIL 2: PAKETE ═══ -->
+      <div class="email" id="e-pakete">
+        <div class="email__subject" data-de="Transparente Preise. <em>Keine Überraschungen.</em>" data-en="Transparent pricing. <em>No surprises.</em>">Transparente Preise. <em>Keine Überraschungen.</em></div>
+        <div class="email__meta">
+          <div class="email__meta-inner">
+            <span class="email__meta-key" data-de="Von" data-en="From">Von</span>
+            <span class="email__meta-val"><span class="email__avatar">BM</span><b>Bis Montag · Pakete</b> &lt;info@bismontag.ch&gt;</span>
+            <span class="email__meta-key" data-de="An" data-en="To">An</span>
+            <span class="email__meta-val" data-de="<b>KMU Kanton Bern</b>" data-en="<b>SMEs Canton Bern</b>"><b>KMU Kanton Bern</b></span>
+            <span class="email__meta-key" data-de="Datum" data-en="Date">Datum</span>
+            <span class="email__meta-val" data-de="Montag, 14. April 2025" data-en="Monday, 14 April 2025">Montag, 14. April 2025</span>
+            <span class="email__meta-key" data-de="Betr." data-en="Subj.">Betr.</span>
+            <span class="email__meta-val" data-de="Alles inbegriffen — Location, Aktivität, Catering & Agentur" data-en="Everything included — venue, activity, catering & agency">Alles inbegriffen — Location, Aktivität, Catering & Agentur</span>
+          </div>
+        </div>
+        <div class="email__body">
+          <p class="email__p" data-de='Keine &quot;Bitte anfragen&quot; Taktik. Alle Preise sind Gesamtpakete — alles inklusive. Ihr seht was es kostet, bevor ihr auch nur ein Gespräch führt.' data-en='No &quot;please enquire&quot; tactics. All prices are all-inclusive packages. You see what it costs before you even have a conversation.'>Keine "Bitte anfragen" Taktik. Alle Preise sind Gesamtpakete — alles inklusive. Ihr seht was es kostet, bevor ihr auch nur ein Gespräch führt.</p>
+
+          <table class="email__pkg-table">
+            <thead>
+              <tr>
+                <th data-de="Paket" data-en="Package">Paket</th>
+                <th data-de="Grösse" data-en="Size">Grösse</th>
+                <th data-de="Preis (all-in)" data-en="Price (all-in)">Preis (all-in)</th>
+                <th data-de="Inbegriffen" data-en="Included">Inbegriffen</th>
+              </tr>
+            </thead>
+            <tbody id="pkg-dynamic-container">
+              <tr>
+                <td>
+                  <div class="pkg-name" data-de="FEIERABEND" data-en="FEIERABEND">FEIERABEND</div>
+                  <div class="pkg-size" data-de="3–4 Stunden" data-en="3–4 hours">3–4 Stunden</div>
+                </td>
+                <td><div class="pkg-size" data-de="15–30 Pers." data-en="15–30 people">15–30 Pers.</div></td>
+                <td><div class="pkg-price"><em>6.000</em> – 8.000 CHF</div></td>
+                <td><div class="pkg-inc" data-de="Location, Aktivität, Catering, Briefing, 20 Fotos, Abschlussbericht" data-en="Venue, activity, catering, briefing, 20 photos, final report">Location, Aktivität, Catering, Briefing, 20 Fotos, Abschlussbericht</div></td>
+              </tr>
+              <tr class="is-featured">
+                <td>
+                  <div class="pkg-name" data-de="ZUSAMMEN" data-en="TOGETHER">ZUSAMMEN</div>
+                  <div class="pkg-size" data-de="Ganztägig" data-en="Full day">Ganztägig</div>
+                  <div class="pkg-badge" data-de="Beliebtestes" data-en="Most popular">Beliebtestes</div>
+                </td>
+                <td><div class="pkg-size" data-de="25–60 Pers." data-en="25–60 people">25–60 Pers.</div></td>
+                <td><div class="pkg-price"><em>16.000</em> – 24.000 CHF</div></td>
+                <td><div class="pkg-inc" data-de="Konzept, Event-Branding, alle Lieferanten, 50+ Fotos, After-Movie 90 Sek., 3 LinkedIn Posts" data-en="Concept, event branding, all suppliers, 50+ photos, after-movie 90 sec., 3 LinkedIn posts">Konzept, Event-Branding, alle Lieferanten, 50+ Fotos, After-Movie 90 Sek., 3 LinkedIn Posts</div></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="pkg-name" data-de="MEILENSTEIN" data-en="MILESTONE">MEILENSTEIN</div>
+                  <div class="pkg-size" data-de="Ganztag / Abend" data-en="Full day / Evening">Ganztag / Abend</div>
+                </td>
+                <td><div class="pkg-size" data-de="40–120 Pers." data-en="40–120 people">40–120 Pers.</div></td>
+                <td><div class="pkg-price"><em>28.000</em> – 55.000 CHF</div></td>
+                <td><div class="pkg-inc" data-de="Komplette visuelle Identität, Moderation, After-Movie 2–3 Min., 5 LinkedIn Posts, Newsletter" data-en="Complete visual identity, moderation, after-movie 2–3 min., 5 LinkedIn posts, newsletter">Komplette visuelle Identität, Moderation, After-Movie 2–3 Min., 5 LinkedIn Posts, Newsletter</div></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="pkg-name" data-de="NACH MASS" data-en="BESPOKE">NACH MASS</div>
+                  <div class="pkg-size" data-de="Individuell" data-en="Individual">Individuell</div>
+                </td>
+                <td><div class="pkg-size" data-de="Flex" data-en="Flex">Flex</div></td>
+                <td><div class="pkg-price">Ab <em>2.000</em> CHF</div></td>
+                <td><div class="pkg-inc" data-de="Jahresvertrag, Onboarding-Events, nur After-Movie, Weihnachtsfeier-Spezial" data-en="Annual contract, onboarding events, after-movie only, Christmas party special">Jahresvertrag, Onboarding-Events, nur After-Movie, Weihnachtsfeier-Spezial</div></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="email__quote">
+            <p data-de="Nicht sicher welches Paket passt? Das klären wir im <b>Discovery-Gespräch</b> — kostenlos, ohne Verpflichtung." data-en="Not sure which package fits? We will figure it out in the <b>Discovery call</b> — free, no commitment.">Nicht sicher welches Paket passt? Das klären wir im <b>Discovery-Gespräch</b> — kostenlos, ohne Verpflichtung. <span style="color:var(--orange);cursor:pointer" onclick="go('kontakt')" data-de="Gespräch buchen →" data-en="Book a call →">Gespräch buchen →</span></p>
+          </div>
+
+          <div class="email__signoff">
+            <p class="email__signoff-p" data-de="Bei Fragen stehen wir gerne zur Verfügung." data-en="Happy to answer any questions.">Bei Fragen stehen wir gerne zur Verfügung.</p>
+            <div class="email__signoff-name" data-de="Bis Montag · Pakete" data-en="Bis Montag · Packages">Bis Montag · Pakete</div>
+            <div class="email__signoff-web" data-de="info@bismontag.ch" data-en="packages@bismontag.ch">info@bismontag.ch</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ EMAIL 3: PARTNER ═══ -->
+      <div class="email" id="e-partner">
+        <div class="email__subject" data-de="Kuratierte <em>Locations & Partner</em> in Kanton Bern" data-en="Curated <em>Venues & Partners</em> in Canton Bern">Kuratierte <em>Locations & Partner</em> in Kanton Bern</div>
+        <div class="email__meta">
+          <div class="email__meta-inner">
+            <span class="email__meta-key" data-de="Von" data-en="From">Von</span>
+            <span class="email__meta-val"><span class="email__avatar">BM</span><b data-de="Bis Montag · Netzwerk" data-en="Bis Montag · Network">Bis Montag · Netzwerk</b> &lt;info@bismontag.ch&gt;</span>
+            <span class="email__meta-key" data-de="An" data-en="To">An</span>
+            <span class="email__meta-val" data-de="<b>KMU Kanton Bern</b>" data-en="<b>SMEs Canton Bern</b>"><b>KMU Kanton Bern</b></span>
+            <span class="email__meta-key" data-de="Datum" data-en="Date">Datum</span>
+            <span class="email__meta-val" data-de="Dienstag, 8. April 2025" data-en="Tuesday, 8 April 2025">Dienstag, 8. April 2025</span>
+            <span class="email__meta-key" data-de="Betr." data-en="Subj.">Betr.</span>
+            <span class="email__meta-val" data-de="Aus eigener Erfahrung — keine bezahlten Platzierungen" data-en="From personal experience — no paid placements">Aus eigener Erfahrung — keine bezahlten Platzierungen</span>
+          </div>
+        </div>
+        <div class="email__body">
+          <div style="border-left:3px solid var(--orange);padding:18px 22px;margin:0 0 24px;background:rgba(45,63,107,0.04);border-radius:0 8px 8px 0"><div style="font-family:var(--f-display);font-size:16px;font-weight:900;letter-spacing:-0.3px;color:var(--tx-primary);margin-bottom:8px" data-de="Liste wird kuratiert." data-en="List being curated.">Liste wird kuratiert.</div><div style="font-size:13px;color:var(--tx-dim);line-height:1.7" data-de="Wir empfehlen niemanden, den wir nicht persönlich kennen. Das braucht Zeit." data-en="We only recommend people we know personally. That takes time.">Wir empfehlen niemanden, den wir nicht persönlich kennen. Das braucht Zeit.</div></div>
+          <div class="email__link-list" id="partner-loc-dynamic" style="margin-bottom:24px"><div style="padding:12px 0;font-family:var(--f-mono);font-size:11px;color:var(--tx-muted)" data-de="Wird ergänzt." data-en="Coming soon.">Wird ergänzt.</div></div><div class="email__link-list" id="partner-sup-dynamic" style="margin-bottom:28px"><div style="padding:12px 0;font-family:var(--f-mono);font-size:11px;color:var(--tx-muted)" data-de="Wird ergänzt." data-en="Coming soon.">Wird ergänzt.</div></div>
+          <div class="email__signoff">
+            <div class="email__signoff-name" data-de="Bis Montag · Netzwerk" data-en="Bis Montag · Network">Bis Montag · Netzwerk</div>
+            <div class="email__signoff-web">info@bismontag.ch</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ EMAIL 4: DISCOVERY ═══ -->
+      <div class="email" id="e-discovery">
+        <div class="email__subject" data-de="Wir lernen euer Team kennen — <em>bevor wir planen</em>" data-en="We get to know your team — <em>before we plan anything</em>">Wir lernen euer Team kennen — <em>bevor wir planen</em></div>
+        <div class="email__meta">
+          <div class="email__meta-inner">
+            <span class="email__meta-key" data-de="Von" data-en="From">Von</span>
+            <span class="email__meta-val"><span class="email__avatar">BM</span><b>Bis Montag · Discovery</b> &lt;info@bismontag.ch&gt;</span>
+            <span class="email__meta-key" data-de="An" data-en="To">An</span>
+            <span class="email__meta-val" data-de="<b>KMU Kanton Bern</b>" data-en="<b>SMEs Canton Bern</b>"><b>KMU Kanton Bern</b></span>
+            <span class="email__meta-key" data-de="Datum" data-en="Date">Datum</span>
+            <span class="email__meta-val" data-de="Freitag, 11. April 2025" data-en="Friday, 11 April 2025">Freitag, 11. April 2025</span>
+            <span class="email__meta-key" data-de="Betr." data-en="Subj.">Betr.</span>
+            <span class="email__meta-val" data-de="Kein Fragebogen, kein Pitch. Ein echtes Gespräch." data-en="No questionnaire, no pitch. A real conversation.">Kein Fragebogen, kein Pitch. Ein echtes Gespräch.</span>
+          </div>
+        </div>
+        <div class="email__body">
+          <p class="email__p" data-de='Die meisten Agenturen fragen: &quot;Was wollt ihr?&quot; Wir fragen anders.' data-en='Most agencies ask: &quot;What do you want?&quot; We ask differently.'>Die meisten Agenturen fragen: "Was wollt ihr?" und schicken dann eine Liste von Aktivitäten zum Ankreuzen. Wir machen das anders.</p>
+
+          <div class="email__dark-block">
+            <div class="email__dark-block-label" data-de="Unser Ansatz" data-en="Our approach">Unser Ansatz</div>
+            <div class="email__dark-block-title" data-de="Wir werden Teil eures Teams — bevor wir etwas planen." data-en="We become part of your team — before we plan anything.">Wir werden Teil eures Teams — bevor wir etwas planen.</div>
+            <div class="email__dark-block-body" data-de="45 Minuten. Kein Fragebogen, kein Pitch. Wir hören zu — wer sind diese Menschen, was verbindet sie, was haben sie hinter sich, worüber lachen sie zusammen. Erst dann entsteht ein Event, der wirklich zu euch passt." data-en="45 minutes. No questionnaire, no pitch. We listen — who are these people, what connects them, what have they been through, what makes them laugh together. Only then do we create an event that actually fits.">45 Minuten. Kein Fragebogen, kein Pitch. Wir hören zu — wer sind diese Menschen, was verbindet sie, was haben sie hinter sich, worüber lachen sie zusammen. <span class="sel-highlight" style="--sel-color:rgba(255,255,255,0.12)">Erst dann entsteht ein Event, der wirklich zu euch passt.</span></div>
+            <button class="email__dark-block-btn" data-de="Discovery-Gespräch buchen →" data-en="Book a Discovery call →" onclick="go('kontakt')" data-de="Discovery-Gespräch buchen →" data-en="Book a Discovery call →">Discovery-Gespräch buchen →</button>
+          </div>
+
+          <div class="email__section" data-de="Was wir im Discovery fragen" data-en="What we ask in Discovery">Was wir im Discovery fragen</div>
+          <div class="email__list">
+            <div class="email__li"><span class="email__li-mark">—</span><div class="email__li-text" data-de="<b>Kontext der Firma</b> — Was hat euer Team in den letzten 12 Monaten bewegt? Was war schwer, was war gut? Gab es Veränderungen im Team?" data-en="<b>Company context</b> — What has your team been through in the last 12 months? What was tough, what went well? Any changes in the team?"><b>Kontext der Firma</b> — Was hat euer Team in den letzten 12 Monaten bewegt? Was war schwer, was war gut? Gab es Veränderungen im Team?</div></div>
+            <div class="email__li"><span class="email__li-mark">—</span><div class="email__li-text" data-de="<b>Die Menschen</b> — Wer ist das Team wirklich? Gibt es Introvertierte, Neue, jemanden der sich vielleicht aussen fühlt? Wann haben sie das letzte Mal zusammen gelacht?" data-en="<b>The people</b> — Who is the team, really? Are there introverts, newcomers, someone who might feel on the outside? When did they last laugh together?"><b>Die Menschen</b> — Wer ist das Team wirklich? Gibt es Introvertierte, Neue, jemanden der sich vielleicht aussen fühlt? Wann haben sie das letzte Mal zusammen gelacht?</div></div>
+            <div class="email__li"><span class="email__li-mark">—</span><div class="email__li-text" data-de="<b>Der Zweck</b> — Warum jetzt ein Event? Was soll er bewirken — und was soll er definitiv nicht sein?" data-en="<b>The purpose</b> — Why an event now? What should it achieve — and what should it definitely not be?"><b>Der Zweck</b> — Warum jetzt ein Event? Was soll er bewirken — und was soll er definitiv nicht sein?</div></div>
+            <div class="email__li"><span class="email__li-mark">—</span><div class="email__li-text" data-de="<b>Der Rahmen</b> — Termine, Grösse, Budget, öffentlich oder intern. Das Letzte, nicht das Erste." data-en="<b>The framework</b> — Dates, size, budget, public or internal. Last, not first."><b>Der Rahmen</b> — Termine, Grösse, Budget, öffentlich oder intern. Das Letzte, nicht das Erste.</div></div>
+          </div>
+
+          <hr class="email__hr">
+
+          <div class="email__section" data-de="Was ihr danach bekommt — Team-Porträt" data-en="What you get after — Team Portrait">Was ihr danach bekommt — Team-Porträt</div>
+          <p class="email__p" data-de="Innerhalb von 48 Stunden erhaltet ihr ein einseitiges Dokument — das <b>Team-Porträt</b>. Es fasst zusammen was wir gehört haben: wer ist dieses Team, was ist die Geschichte dieses Events, was soll er erreichen, was soll er nicht sein." data-en="Within 48 hours you will receive a one-page document — the <b>Team Portrait</b>. It summarises what we heard: who this team is, what the story of this event is, what it should achieve, what it should not be.">Innerhalb von 48 Stunden erhaltet ihr ein einseitiges Dokument — das <b>Team-Porträt</b>. Es fasst zusammen was wir gehört haben: wer ist dieses Team, was ist die Geschichte dieses Events, was soll er erreichen, was soll er nicht sein.</p>
+
+          <div class="email__quote">
+            <p data-de="Das Team-Porträt ist nicht für uns — es ist für euch. Wenn wir etwas falsch verstanden haben, sagt es uns. Diese Korrektur ist bereits Teil des Prozesses." data-en="The Team Portrait is for you, not for us. If we got something wrong, tell us. That correction is already part of the process.">Das Team-Porträt ist nicht für uns — es ist für euch. Wenn wir etwas falsch verstanden haben, sagt es uns. Diese Korrektur ist bereits Teil des Prozesses.</p>
+          </div>
+
+          <div class="email__signoff">
+            <p class="email__signoff-p" data-de="Das Discovery-Gespräch ist kostenlos und ohne Verpflichtung." data-en="The Discovery call is free and with no commitment.">Das Discovery-Gespräch ist kostenlos und ohne Verpflichtung.</p>
+            <div class="email__signoff-name">Bis Montag · Discovery</div>
+            <div class="email__signoff-web">info@bismontag.ch</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ EMAIL 5: KONTAKT / COMPOSE ═══ -->
+      <div class="email" id="e-kontakt">
+        <div class="email__subject" data-de="Neue Nachricht an <em>Bis Montag</em>" data-en="New message to <em>Bis Montag</em>">Neue Nachricht an <em>Bis Montag</em></div>
+        <div class="email__meta">
+          <div class="email__meta-inner">
+            <span class="email__meta-key" data-de="Von" data-en="From">Von</span>
+            <span class="email__meta-val" data-de="<b>Ich</b> &lt;meine@email.ch&gt;" data-en="<b>Me</b> &lt;my@email.ch&gt;"><b>Ich</b> &lt;meine@email.ch&gt;</span>
+            <span class="email__meta-key" data-de="An" data-en="To">An</span>
+            <span class="email__meta-val"><span class="email__avatar">BM</span><b>Bis Montag</b> &lt;info@bismontag.ch&gt;</span>
+          </div>
+        </div>
+        <div class="email__body" style="padding-top:20px">
+
+          <div class="email__calendly">
+            <div class="email__calendly-title" data-de="🗓 Termin direkt buchen" data-en="🗓 Book directly">🗓 Termin direkt buchen</div>
+            <div class="email__calendly-sub" data-de="45 Minuten per Video oder Telefon. Kein Verkaufsgespräch — ein echtes Gespräch." data-en="45 minutes by video or phone. No sales pitch — a real conversation.">45 Minuten per Video oder Telefon. Kein Verkaufsgespräch — ein echtes Gespräch.</div>
+            <div <div id="calendly-inline-widget" style="min-width:280px;height:420px;margin-top:8px"></div>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+        <script>
+          window.addEventListener('load', function() {
+            if (window.Calendly) {
+              Calendly.initInlineWidget({
+                url: 'https://calendly.com/bismontag-info/30min',
+                parentElement: document.getElementById('calendly-inline-widget'),
+                prefill: {},
+                utm: {}
+              });
+            }
+          });
+        </script>
+          </div>
+
+          <p class="email__p" style="text-align:center;color:var(--tx-muted);font-size:13px" data-de="— oder direkt schreiben —" data-en="— or write to us directly —" data-de="— oder direkt schreiben —" data-en="— or write to us directly —" data-de="— oder direkt schreiben —" data-en="— or write to us directly —">— oder direkt schreiben —</p>
+
+          <div class="email__compose">
+            <div class="email__compose-bar">
+              <span class="email__compose-bar-title" data-de="Neue Nachricht" data-en="New Message">Neue Nachricht</span>
+              <div class="email__compose-dots">
+                <div class="email__compose-dot" style="background:#FF5F57"></div>
+                <div class="email__compose-dot" style="background:#FEBC2E"></div>
+                <div class="email__compose-dot" style="background:#28C840"></div>
+              </div>
+            </div>
+            <div class="email__compose-field">
+              <span class="email__compose-label">An</span>
+              <span class="email__compose-value">info@bismontag.ch</span>
+            </div>
+            <div class="email__compose-field">
+              <span class="email__compose-label">Von</span>
+              <input class="email__compose-input" type="email" data-de-placeholder="eure@email.ch" data-en-placeholder="your@email.ch" placeholder="eure@email.ch">
+            </div>
+            <div class="email__compose-field">
+              <span class="email__compose-label">Name</span>
+              <input class="email__compose-input" type="text" data-de-placeholder="Vorname Name · Firma AG" data-en-placeholder="First Last · Company AG" placeholder="Vorname Name · Firma AG">
+            </div>
+            <div class="email__compose-field">
+              <span class="email__compose-label">Betr.</span>
+              <select class="email__compose-select">
+                <option value="" data-de="Paket oder Thema wählen…" data-en="Choose package or topic…">Paket oder Thema wählen…</option>
+                <option>Feierabend — 6.000–8.000 CHF</option>
+                <option>Zusammen — 16.000–24.000 CHF</option>
+                <option>Meilenstein — 28.000–55.000 CHF</option>
+                <option>Nach Mass — individuell</option>
+                <option>Discovery-Gespräch (kostenlos)</option>
+                <option>Partnerschaft anfragen</option>
+              </select>
+            </div>
+            <div class="email__compose-textarea-wrap">
+              <textarea class="email__compose-textarea" data-de-placeholder="Eventdatum, Personenzahl, was euch bewegt — oder einfach Hallo. Wir melden uns innert 24 Stunden." data-en-placeholder="Event date, number of people, what's on your mind — or just say hello. We reply within 24h." placeholder="Eventdatum, Personenzahl, was euch bewegt — oder einfach Hallo. Wir melden uns innert 24 Stunden."></textarea>
+            </div>
+            <div class="email__compose-footer">
+              <button class="email__compose-send" data-de="Senden ↑" data-en="Send ↑">Senden ↑</button>
+              <span class="email__compose-note" data-de="Antwort innert 24h · info@bismontag.ch" data-en="Reply within 24h · info@bismontag.ch" data-de="Antwort innert 24h · info@bismontag.ch" data-en="Reply within 24h · info@bismontag.ch">Antwort innert 24h · info@bismontag.ch</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="email" id="e-referenzen-static">
+        <div class="email__subject" data-de="Referenzen" data-en="References">Referenzen</div>
+        <div class="email__body" style="padding-top:60px;max-width:480px">
+          <div style="font-family:var(--f-display);font-size:36px;font-weight:900;letter-spacing:-1.5px;line-height:1;color:var(--tx-primary);margin-bottom:14px" data-de="Keine neuen<br>Nachrichten." data-en="No new<br>messages.">Keine neuen<br>Nachrichten.</div>
+          <div style="font-family:var(--f-mono);font-size:14px;color:var(--orange)" data-de="Das ändert sich bis Montag." data-en="That changes by Monday.">Das ändert sich bis Montag.</div>
+        </div>
+      </div>
+    </div><!-- /pane__scroll -->
+
+    <!-- Reply bar -->
+    <div class="pane__reply">
+      <div class="pane__reply-field" data-de="← Antworten an info@bismontag.ch" data-en="← Reply to info@bismontag.ch">← Antworten an info@bismontag.ch</div>
+      <button class="pane__reply-btn" onclick="go('kontakt')" data-de="Gespräch buchen →" data-en="Book a call →">Gespräch buchen →</button>
+    </div>
+
+  </div><!-- /pane -->
+
+</div><!-- /window -->
+
+<script>
+function go(id) {
+  // Restore list items if coming from Referenzen
+  document.querySelectorAll('.list__scroll > .list-item').forEach(function(i) { i.style.display = ''; });
+  // Restore list header
+  var lt = document.querySelector('.list__title');
+  var lc = document.querySelector('.list__count');
+  var isEN = document.getElementById('btn-en') && document.getElementById('btn-en').classList.contains('active');
+  if (lt) { lt.textContent = isEN ? 'Inbox' : 'Posteingang'; lt.setAttribute('data-de','Posteingang'); lt.setAttribute('data-en','Inbox'); }
+  if (lc) { lc.textContent = isEN ? '4 unread' : '4 ungelesen'; }
+  // If coming from archive, restore inbox view first
+  if (document.getElementById('archiv-list').style.display === 'block') {
+    goInbox();
+    document.querySelector('.list__scroll').querySelectorAll('.list-item:not(.list-item--archive)').forEach((i,idx) => {
+      i.classList.remove('is-on');
+    });
+  }
+  document.querySelectorAll('.email, .view').forEach(e => e.classList.remove('is-on'));
+  document.getElementById('e-' + id).classList.add('is-on');
+  document.querySelector('.pane__scroll').scrollTop = 0;
+
+  // Restore inbox list item highlight
+  document.querySelectorAll('.list-item:not(.list-item--archive)').forEach(i => {
+    const onclick = i.getAttribute('onclick');
+    if (onclick && onclick.includes("'" + id + "'")) i.classList.add('is-on');
+  });
+}
+
+function nav(btn) {
+  document.querySelectorAll('.sidebar__row').forEach(b => b.classList.remove('is-on'));
+  btn.classList.add('is-on');
+}
+
+function item(el) {
+  document.querySelectorAll('.list-item').forEach(i => i.classList.remove('is-on'));
+  el.classList.add('is-on');
+  el.classList.remove('unread');
+  const unread = document.querySelectorAll('.list-item.unread').length;
+  const badges = document.querySelectorAll('.sidebar__row-badge');
+  if (badges[0]) badges[0].textContent = unread || '';
+}
+
+function goArchiv() {
+  // Hide inbox list, show archive list
+  document.querySelector('.list__scroll').querySelectorAll('.list-item:not(.list-item--archive)').forEach(i => i.style.display = 'none');
+  document.getElementById('archiv-list').style.display = 'block';
+
+  // Update list header
+  document.querySelector('.list__title').textContent = 'Referenzen';
+  document.querySelector('.list__count').textContent = '3 Projekte';
+
+  // Hide all emails and views, show empty state
+  document.querySelectorAll('.email, .view').forEach(e => e.classList.remove('is-on'));
+
+  // Show first project by default
+  // Projects loaded dynamically via loadDynProjects()
+  // First item highlighted by loadDynProjects()
+  document.querySelector('.pane__scroll').scrollTop = 0;
+}
+
+function goInbox() {
+  // Restore inbox
+  document.querySelector('.list__scroll').querySelectorAll('.list-item:not(.list-item--archive)').forEach(i => i.style.display = '');
+  document.getElementById('archiv-list').style.display = 'none';
+  document.querySelector('.list__title').textContent = 'Posteingang';
+  document.querySelector('.list__count').textContent = '4 ungelesen';
+}
+
+function goProj(id) {
+  document.querySelectorAll('.email, .view').forEach(e => e.classList.remove('is-on'));
+  document.getElementById('e-' + id).classList.add('is-on');
+  document.querySelector('.pane__scroll').scrollTop = 0;
+}
+
+// Override nav to reset inbox when switching away from archiv
+const origNav = nav;
+</script>
+
+
+</div>
+
+<div id="mobile-version">
+<!-- ══════════════════════════════════
+     SCREEN 1 — INBOX
+══════════════════════════════════ -->
+<div id="screen-inbox" class="screen">
+
+  <!-- Status bar -->
+  <div class="status-bar" style="background:rgba(247,247,245,0.95)"></div>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div style="width:60px"></div>
+    <div class="navbar__title">BIS <em>MONTAG</em></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="mobile-lang-switch">
+        <button class="mobile-lang-btn active" id="mob-btn-de" onclick="setLang('de')">DE</button>
+        <span class="mobile-lang-sep">|</span>
+        <button class="mobile-lang-btn" id="mob-btn-en" onclick="setLang('en')">EN</button>
+      </div>
+      <div class="navbar__action" onclick="openScreen('kontakt')">✏</div>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-bar">
+    <input class="search-input" type="search" placeholder="🔍  Suchen">
+  </div>
+
+  <!-- Inbox header -->
+  <div class="inbox-header">
+    <div class="inbox-header__title" data-de="Posteingang" data-en="Inbox">Posteingang</div>
+    <div class="inbox-header__meta" data-de="4 ungelesen · Kanton Bern" data-en="4 unread · Canton Bern">4 ungelesen · Kanton Bern</div>
+  </div>
+
+  <!-- Email list -->
+  <div class="email-list">
+    <div class="email-list__section-label" data-de="Heute" data-en="Today">Heute</div>
+
+    <div class="email-item unread" onclick="openScreen('home')">
+      <div class="email-item__dot"></div>
+      <div class="email-item__content">
+        <div class="email-item__row">
+          <span class="email-item__sender" data-de="Bis Montag" data-en="Bis Montag">Bis Montag</span>
+          <span class="email-item__date">09:00</span>
+        </div>
+        <div class="email-item__subject" data-de="Euer nächster Event. Bis Montag." data-en="Your next event. By Monday.">Euer nächster Event. Bis Montag.</div>
+        <div class="email-item__preview" data-de="Events, die dein Team wirklich will. Von der Idee bis zur letzten Runde — wir übernehmen alles." data-en="Events your team actually wants. From concept to the last drink — we handle everything.">Events, die dein Team wirklich will. Von der Idee bis zur letzten Runde — wir übernehmen alles.</div>
+      </div>
+      <div class="email-item__chevron">›</div>
+    </div>
+
+    <div class="email-list__section-label" data-de="Diese Woche" data-en="This week">Diese Woche</div>
+
+    <div class="email-item unread" onclick="openScreen('pakete')">
+      <div class="email-item__dot"></div>
+      <div class="email-item__content">
+        <div class="email-item__row">
+          <span class="email-item__sender" data-de="Pakete & Preise" data-en="Packages & Pricing">Pakete & Preise</span>
+          <span class="email-item__date">Mo</span>
+        </div>
+        <div class="email-item__subject" data-de="Transparente Preise für euren Event" data-en="Transparent pricing for your event">Transparente Preise für euren Event</div>
+        <div class="email-item__preview" data-de="Feierabend ab 6.000 · Zusammen ab 16.000 · Meilenstein ab 28.000 CHF. Alles inklusive." data-en="Feierabend from 6,000 · Zusammen from 16,000 · Meilenstein from 28,000 CHF. All-inclusive.">Feierabend ab 6.000 · Zusammen ab 16.000 · Meilenstein ab 28.000 CHF — alles inbegriffen.</div>
+      </div>
+      <div class="email-item__chevron">›</div>
+    </div>
+
+    <div class="email-item unread" onclick="openScreen('discovery')">
+      <div class="email-item__dot"></div>
+      <div class="email-item__content">
+        <div class="email-item__row">
+          <span class="email-item__sender" data-de="Discovery · Neu" data-en="Discovery · New">Discovery · Neu</span>
+          <span class="email-item__date">Fr</span>
+        </div>
+        <div class="email-item__subject" data-de="Wir lernen euer Team kennen" data-en="We get to know your team first">Wir lernen euer Team kennen</div>
+        <div class="email-item__preview" data-de="Bevor wir auch nur eine Location buchen, hören wir zu. 45 Minuten, kostenlos." data-en="Before we book a single venue, we listen. 45 minutes, free.">Bevor wir auch nur eine Location buchen, hören wir zu. 45 Minuten, kostenlos.</div>
+      </div>
+      <div class="email-item__chevron">›</div>
+    </div>
+
+    <div class="email-item unread" onclick="openScreen('partner')">
+      <div class="email-item__dot"></div>
+      <div class="email-item__content">
+        <div class="email-item__row">
+          <span class="email-item__sender" data-de="Locations & Partner" data-en="Locations & Partners">Locations & Partner</span>
+          <span class="email-item__date">Di</span>
+        </div>
+        <div class="email-item__subject" data-de="Kuratierte Locations in Kanton Bern" data-en="Curated venues in Canton Bern">Kuratierte Locations in Kanton Bern</div>
+        <div class="email-item__preview" data-de="Bierhübeli, Kornhauskeller, chillfood's füüri, Markthalle Burgdorf." data-en="Bierhübeli, Kornhauskeller, chillfood's füüri, Markthalle Burgdorf.">Bierhübeli, Kornhauskeller, chillfood's füüri, Markthalle Burgdorf und mehr.</div>
+      </div>
+      <div class="email-item__chevron">›</div>
+    </div>
+
+    <div class="email-item" onclick="openScreen('kontakt')">
+      <div class="email-item__dot read"></div>
+      <div class="email-item__content">
+        <div class="email-item__row">
+          <span class="email-item__sender" data-de="Kontakt" data-en="Contact">Kontakt</span>
+          <span class="email-item__date">Mo</span>
+        </div>
+        <div class="email-item__subject" data-de="45 Minuten. Kostenlos." data-en="45 minutes. Free.">45 Minuten. Kostenlos.</div>
+        <div class="email-item__preview" data-de="Kein Verkaufsgespräch. Wir hören zu — und sagen ehrlich ob wir passen." data-en="No sales pitch. We listen — and tell you honestly if we are the right fit.">Kein Verkaufsgespräch. Wir hören zu — und sagen ehrlich ob wir passen.</div>
+      </div>
+      <div class="email-item__chevron">›</div>
+    </div>
+
+    <div style="height:20px"></div>
+  </div>
+
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <div class="tab-bar__item">
+      <div class="tab-bar__icon">📥</div>
+      <div class="tab-bar__label" style="color:var(--orange)" data-de="Inbox" data-en="Inbox">Inbox</div>
+    </div>
+    <div class="tab-bar__item" onclick="openScreen('pakete')">
+      <div class="tab-bar__icon">📦</div>
+      <div class="tab-bar__label" data-de="Pakete" data-en="Packages">Pakete</div>
+    </div>
+    <div class="tab-bar__item" onclick="openScreen('discovery')">
+      <div class="tab-bar__icon">🔍</div>
+      <div class="tab-bar__label" data-de="Discovery" data-en="Discovery">Discovery</div>
+    </div>
+    <div class="tab-bar__item" onclick="openScreen('kontakt')">
+      <div class="tab-bar__icon">📩</div>
+      <div class="tab-bar__label" data-de="Kontakt" data-en="Contact">Kontakt</div>
+    </div>
+    <div class="tab-bar__item" onclick="openMobileArchiv()">
+      <div class="tab-bar__icon">🗂</div>
+      <div class="tab-bar__label" data-de="Referenzen" data-en="References">Referenzen</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 2 — HOME EMAIL
+══════════════════════════════════ -->
+<div id="screen-home" class="screen email-screen">
+  <div class="status-bar"></div>
+  <div class="navbar navbar--email">
+    <div class="navbar__back" onclick="closeScreen('home')">
+      <span class="navbar__back-arrow">‹</span>
+      <span class="navbar__back-label" data-de="Posteingang" data-en="Inbox">Posteingang</span>
+    </div>
+    <div class="navbar__title">BIS <em>MONTAG</em></div>
+    <div style="width:80px"></div>
+  </div>
+  <div class="email-view">
+    <div class="email-header">
+      <div class="email-header__subject" data-de="Euer nächster Event. <em>Bis Montag.</em>" data-en="Your next event. <em>By Monday.</em>">Euer nächster Event. <em>Bis Montag.</em></div>
+      <div class="email-meta">
+        <div class="email-meta-row">
+          <span class="email-meta-label" data-de="Von" data-en="From">Von</span>
+          <span class="email-meta-avatar">BM</span>
+          <span class="email-meta-value"><b>Bis Montag</b> &lt;info@bismontag.ch&gt;</span>
+        </div>
+        <div class="email-meta-row">
+          <span class="email-meta-label" data-de="An" data-en="To">An</span>
+          <span class="email-meta-value" data-de="<b>KMU Kanton Bern</b>" data-en="<b>SMEs Canton Bern</b>"><b>KMU Kanton Bern</b></span>
+        </div>
+        <div class="email-meta-row">
+          <span class="email-meta-label" data-de="Datum" data-en="Date">Datum</span>
+          <span class="email-meta-value" data-de="Heute, 09:00 · Kanton Bern" data-en="Today, 09:00 · Canton Bern">Heute, 09:00 · Kanton Bern</span>
+        </div>
+      </div>
+    </div>
+    <div class="email-body">
+      <p class="p">Hallo,</p>
+      <p class="p">wir sind Bis Montag — eine Eventagentur für KMU im Kanton Bern. Wir machen keine Pflicht-Events. Wir machen Erlebnisse, über die euer Team noch Wochen danach spricht.</p>
+
+      <div class="highlight">
+        <p>Unser Versprechen: <b>Wir werden Teil eures Teams — bevor wir auch nur eine Location buchen.</b></p>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat__num">48h</div>
+          <div class="stat__label">Offerte garantiert</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">100%</div>
+          <div class="stat__label">Foto-Doku</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">0</div>
+          <div class="stat__label">Versteckte Kosten</div>
+        </div>
+      </div>
+
+      <div class="h2">So funktioniert's</div>
+      <div class="li"><div class="li-dot"></div><div class="li-text"><b>Discovery-Gespräch</b> — 45 Minuten, kostenlos. Wir lernen euer Team kennen.</div></div>
+      <div class="li"><div class="li-dot"></div><div class="li-text"><b>Offerte innert 48h</b> — transparent, klare Preise, konkretes Konzept.</div></div>
+      <div class="li"><div class="li-dot"></div><div class="li-text"><b>Wir übernehmen alles</b> — Konzept, Locations, Lieferanten, Onsite.</div></div>
+      <div class="li"><div class="li-dot"></div><div class="li-text"><b>Fotos & After-Movie</b> — innert 5 Werktagen, LinkedIn-ready.</div></div>
+
+      <div class="signoff">
+        <p>Mit freundlichen Grüssen,</p>
+        <div class="signoff__name">Bis Montag</div>
+        <div class="signoff__role">Eventagentur für KMU · Kanton Bern</div>
+        <div class="signoff__web">bismontag.ch</div>
+      </div>
+    </div>
+  </div>
+  <div class="email-reply">
+    <button class="email-reply__btn-ghost" onclick="closeScreen('home')" data-de="← Zurück" data-en="← Back">← Zurück</button>
+    <button class="email-reply__btn" onclick="openScreen('kontakt')" data-de="Gespräch buchen →" data-en="Book a call →">Gespräch buchen →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 3 — PAKETE
+══════════════════════════════════ -->
+<div id="screen-pakete" class="screen email-screen">
+  <div class="status-bar"></div>
+  <div class="navbar navbar--email">
+    <div class="navbar__back" onclick="closeScreen('pakete')">
+      <span class="navbar__back-arrow">‹</span>
+      <span class="navbar__back-label">Posteingang</span>
+    </div>
+    <div class="navbar__title">BIS <em>MONTAG</em></div>
+    <div style="width:80px"></div>
+  </div>
+  <div class="email-view">
+    <div class="email-header">
+      <div class="email-header__subject" data-de="Transparente Preise. <em>Keine Überraschungen.</em>" data-en="Transparent pricing. <em>No surprises.</em>">Transparente Preise. <em>Keine Überraschungen.</em></div>
+      <div class="email-meta">
+        <div class="email-meta-row">
+          <span class="email-meta-label" data-de="Von" data-en="From">Von</span>
+          <span class="email-meta-avatar">BM</span>
+          <span class="email-meta-value"><b>Pakete</b> &lt;info@bismontag.ch&gt;</span>
+        </div>
+        <div class="email-meta-row">
+          <span class="email-meta-label" data-de="Betr." data-en="Subj.">Betr.</span>
+          <span class="email-meta-value" data-de="Alles inbegriffen — Location, Catering, Agentur" data-en="Everything included — venue, catering & agency">Alles inbegriffen — Location, Catering, Agentur</span>
+        </div>
+      </div>
+    </div>
+    <div class="email-body">
+      <p class="p">Keine "Bitte anfragen" Taktik. Alle Preise sind Gesamtpakete — alles inklusive.</p>
+
+      <div class="pkgs">
+        <div class="pkg">
+          <div class="pkg__num">PAKET 01</div>
+          <div class="pkg__header">
+            <div class="pkg__name">FEIERABEND</div>
+            <div class="pkg__price"><em>6–8k</em> CHF</div>
+          </div>
+          <div class="pkg__tag">15–30 Pers. · 3–4 Stunden · alles inkl.</div>
+          <div class="pkg__list">
+            <div class="pkg__item">Eine Aktivität nach Wahl</div>
+            <div class="pkg__item">Location & Catering koordiniert</div>
+            <div class="pkg__item">20 editierte Fotos</div>
+          </div>
+        </div>
+        <div class="pkg is-featured">
+          <div class="pkg__num">PAKET 02 — BELIEBTESTES</div>
+          <div class="pkg__header">
+            <div class="pkg__name">ZUSAMMEN</div>
+            <div class="pkg__price"><em>16–24k</em> CHF</div>
+          </div>
+          <div class="pkg__tag">25–60 Pers. · Ganztägig · alles inkl.</div>
+          <div class="pkg__list">
+            <div class="pkg__item">Tematisches Konzept</div>
+            <div class="pkg__item">Event-Branding</div>
+            <div class="pkg__item">50+ Fotos · After-Movie 90 Sek.</div>
+            <div class="pkg__item">3 LinkedIn Posts</div>
+          </div>
+        </div>
+        <div class="pkg">
+          <div class="pkg__num">PAKET 03</div>
+          <div class="pkg__header">
+            <div class="pkg__name">MEILENSTEIN</div>
+            <div class="pkg__price"><em>28–55k</em> CHF</div>
+          </div>
+          <div class="pkg__tag">40–120 Pers. · Ganztag/Abend · alles inkl.</div>
+          <div class="pkg__list">
+            <div class="pkg__item">Komplette visuelle Identität</div>
+            <div class="pkg__item">After-Movie 2–3 Min.</div>
+            <div class="pkg__item">5 LinkedIn Posts + Newsletter</div>
+          </div>
+        </div>
+        <div class="pkg">
+          <div class="pkg__num">PAKET 04</div>
+          <div class="pkg__header">
+            <div class="pkg__name">NACH MASS</div>
+            <div class="pkg__price">ab <em>2k</em> CHF</div>
+          </div>
+          <div class="pkg__tag">Individuell · Erstgespräch kostenlos</div>
+          <div class="pkg__list">
+            <div class="pkg__item">Jahresvertrag · Nur After-Movie</div>
+            <div class="pkg__item">Offerte innert 48h</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight">
+        <p>Nicht sicher? Das klären wir im <b>Discovery-Gespräch</b> — kostenlos, unverbindlich.</p>
+      </div>
+    </div>
+  </div>
+  <div class="email-reply">
+    <button class="email-reply__btn-ghost" onclick="closeScreen('pakete')" data-de="← Zurück" data-en="← Back">← Zurück</button>
+    <button class="email-reply__btn" onclick="openScreen('kontakt')" data-de="Anfragen →" data-en="Enquire →">Anfragen →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 4 — DISCOVERY
+══════════════════════════════════ -->
+<div id="screen-discovery" class="screen email-screen">
+  <div class="status-bar"></div>
+  <div class="navbar navbar--email">
+    <div class="navbar__back" onclick="closeScreen('discovery')">
+      <span class="navbar__back-arrow">‹</span>
+      <span class="navbar__back-label">Posteingang</span>
+    </div>
+    <div class="navbar__title">BIS <em>MONTAG</em></div>
+    <div style="width:80px"></div>
+  </div>
+  <div class="email-view">
+    <div class="email-header">
+      <div class="email-header__subject" data-de="Wir lernen euer Team kennen — <em>bevor wir planen</em>" data-en="We get to know your team — <em>before we plan anything</em>">Wir lernen euer Team kennen — <em>bevor wir planen</em></div>
+      <div class="email-meta">
+        <div class="email-meta-row">
+          <span class="email-meta-label" data-de="Von" data-en="From">Von</span>
+          <span class="email-meta-avatar">BM</span>
+          <span class="email-meta-value"><b>Discovery</b> &lt;info@bismontag.ch&gt;</span>
+        </div>
+        <div class="email-meta-row">
+          <span class="email-meta-label" data-de="Betr." data-en="Subj.">Betr.</span>
+          <span class="email-meta-value" data-de="Kein Fragebogen. Ein echtes Gespräch." data-en="No questionnaire. A real conversation.">Kein Fragebogen. Ein echtes Gespräch.</span>
+        </div>
+      </div>
+    </div>
+    <div class="email-body">
+      <p class="p">Die meisten Agenturen fragen: "Was wollt ihr?" Wir fragen anders.</p>
+
+      <div class="discovery">
+        <div class="discovery__tag" data-de="Unser Ansatz" data-en="Our approach">Unser Ansatz</div>
+        <div class="discovery__title" data-de="Wir werden Teil eures Teams — bevor wir etwas planen." data-en="We become part of your team — before we plan anything.">Wir werden Teil eures Teams — bevor wir etwas planen.</div>
+        <div class="discovery__body" data-de="45 Minuten. Kein Fragebogen, kein Pitch. Wir hören zu — wer sind diese Menschen, was verbindet sie, was haben sie hinter sich." data-en="45 minutes. No questionnaire, no pitch. We listen — who are these people, what connects them, what have they been through.">45 Minuten. Kein Pitch. Wir hören zu — wer sind diese Menschen, was verbindet sie, was haben sie hinter sich.</div>
+        <button class="discovery__btn" onclick="openScreen('kontakt')">Discovery-Gespräch buchen →</button>
+      </div>
+
+      <div class="h2">Was wir fragen</div>
+      <div class="li"><div class="li-dot"></div><div class="li-text"><b>Kontext</b> — Was hat euer Team in den letzten 12 Monaten bewegt?</div></div>
+      <div class="li"><div class="li-dot"></div><div class="li-text"><b>Menschen</b> — Wer ist das Team wirklich? Neue, Introvertierte, besondere Dynamiken?</div></div>
+      <div class="li"><div class="li-dot"></div><div class="li-text"><b>Zweck</b> — Warum jetzt? Was soll der Event bewirken?</div></div>
+      <div class="li"><div class="li-dot"></div><div class="li-text"><b>Rahmen</b> — Termine, Grösse, Budget. Das Letzte, nicht das Erste.</div></div>
+
+      <div class="sep"></div>
+
+      <div class="h2">Was ihr danach bekommt</div>
+      <p class="p">Innerhalb von 48 Stunden erhaltet ihr ein <b>Team-Porträt</b> — eine Seite, die zusammenfasst was wir gehört haben.</p>
+
+      <div class="highlight">
+        <p>Das Team-Porträt ist für euch, nicht für uns. Wenn wir etwas falsch verstanden haben — sagt es uns. Das ist bereits Teil des Prozesses.</p>
+      </div>
+    </div>
+  </div>
+  <div class="email-reply">
+    <button class="email-reply__btn-ghost" onclick="closeScreen('discovery')" data-de="← Zurück" data-en="← Back">← Zurück</button>
+    <button class="email-reply__btn" onclick="openScreen('kontakt')">Gespräch buchen →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 5 — PARTNER
+══════════════════════════════════ -->
+<div id="screen-partner" class="screen email-screen">
+  <div class="status-bar"></div>
+  <div class="navbar navbar--email">
+    <div class="navbar__back" onclick="closeScreen('partner')">
+      <span class="navbar__back-arrow">‹</span>
+      <span class="navbar__back-label">Posteingang</span>
+    </div>
+    <div class="navbar__title">BIS <em>MONTAG</em></div>
+    <div style="width:80px"></div>
+  </div>
+  <div class="email-view">
+    <div class="email-header">
+      <div class="email-header__subject" data-de="Kuratierte <em>Locations & Partner</em> in Kanton Bern" data-en="Curated <em>Venues & Partners</em> in Canton Bern">Kuratierte <em>Locations & Partner</em></div>
+      <div class="email-meta">
+        <div class="email-meta-row">
+          <span class="email-meta-label" data-de="Von" data-en="From">Von</span>
+          <span class="email-meta-avatar">BM</span>
+          <span class="email-meta-value"><b>Netzwerk</b> &lt;info@bismontag.ch&gt;</span>
+        </div>
+        <div class="email-meta-row">
+          <span class="email-meta-label" data-de="Betr." data-en="Subj.">Betr.</span>
+          <span class="email-meta-value" data-de="Aus eigener Erfahrung — keine bezahlten Platzierungen" data-en="From personal experience — no paid placements">Aus eigener Erfahrung — keine bezahlten Platzierungen</span>
+        </div>
+      </div>
+    </div>
+    <div class="email-body">
+      <p class="p">Wir arbeiten nur mit Locations und Lieferanten zusammen, die wir kennen und empfehlen können.</p>
+
+      <div class="h2">📍 Locations · Kanton Bern</div>
+      <div class="partners">
+        <a class="partner" href="https://bierhuebeli.ch" target="_blank">
+          <div class="partner__icon">BH</div>
+          <div class="partner__name">Bierhübeli Bern</div>
+          <div class="partner__cat">Location</div>
+          <div class="partner__arrow">›</div>
+        </a>
+        <a class="partner" href="https://casinobern.ch" target="_blank">
+          <div class="partner__icon">CB</div>
+          <div class="partner__name">Casino Bern</div>
+          <div class="partner__cat">Location</div>
+          <div class="partner__arrow">›</div>
+        </a>
+        <a class="partner" href="https://bindella.ch/kornhauskeller" target="_blank">
+          <div class="partner__icon">KK</div>
+          <div class="partner__name">Kornhauskeller</div>
+          <div class="partner__cat">Gastronomie</div>
+          <div class="partner__arrow">›</div>
+        </a>
+        <a class="partner" href="https://fueueri.ch" target="_blank">
+          <div class="partner__icon">FF</div>
+          <div class="partner__name">chillfood's füüri</div>
+          <div class="partner__cat">Fire Cooking</div>
+          <div class="partner__arrow">›</div>
+        </a>
+        <a class="partner" href="https://markthalle-burgdorf.ch" target="_blank">
+          <div class="partner__icon">MB</div>
+          <div class="partner__name">Markthalle Burgdorf</div>
+          <div class="partner__cat">Halle</div>
+          <div class="partner__arrow">›</div>
+        </a>
+      </div>
+
+      <div class="h2">⚙ Lieferanten</div>
+      <div class="partners">
+        <a class="partner" href="https://flashlight.ch" target="_blank">
+          <div class="partner__icon">FL</div>
+          <div class="partner__name">Flashlight AG</div>
+          <div class="partner__cat">Technik</div>
+          <div class="partner__arrow">›</div>
+        </a>
+        <a class="partner" href="https://gourmetbox.ch" target="_blank">
+          <div class="partner__icon">GB</div>
+          <div class="partner__name">Gourmetbox</div>
+          <div class="partner__cat">Catering</div>
+          <div class="partner__arrow">›</div>
+        </a>
+      </div>
+
+      <div class="highlight" style="margin-top:24px">
+        <p>Ihr seid Lieferant oder Location? <b>Bevorzugte Konditionen möglich.</b><br>
+        <span onclick="openScreen('kontakt')" style="color:var(--orange);cursor:pointer">Partnerschaft anfragen →</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="email-reply">
+    <button class="email-reply__btn-ghost" onclick="closeScreen('partner')" data-de="← Zurück" data-en="← Back">← Zurück</button>
+    <button class="email-reply__btn" onclick="openScreen('kontakt')" data-de="Kontakt →" data-en="Contact →">Kontakt →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREEN 6 — KONTAKT / COMPOSE
+══════════════════════════════════ -->
+<div id="screen-kontakt" class="screen email-screen">
+  <div class="status-bar"></div>
+  <div class="navbar navbar--email">
+    <div class="navbar__back" onclick="closeScreen('kontakt')">
+      <span class="navbar__back-arrow">‹</span>
+      <span class="navbar__back-label" data-de="Abbrechen" data-en="Cancel">Abbrechen</span>
+    </div>
+    <div class="navbar__title">Neue Nachricht</div>
+    <div class="navbar__action" style="font-size:11px">Senden</div>
+  </div>
+  <div class="email-view">
+    <div class="email-header" style="padding:16px 20px">
+      <div class="email-header__subject" style="font-size:16px;margin-bottom:10px" data-de="30 Minuten. <em>Kostenlos.</em>" data-en="30 minutes. <em>Free.</em>">30 Minuten. <em>Kostenlos.</em></div>
+    </div>
+    <div class="email-body" style="padding-top:12px">
+
+      <div class="calendly" style="margin-top:0">
+        <div class="calendly__title">🗓 Termin direkt buchen</div>
+        <div class="calendly__sub">45 Minuten per Video oder Telefon. Kein Verkaufsgespräch.</div>
+        <div <div id="calendly-mobile-widget" style="min-width:280px;height:380px;margin-top:8px"></div>
+        <script>
+          window.addEventListener('load', function() {
+            if (window.Calendly) {
+              Calendly.initInlineWidget({
+                url: 'https://calendly.com/bismontag-info/30min',
+                parentElement: document.getElementById('calendly-mobile-widget'),
+              });
+            }
+          });
+        </script>
+      </div>
+
+      <p class="p" style="text-align:center;color:var(--gray-400);font-size:13px;margin:8px 0">— oder schreib direkt —</p>
+
+      <div class="compose">
+        <div class="compose__bar">
+          <span class="compose__bar-title">Neue Nachricht</span>
+          <div class="compose__bar-dots">
+            <div class="compose__bar-dot" style="background:#FF5F57"></div>
+            <div class="compose__bar-dot" style="background:#FEBC2E"></div>
+            <div class="compose__bar-dot" style="background:#28C840"></div>
+          </div>
+        </div>
+        <div class="compose__field">
+          <span class="compose__label">An</span>
+          <span class="compose__value">info@bismontag.ch</span>
+        </div>
+        <div class="compose__field">
+          <span class="compose__label">Von</span>
+          <input class="compose__input" type="email" placeholder="eure@email.ch">
+        </div>
+        <div class="compose__field">
+          <span class="compose__label">Name</span>
+          <input class="compose__input" type="text" placeholder="Name · Firma AG">
+        </div>
+        <div class="compose__field">
+          <span class="compose__label">Betr.</span>
+          <select class="compose__select">
+            <option value="">Paket wählen…</option>
+            <option>Feierabend — 6.000–8.000 CHF</option>
+            <option>Zusammen — 16.000–24.000 CHF</option>
+            <option>Meilenstein — 28.000–55.000 CHF</option>
+            <option>Nach Mass</option>
+            <option>Discovery-Gespräch</option>
+            <option>Partnerschaft anfragen</option>
+          </select>
+        </div>
+        <div class="compose__textarea-wrap">
+          <textarea class="compose__textarea" placeholder="Was euch bewegt — oder einfach Hallo."></textarea>
+        </div>
+        <div class="compose__footer">
+          <button class="compose__send">Senden ↑</button>
+          <span class="compose__note">Antwort innert 24h</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openScreen(id) {
+  const s = document.getElementById('screen-' + id);
+  if (s) {
+    s.classList.add('is-open');
+    // Mark inbox item as read
+    document.querySelectorAll('.email-item').forEach(item => {
+      const onclick = item.getAttribute('onclick');
+      if (onclick && onclick.includes(id)) {
+        item.classList.remove('unread');
+        const dot = item.querySelector('.email-item__dot');
+        if (dot) dot.classList.add('read');
+      }
+    });
+  }
+}
+
+function closeScreen(id) {
+  const s = document.getElementById('screen-' + id);
+  if (s) s.classList.remove('is-open');
+}
+
+// iOS-style swipe back
+document.querySelectorAll('.email-screen').forEach(screen => {
+  let startX = 0;
+  screen.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+  }, { passive: true });
+  screen.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if (dx > 80 && startX < 40) {
+      screen.classList.remove('is-open');
+    }
+  }, { passive: true });
+});
+</script>
+</div>
+
+<script>
+function setLang(lang) {
+  // Desktop buttons
+  const btnDe = document.getElementById('btn-de');
+  const btnEn = document.getElementById('btn-en');
+  if (btnDe) btnDe.classList.toggle('active', lang === 'de');
+  if (btnEn) btnEn.classList.toggle('active', lang === 'en');
+  // Mobile buttons
+  const mobDe = document.getElementById('mob-btn-de');
+  const mobEn = document.getElementById('mob-btn-en');
+  if (mobDe) mobDe.classList.toggle('active', lang === 'de');
+  if (mobEn) mobEn.classList.toggle('active', lang === 'en');
+  document.querySelectorAll('[data-de]').forEach(function(el) {
+    el.innerHTML = lang === 'de' ? el.getAttribute('data-de') : el.getAttribute('data-en');
+  });
+}
+</script>
+
+
+<!-- ══ REFERENZEN SCREEN ══ -->
+<div id="screen-referenzen" class="screen email-screen">
+  <div class="status-bar"></div>
+  <div class="navbar navbar--email">
+    <div class="navbar__back" onclick="closeScreen('referenzen')">
+      <span class="navbar__back-arrow">‹</span>
+      <span class="navbar__back-label" data-de="Zurück" data-en="Back">Zurück</span>
+    </div>
+    <div class="navbar__title">BIS <em>MONTAG</em></div>
+    <div style="width:60px"></div>
+  </div>
+  <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column">
+    <div style="padding:20px 16px;border-bottom:1px solid var(--gray-100);flex-shrink:0">
+      <div style="font-family:var(--f-display);font-size:22px;font-weight:900;letter-spacing:-0.8px;color:var(--gray-900)" data-de="Referenzen" data-en="References">Referenzen</div>
+      <div style="font-family:var(--f-mono);font-size:11px;color:var(--gray-400);margin-top:3px" id="mob-archiv-count"></div>
+    </div>
+    <div id="mob-archiv-items" style="padding:0 16px;flex:1"></div>
+  </div>
+</div>
+
+<!-- ══ PROJEKT DETAIL SCREEN ══ -->
+<div id="screen-proj-detail" class="screen email-screen">
+  <div class="status-bar"></div>
+  <div class="navbar navbar--email">
+    <div class="navbar__back" onclick="closeScreen('proj-detail')">
+      <span class="navbar__back-arrow">‹</span>
+      <span class="navbar__back-label" data-de="Referenzen" data-en="References">Referenzen</span>
+    </div>
+    <div class="navbar__title">BIS <em>MONTAG</em></div>
+    <div style="width:60px"></div>
+  </div>
+  <div class="email-view" id="mob-proj-content" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch"></div>
+  <div class="email-reply">
+    <button class="email-reply__btn" onclick="openScreen('kontakt')" data-de="Gespräch buchen →" data-en="Book a call →">Gespräch buchen →</button>
+  </div>
+</div>
+
+
+<script>
+// ═══════════════════════════════════════
+// DYNAMIC PROJECTS — GitHub API Loader
+// ═══════════════════════════════════════
+
+const GITHUB_REPO = 'marcos751/Bis-Montag';
+const PROJECTS_FOLDER = '_projekti';
+let _loadedProjects = [];
+
+// Parse YAML frontmatter from markdown
+function parseFM(text) {
+  const match = text.match(/^---\n([\s\S]*?)\n---/);
+  if (!match) return {};
+  const fm = {};
+  match[1].split('\n').forEach(line => {
+    const colonIdx = line.indexOf(':');
+    if (colonIdx > 0) {
+      const key = line.slice(0, colonIdx).trim();
+      const val = line.slice(colonIdx + 1).trim().replace(/^["']|["']$/g, '');
+      fm[key] = val;
+    }
+  });
+  fm._body = text.replace(/^---[\s\S]*?---\n?/, '').trim();
+  return fm;
+}
+
+// Render project as email HTML
+function renderProjectEmail(p) {
+  const photos = [p.foto_main, p.foto_2, p.foto_3].filter(Boolean);
+  const photosHtml = photos.length > 0 ? `
+    <div class="proj-photos">
+      ${photos[0] ? `<div class="proj-photo proj-photo--tall"><img src="${photos[0]}" alt="${p.naslov || ''}"><div class="proj-photo-tag">${p.klijent || ''}</div></div>` : ''}
+      ${photos[1] ? `<div class="proj-photo"><img src="${photos[1]}" alt=""></div>` : ''}
+      ${photos[2] ? `<div class="proj-photo"><img src="${photos[2]}" alt=""></div>` : ''}
+    </div>` : '';
+
+  return `
+    <div class="email__subject">${p.naslov || 'Projekt'} — <em>${p.klijent || ''}</em></div>
+    <div class="email__meta">
+      <div class="email__meta-inner">
+        <span class="email__meta-key" data-de="Kunde" data-en="Client">Kunde</span>
+        <span class="email__meta-val"><b>${p.klijent || ''}</b></span>
+        <span class="email__meta-key" data-de="Datum" data-en="Date">Datum</span>
+        <span class="email__meta-val">${p.datum || ''}</span>
+        <span class="email__meta-key" data-de="Paket" data-en="Package">Paket</span>
+        <span class="email__meta-val"><b>${p.paket || ''}</b> · ${p.osobe || ''} Personen · ${p.lokacija || ''}</span>
+      </div>
+    </div>
+    <div class="email__body">
+      <div class="proj-badge">${p.paket || ''}</div>
+      ${photosHtml}
+      <p class="email__p">${(p.opis || '').replace(/\n/g, '<br>')}</p>
+      <div class="email__signoff">
+        <div class="email__signoff-name">Bis Montag · Referenz</div>
+        <div class="email__signoff-role">${p.paket || ''} · ${p.datum || ''}</div>
+        <div class="email__signoff-web">bismontag.ch</div>
+      </div>
+    </div>`;
+}
+
+// Render list items
+function renderProjectList(projects) {
+  if (projects.length === 0) {
+    return '<div style="padding:20px 14px;font-family:var(--f-mono);font-size:11px;color:var(--tx-muted)">Noch keine Projekte. Im /admin Bereich hinzufügen.</div>';
+
+  // Show styled empty state
+  const emptyHtml = `<div class="email is-on" id="e-archiv-empty">
+    <div class="email__body" style="padding-top:60px;max-width:480px">
+      <div style="font-family:var(--f-display);font-size:32px;font-weight:900;letter-spacing:-1.5px;line-height:1;color:var(--tx-primary);margin-bottom:12px">Keine neuen<br>Nachrichten.</div>
+      <div style="font-family:var(--f-mono);font-size:13px;color:var(--orange);margin-bottom:32px">Das ändert sich bis Montag.</div>
+      <p style="font-size:14px;color:var(--tx-muted);line-height:1.7">Der erste Event ist in Planung.<br>Euer könnte es sein.</p>
+    </div>
+  </div>`;
+  document.querySelectorAll('.email, .view').forEach(e => e.classList.remove('is-on'));
+  const oldEmpty = document.getElementById('e-archiv-empty');
+  if (oldEmpty) oldEmpty.remove();
+  document.querySelector('.pane__scroll').insertAdjacentHTML('beforeend', emptyHtml);
+  document.querySelector('.pane__scroll').scrollTop = 0;
+  }
+  return projects.map((p, i) => `
+    <div class="list-item list-item--archive" onclick="showDynProject(${i});item(this)">
+      <div class="list-item__row">
+        <span class="list-item__sender" style="font-family:var(--f-mono);font-size:11px">${p.klijent || 'Projekt'}</span>
+        <span class="list-item__date">${(p.datum || '').slice(0, 7)}</span>
+      </div>
+      <div class="list-item__subject">${p.naslov || ''}</div>
+      <div class="list-item__preview">${p.paket || ''} · ${p.osobe || ''} · ${p.lokacija || ''}</div>
+    </div>`).join('');
+}
+
+// Show a single project in pane
+function showDynProject(index) {
+  const p = _loadedProjects[index];
+  if (!p) return;
+
+  document.querySelectorAll('.email, .view').forEach(e => e.classList.remove('is-on'));
+  const old = document.getElementById('e-dyn-proj');
+  if (old) old.remove();
+
+  const el = document.createElement('div');
+  el.className = 'email is-on';
+  el.id = 'e-dyn-proj';
+  el.innerHTML = renderProjectEmail(p);
+  document.querySelector('.pane__scroll').appendChild(el);
+  document.querySelector('.pane__scroll').scrollTop = 0;
+
+  // Apply current language
+  if (typeof setLang === 'function') {
+    document.querySelectorAll('#e-dyn-proj [data-de]').forEach(el2 => {
+      const lang = document.getElementById('btn-en') && document.getElementById('btn-en').classList.contains('active') ? 'en' : 'de';
+      el2.innerHTML = lang === 'de' ? el2.getAttribute('data-de') : el2.getAttribute('data-en');
+    });
+  }
+}
+
+// Load projects from GitHub API
+async function loadDynProjects() {
+  const archivList = document.getElementById('archiv-list');
+  archivList.innerHTML = '<div style="padding:20px 14px;font-family:var(--f-mono);font-size:11px;color:var(--tx-muted)">Lädt Projekte...</div>';
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${PROJECTS_FOLDER}`);
+    
+    if (!res.ok) {
+      // Folder doesn't exist yet — show empty state
+      archivList.innerHTML = '<div style="padding:20px 14px;font-family:var(--f-mono);font-size:11px;color:var(--tx-muted)">Noch keine Projekte. <a href="/admin" style="color:var(--orange)">Im Admin-Bereich hinzufügen →</a></div>';
+      return;
+    }
+
+    const files = await res.json();
+    const mdFiles = Array.isArray(files) ? files.filter(f => f.name.endsWith('.md')) : [];
+
+    if (mdFiles.length === 0) {
+      archivList.innerHTML = '<div style="padding:20px 14px;font-family:var(--f-mono);font-size:11px;color:var(--tx-muted)">Noch keine Projekte. <a href="/admin" style="color:var(--orange)">Im Admin-Bereich hinzufügen →</a></div>';
+      return;
+    }
+
+    // Fetch all project files in parallel
+    const projects = await Promise.all(
+      mdFiles.map(async file => {
+        const r = await fetch(file.download_url);
+        const text = await r.text();
+        return { ...parseFM(text), _filename: file.name };
+      })
+    );
+
+    // Sort by date descending
+    projects.sort((a, b) => (b.datum || '').localeCompare(a.datum || ''));
+
+    _loadedProjects = projects;
+    archivList.innerHTML = renderProjectList(projects);
+
+    // Show first project
+    if (projects.length > 0) {
+      showDynProject(0);
+      archivList.querySelector('.list-item') && archivList.querySelector('.list-item').classList.add('is-on');
+    }
+
+  } catch (err) {
+    console.error('Project load error:', err);
+    archivList.innerHTML = '<div style="padding:20px 14px;font-family:var(--f-mono);font-size:11px;color:var(--tx-muted)">Fehler beim Laden. Seite neu laden.</div>';
+  }
+}
+
+// Override goArchiv to use dynamic loader
+function goArchiv() {
+  // Switch list header
+  document.querySelector('.list__title').textContent = 
+    document.getElementById('btn-en') && document.getElementById('btn-en').classList.contains('active') ? 'References' : 'Referenzen';
+  document.querySelector('.list__count').textContent = '';
+
+  // Hide inbox items, show archiv list
+  document.querySelectorAll('.list__scroll > .list-item:not(.list-item--archive)').forEach(i => i.style.display = 'none');
+  document.getElementById('archiv-list').style.display = 'block';
+
+  // Hide all current email panes
+  document.querySelectorAll('.email, .view').forEach(e => e.classList.remove('is-on'));
+
+  // Load projects from GitHub
+  loadDynProjects();
+}
+</script>
+
+
+<script>
+// ═══════════════════════════════════════
+// DYNAMIC PAKETE & PARTNER LOADERS
+// ═══════════════════════════════════════
+
+// ── PAKETE ──
+async function loadDynPakete() {
+  const container = document.getElementById('pkg-dynamic-container');
+  if (!container) return;
+
+  // Keep existing content while loading
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/_pakete`);
+    if (!res.ok) { renderFallbackPakete(); return; }
+    const files = await res.json();
+    const mdFiles = Array.isArray(files) ? files.filter(f => f.name.endsWith('.md')) : [];
+    if (mdFiles.length === 0) { renderFallbackPakete(); return; }
+
+    const pakete = await Promise.all(
+      mdFiles.map(async f => {
+        const r = await fetch(f.download_url);
+        const text = await r.text();
+        return parseFM(text);
+      })
+    );
+
+    pakete.sort((a, b) => (parseInt(a.reihenfolge) || 99) - (parseInt(b.reihenfolge) || 99));
+
+    const lang = document.getElementById('btn-en') && document.getElementById('btn-en').classList.contains('active') ? 'en' : 'de';
+    
+    const html = pakete.map(p => {
+      const featured = p.featured === 'true';
+      const tagline = lang === 'en' ? (p.tagline_en || p.tagline_de || '') : (p.tagline_de || '');
+      const inbegriffen = lang === 'en' 
+        ? (p.inbegriffen_en || p.inbegriffen_de || '') 
+        : (p.inbegriffen_de || '');
+      const preisStr = p.preis_bis 
+        ? `<em style="color:var(--orange)">${Number(p.preis_von).toLocaleString('de-CH')}</em> – ${Number(p.preis_bis).toLocaleString('de-CH')} CHF`
+        : `Ab <em style="color:var(--orange)">${Number(p.preis_von).toLocaleString('de-CH')}</em> CHF`;
+      
+      return `<tr${featured ? ' class="is-featured"' : ''}>
+        <td>
+          <div class="pkg-name">${p.name || ''}</div>
+          <div class="pkg-size">${p.dauer || ''}</div>
+          ${featured ? `<div class="pkg-badge">${lang === 'en' ? 'Most popular' : 'Beliebtestes'}</div>` : ''}
+        </td>
+        <td><div class="pkg-size">${p.personen || ''}</div></td>
+        <td><div class="pkg-price" style="font-family:var(--f-mono);font-size:13px">${preisStr}</div></td>
+        <td><div class="pkg-inc">${String(inbegriffen).split(',').map(s => s.trim()).filter(Boolean).join(', ')}</div></td>
+      </tr>`;
+    }).join('');
+
+    container.innerHTML = html;
+
+  } catch(err) {
+    console.error('Pakete load error:', err);
+    renderFallbackPakete();
+  }
+}
+
+function renderFallbackPakete() {
+  // No CMS data — keep hardcoded table visible
+  const container = document.getElementById('pkg-dynamic-container');
+  if (container) container.style.display = '';
+}
+
+// ── PARTNER ──
+async function loadDynPartner() {
+  const locContainer = document.getElementById('partner-loc-dynamic');
+  const supContainer = document.getElementById('partner-sup-dynamic');
+  if (!locContainer && !supContainer) return;
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/_partner`);
+    if (!res.ok) return; // Keep hardcoded fallback
+
+    const files = await res.json();
+    const mdFiles = Array.isArray(files) ? files.filter(f => f.name.endsWith('.md')) : [];
+    if (mdFiles.length === 0) return;
+
+    const partner = await Promise.all(
+      mdFiles.map(async f => {
+        const r = await fetch(f.download_url);
+        const text = await r.text();
+        return parseFM(text);
+      })
+    );
+
+    partner.sort((a, b) => (parseInt(a.reihenfolge) || 99) - (parseInt(b.reihenfolge) || 99));
+
+    const lang = document.getElementById('btn-en') && document.getElementById('btn-en').classList.contains('active') ? 'en' : 'de';
+
+    const locations = partner.filter(p => p.kategorie === 'Location');
+    const lieferanten = partner.filter(p => p.kategorie === 'Lieferant');
+
+    function renderPartnerRows(list) {
+      return list.map(p => {
+        const desc = lang === 'en' ? (p.beschreibung_en || p.beschreibung_de || '') : (p.beschreibung_de || '');
+        return `<a class="email__link-row" href="${p.url || '#'}" target="_blank" rel="noopener">
+          <div class="email__link-row-abbr">${p.abk || '?'}</div>
+          <div class="email__link-row-name">${p.name || ''}</div>
+          <div class="email__link-row-cat">${desc}</div>
+          <div class="email__link-row-arrow">↗</div>
+        </a>`;
+      }).join('');
+    }
+
+    if (locContainer && locations.length > 0) {
+      locContainer.innerHTML = renderPartnerRows(locations);
+    }
+    if (supContainer && lieferanten.length > 0) {
+      supContainer.innerHTML = renderPartnerRows(lieferanten);
+    }
+
+  } catch(err) {
+    console.error('Partner load error:', err);
+    // Keep hardcoded fallback
+  }
+}
+
+// ── AUTO LOAD ──
+// Load pakete and partner when their email sections become visible
+const _origGo = window.go;
+window.go = function(id) {
+  _origGo(id);
+  if (id === 'pakete') loadDynPakete();
+  if (id === 'partner') loadDynPartner();
+};
+
+// Also load on page init if pakete/partner is visible
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('e-pakete') && document.getElementById('e-pakete').classList.contains('is-on')) {
+    loadDynPakete();
+  }
+});
+</script>
+
+<script>
+function goReferenzenStatic() {
+  document.querySelectorAll('.email, .view').forEach(function(e) { e.classList.remove('is-on'); });
+  var el = document.getElementById('e-referenzen-static');
+  if (el) el.classList.add('is-on');
+  var lt = document.querySelector('.list__title');
+  var lc = document.querySelector('.list__count');
+  if (lt) lt.textContent = (document.getElementById('btn-en') && document.getElementById('btn-en').classList.contains('active')) ? 'References' : 'Referenzen';
+  if (lc) lc.textContent = '';
+  document.querySelectorAll('.list__scroll > .list-item').forEach(function(i) { i.style.display = 'none'; });
+  var ps = document.querySelector('.pane__scroll');
+  if (ps) ps.scrollTop = 0;
+}
+</script>
+</body>
+</html>
